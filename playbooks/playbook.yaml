@@ -1,0 +1,42 @@
+tools_to_install:
+  tools:
+    - name: gitleaks
+      install: docker pull zricethezav/gitleaks:latest
+      update: docker pull zricethezav/gitleaks:latest
+      help: docker run --rm zricethezav/gitleaks --help
+      devsecops:
+        name: gitleaks
+        description: "Gitleaks is a SAST tool for detecting hardcoded secrets like passwords, api keys, and tokens in git repos."
+        category: "secret-scanning"
+        url: https://github.com/gitleaks/gitleaks
+        language: "All"
+
+commands_to_run:
+  steps:
+    - name: "Start"
+      command: echo "Welcome to DevSecOpsBuilder"
+      stepno: 1
+      
+    - name: "List files"
+      command: ls -l
+      stepno: 2
+
+    - name: "Get current directory"
+      command: pwd
+      stepno: 2
+
+    - name: "GITLEAK-JOB"
+      command: docker run -v ${path_to_host_folder_to_scan}:/path zricethezav/gitleaks:latest ${run_command_option} --source="/path" ${options}
+      parameters:
+        path_to_host_folder_to_scan: "/home/erdem/Desktop/devsecops/DevSecOpsBuilder/test/SecretsTest/"
+        run_command_option: detect
+        options: --verbose --report-format=json --report-path=/path/gitleaks_report.json 
+        output_path: "./outputs/git-secrets/"
+      post_command: mv ${path_to_host_folder_to_scan}gitleaks_report.json ${output_path}
+      stepno: 3
+
+    - name: "Finished"
+      command: "echo DevSecOps Builder has been finished ${echo_text}"
+      parameters:
+        echo_text: "This is a test echo."
+      stepno: 4
