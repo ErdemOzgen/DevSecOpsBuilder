@@ -232,7 +232,7 @@ tools_to_install:
       devsecops:
         name: semgrep
         description: "Semgrep is a fast, open-source, static analysis tool for finding bugs and enforcing code standards at editor, commit, and CI time."
-        category: "dependency-check"
+        category: "SAST"
         url: https://github.com/semgrep/semgrep
 
     -name: 
