@@ -60,7 +60,7 @@ lab:
 
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
-	cd lab && rm -rf SecretsTest
+	cd lab && rm -rf SecretsTest/
 cleanoutput:
 	echo "Cleaning Test Secret Scanner repo"
 	cd command_outputs && rm -rf *.txt

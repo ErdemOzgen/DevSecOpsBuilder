@@ -1,0 +1,137 @@
+tools_to_install:
+  tools:
+    - name: gitleaks
+      install: docker pull zricethezav/gitleaks:latest
+      update: docker pull zricethezav/gitleaks:latest
+      help: docker run --rm zricethezav/gitleaks --help
+      language: "All"
+      default: true
+      devsecops:
+        name: gitleaks
+        description: "Gitleaks is a SAST tool for detecting hardcoded secrets like passwords, api keys, and tokens in git repos."
+        category: "secret-scanning"
+        url: https://github.com/gitleaks/gitleaks
+
+    - name: git-hound
+      install: git clone https://github.com/tillson/git-hound.git && cd git-hound && go build .
+      update: git clone https://github.com/tillson/git-hound.git && cd git-hound && mv config.example.yml config.yaml && go install .
+      help: ./git-hound -h
+      language: "All"
+      default: false
+      devsecops:
+        name: git-hound
+        description: "Git Hound makes it easy to find exposed API keys on GitHub using pattern matching, targetted querying, and a scoring system."
+        category: "secret-scanning"
+        url: https://github.com/tillson/git-hound.git
+
+    - name: truffleHog
+      install: |
+            cd /tmp && git clone https://github.com/trufflesecurity/trufflehog.git
+            cd trufflehog; go install
+      update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+      help: trufflehog --help
+      language: "All"
+      default: false
+      devsecops:
+        name: truffleHog
+        description: "Searches through git repositories for secrets, digging deep into commit history and branches. This is effective at finding secrets accidentally committed."
+        category: "secret-scanning"
+        url: https://github.com/trufflesecurity/trufflehog/tree/main
+
+    - name: detect-secrets
+      install: pip install detect-secrets
+      update: pip install --upgrade detect-secrets
+      help: detect-secrets --help
+      language: "All"
+      default: true
+      devsecops:
+        name: detect-secrets
+        description: "An enterprise friendly way of detecting and preventing secrets in code."
+        category: "secret-scanning"
+        url: https://github.com/Yelp/detect-secrets
+    
+    - name: ggshield
+      install: pip install --user -U ggshield EXPORT PATH=$PATH:$HOME/.local/bin
+      update: pip install --user -U ggshield
+      help: EXPORT /home/${USER}/.local/bin && ggshield --help
+      language: "All"
+      default: false
+      devsecops:
+        name: ggshield
+        description: "ggshield is a secrets scanner for commits, branches, pull requests and more. It runs locally and integrates with GitHub, GitLab and BitBucket."
+        category: "secret-scanning"
+        url: https://github.com/gitguardian/ggshield
+
+    - name: cdxgen
+      install: sudo npm install -g @cyclonedx/cdxgen
+      update: sudo npm update -g @cyclonedx/cdxgen
+      help: cdxgen -h
+      default: false
+      language:
+        - "C++"
+        - "Node.js"
+        - "PHP"
+        - "Python"
+        - "Ruby"
+        - "Rust"
+        - "Java"
+        - ".Net"
+        - "Dart"
+        - "Haskell"
+        - "Elixir"
+        - "Go"
+        - "JavaScript"
+      devsecops:
+        name: cdxgen
+        description: "CycloneDX is a lightweight software bill-of-material (SBOM) standard designed for use in application security contexts and supply chain component analysis."
+        category: "dependency-check"
+        url: https://github.com/CycloneDX/cdxgen
+
+    - name: syft
+      install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      help: syft -h
+      default: false
+      language:
+        - "C (conan)"
+        - "C++ (conan)"
+        - "Dart (pubs)"
+        - "Debian (dpkg)"
+        - "Dotnet (deps.json)"
+        - "Objective-C (cocoapods)"
+        - "Elixir (mix)"
+        - "Erlang (rebar3)"
+        - "Go (go.mod, Go binaries)"
+        - "Haskell (cabal, stack)"
+        - "Java (jar, ear, war, par, sar, nar, native-image)"
+        - "JavaScript (npm, yarn)"
+        - "Jenkins Plugins (jpi, hpi)"
+        - "Linux kernel archives (vmlinz)"
+        - "Linux kernel modules (ko)"
+        - "Nix (outputs in /nix/store)"
+        - "PHP (composer)"
+        - "Python (wheel, egg, poetry, requirements.txt)"
+        - "Red Hat (rpm)"
+        - "Ruby (gem)"
+        - "Rust (cargo.lock)"
+        - "Swift (cocoapods, swift-package-manager)"
+      devsecops:
+        name: syft
+        description: "Syft is a tool for generating a Software Bill of Materials (SBOM) from container images and filesystems."
+        category: "dependency-check"
+        url: https://github.com/anchore/syft
+        
+
+    - name: dependency-track
+      install: cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d
+      update: cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d
+      help: echo "Running in docker compose not need help"
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: dependency-track
+        description: "Dependency-Track is an intelligent Software Supply Chain Component Analysis platform that allows organizations to identify and reduce risk from the use of third-party and open source components."
+        category: "dependency-check"
+        url: https://github.com/DependencyTrack/dependency-track
+  
