@@ -189,6 +189,50 @@ tools_to_install:
         description: "A static analysis security vulnerability scanner for Ruby on Rails applications."
         category: "dependency-check"
         url: https://github.com/presidentbeef/brakeman
+    -name: semgrep
+      install: pip install semgrep #docker pull returntocorp/semgrep:latest
+      update: pip install semgrep #docker pull returntocorp/semgrep:latest
+      help: semgrep --help
+      default: false
+      language:
+        - "C#""
+        - "Go"
+        - "Java"
+        - "JavaScript"
+        - "JSX"
+        - "JSON"
+        - "PHP"
+        - "Python"
+        - "Ruby"
+        - "Scala"
+        - "Terraform"
+        - "TypeScript"
+        - "TSX"
+        - "Kotlin"
+        - "Rust"
+        - "Bash"
+        - "C"
+        - "C++"
+        - "Clojure"
+        - "Dart"
+        - "Dockerfile"
+        - "Elixir"
+        - "HTML"
+        - "Julia"
+        - "Jsonnet"
+        - "Lisp"
+        - "Lua"
+        - "OCaml"
+        - "R"
+        - "Scheme"
+        - "Solidity"
+        - "Swift"
+        - "YAML"
+        - "XML"
+      devsecops:
+        name: semgrep
+        description: "Semgrep is a fast, open-source, static analysis tool for finding bugs and enforcing code standards at editor, commit, and CI time."
+        category: "dependency-check"
+        url: https://github.com/semgrep/semgrep
 
-    
-
+    -name: 
