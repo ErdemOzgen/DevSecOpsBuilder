@@ -16,32 +16,20 @@ def generate_jenkinsfile(yaml_path, jenkinsfile_path):
         jfile.write('    agent any\n\n')
         jfile.write('    stages {\n')
 
-        # Write stages that run in sequence
+        # Write stages that run in sequence or parallel
         for stepno, steps in sorted(steps_by_stepno.items()):
-            for step in steps:
-                stage_name = step['name'].replace(' ', '_')
-                jfile.write(f'        stage(\'{stage_name}\') {{\n')
-                jfile.write('            steps {\n')
-
-                # Check for parameters and substitute them in the command
-                command = step['command']
-                if 'parameters' in step:
-                    for param_key, param_value in step['parameters'].items():
-                        command = command.replace('${' + param_key + '}', param_value)
-
-                jfile.write(f'                sh \'{command}\'\n')
-
-                # Check for post_command and add it
-                if 'post_command' in step:
-                    post_command = step['post_command']
-                    if 'parameters' in step:
-                        for param_key, param_value in step['parameters'].items():
-                            post_command = post_command.replace('${' + param_key + '}', param_value)
-
-                    jfile.write(f'                sh \'{post_command}\'\n')
-
+            if len(steps) > 1:
+                # Multiple steps for the same stepno, run in parallel
+                jfile.write(f'        stage(\'Step_{stepno}\') {{\n')
+                jfile.write('            parallel {\n')
+                for step in steps:
+                    write_step(jfile, step)
                 jfile.write('            }\n')
                 jfile.write('        }\n')
+            else:
+                # Single step, run sequentially
+                for step in steps:
+                    write_step(jfile, step)
 
         # Write the pipeline footer to the Jenkinsfile
         jfile.write('    }\n')
@@ -54,6 +42,31 @@ def generate_jenkinsfile(yaml_path, jenkinsfile_path):
         jfile.write('        }\n')
         jfile.write('    }\n')
         jfile.write('}\n')
+
+def write_step(jfile, step):
+    stage_name = step['name'].replace(' ', '_')
+    jfile.write(f'            stage(\'{stage_name}\') {{\n')
+    jfile.write('                steps {\n')
+
+    # Check for parameters and substitute them in the command
+    command = step['command']
+    if 'parameters' in step:
+        for param_key, param_value in step['parameters'].items():
+            command = command.replace('${' + param_key + '}', param_value)
+
+    jfile.write(f'                    sh \'{command}\'\n')
+
+    # Check for post_command and add it
+    if 'post_command' in step:
+        post_command = step['post_command']
+        if 'parameters' in step:
+            for param_key, param_value in step['parameters'].items():
+                post_command = post_command.replace('${' + param_key + '}', param_value)
+
+        jfile.write(f'                    sh \'{post_command}\'\n')
+
+    jfile.write('                }\n')
+    jfile.write('            }\n')
 
 if __name__=="__main__":
     generate_jenkinsfile('./playbooks/playbook.yaml', './outputs/jenkinsFileOutput/Jenkinsfile')
