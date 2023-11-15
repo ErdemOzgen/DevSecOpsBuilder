@@ -336,4 +336,16 @@ tools_to_install:
         category: "DAST"
         url: https://github.com/wapiti-scanner/wapiti/tree/master
 
+    -name: nuclei
+      install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+      update: nuclei -update
+      help: nuclei --help
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: nuclei
+        description: "Nuclei is used to send requests across targets based on a template leading to zero false positives and providing effective scanning for known paths."
+        category: "DAST"
+        url: https://github.com/projectdiscovery/nuclei
     
