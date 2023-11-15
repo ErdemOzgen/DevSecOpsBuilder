@@ -10,7 +10,7 @@ PYTHON=python
 PIP=pip3
 # --------------------------
 
-.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab
+.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput
 
 
 setup:
@@ -61,6 +61,9 @@ lab:
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
 	cd lab && rm -rf SecretsTest
+cleanoutput:
+	echo "Cleaning Test Secret Scanner repo"
+	cd command_outputs && rm -rf *.txt
 
 help:			## Show this help.
 	@echo "Make application docker images and manage containers using docker-compose files."

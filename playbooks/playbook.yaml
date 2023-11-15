@@ -92,7 +92,6 @@ tools_to_install:
       update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
       help: syft -h
       default: false
-      # supported Alpine (apk)
       language:
         - "C (conan)"
         - "C++ (conan)"
@@ -135,7 +134,7 @@ tools_to_install:
         description: "Dependency-Track is an intelligent Software Supply Chain Component Analysis platform that allows organizations to identify and reduce risk from the use of third-party and open source components."
         category: "dependency-check"
         url: https://github.com/DependencyTrack/dependency-track
-
+    
 
 
 
@@ -159,7 +158,7 @@ commands_to_run:
     - name: "GITLEAK-JOB"
       command: docker run -v ${path_to_host_folder_to_scan}:/path zricethezav/gitleaks:latest ${run_command_option} --source="/path" ${options}
       parameters:
-        path_to_host_folder_to_scan: "./test/SecretsTest/"
+        path_to_host_folder_to_scan: "./lab/SecretsTest/"
         run_command_option: detect
         options: --verbose --report-format=json --report-path=/path/gitleaks_report.json 
         output_path: "./outputs/git-secrets/"
