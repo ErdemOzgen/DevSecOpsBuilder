@@ -310,4 +310,17 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/pyupio/safety
     
+    -name: zap-proxy
+      install: sudo snap install zaproxy --classic
+      update: sudo snap refresh zaproxy --classic
+      help: zap-proxy --help
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: zap-proxy
+        description: "The OWASP Zed Attack Proxy (ZAP) is one of the world’s most popular free security tools and is actively maintained by hundreds of international volunteers."
+        category: "DAST"
+        url: https://www.zaproxy.org/download/
+
     -name: 
