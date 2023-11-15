@@ -11,6 +11,8 @@ Automatic DevSecOps builder
 * pipx ggshield
 * nodejs https://nodejs.org/en/download/package-manager
 * sudo apt install make -y
+* sudo apt-get install ruby-full rubygems
+
 
 ## Tools
 

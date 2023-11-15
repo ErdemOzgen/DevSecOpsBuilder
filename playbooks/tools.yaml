@@ -177,4 +177,18 @@ tools_to_install:
         category: "dependency-check"
         url: https://www.npmjs.com/package/npm-check
     
-    -name: 
+    -name: brakeman
+      install: sudo gem install brakeman
+      update: sudo gem update brakeman
+      help: brakeman --help
+      default: false
+      language:
+        - "Ruby on Rails"
+      devsecops:
+        name: brakeman
+        description: "A static analysis security vulnerability scanner for Ruby on Rails applications."
+        category: "dependency-check"
+        url: https://github.com/presidentbeef/brakeman
+
+    
+
