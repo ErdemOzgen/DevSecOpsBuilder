@@ -275,7 +275,7 @@ tools_to_install:
        sudo ulimit -u 8192
       update: docker pull sonarqube@latest
       help: echo "Running in docker  not need help"
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
@@ -284,3 +284,17 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/SonarSource/sonarqube
 
+    -name: gosec
+      install: go install github.com/securego/gosec/cmd/gosec@latest
+      update: go install github.com/securego/gosec/cmd/gosec@latest
+      help: gosec --help
+      default: false
+      language:
+        - "Go"
+      devsecops:
+        name: gosec
+        description: "Golang security checker."
+        category: "SAST"
+        url: https://github.com/securego/gosec
+
+    -name: 
