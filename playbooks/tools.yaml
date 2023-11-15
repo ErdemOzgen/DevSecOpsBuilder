@@ -161,4 +161,20 @@ tools_to_install:
         description: "PHP security vulnerabilities checker."
         category: "dependency-check"
         url: https://github.com/fabpot/local-php-security-checker
-        
+    
+    -name: npm-check
+      install: sudo npm install -g npm-check
+      update: sudo npm update -g npm-check
+      help: npm-check --help
+      default: false
+      language:
+        - "JavaScript"
+        - "Node.js"
+        - "TypeScript"
+      devsecops:
+        name: npm-check
+        description: "Check for outdated, incorrect, and unused dependencies."
+        category: "dependency-check"
+        url: https://www.npmjs.com/package/npm-check
+    
+    -name: 
