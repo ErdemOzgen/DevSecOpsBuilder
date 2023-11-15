@@ -56,11 +56,11 @@ clean:
 
 lab:
 	echo "Clone Test Secret Scanner repo"
-	mkdir -p  test && cd test && git clone https://github.com/BonJarber/SecretsTest.git
+	mkdir -p  lab && cd lab && git clone https://github.com/BonJarber/SecretsTest.git
 
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
-	cd test && rm -rf SecretsTest
+	cd lab && rm -rf SecretsTest
 
 help:			## Show this help.
 	@echo "Make application docker images and manage containers using docker-compose files."
