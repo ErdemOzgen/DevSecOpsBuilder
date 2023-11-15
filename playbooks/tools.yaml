@@ -297,4 +297,17 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/securego/gosec
 
+    -name: safety
+      install: pip install safety
+      update: pip install safety
+      help: safety --help
+      default: false
+      language:
+        - "Python"
+      devsecops:
+        name: safety
+        description: "Safety checks your installed dependencies for known security vulnerabilities."
+        category: "SAST"
+        url: https://github.com/pyupio/safety
+    
     -name: 
