@@ -348,4 +348,6 @@ tools_to_install:
         description: "Nuclei is used to send requests across targets based on a template leading to zero false positives and providing effective scanning for known paths."
         category: "DAST"
         url: https://github.com/projectdiscovery/nuclei
+    #TODO: add oss-fuzz
+    #TODO: Kubernetes add from kubernetes cluster
     
