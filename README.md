@@ -7,7 +7,7 @@ Automatic DevSecOps builder
 * Docker
 * python = anaconda
 * golang
-* java 11 sudo apt install default-jre
+* java 11 sudo apt install default-jre ==> apt install openjdk-17-jdk openjdk-17-jre
 * pipx ggshield
 * nodejs https://nodejs.org/en/download/package-manager
 * sudo apt install make -y

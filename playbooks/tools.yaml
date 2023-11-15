@@ -189,6 +189,7 @@ tools_to_install:
         description: "A static analysis security vulnerability scanner for Ruby on Rails applications."
         category: "dependency-check"
         url: https://github.com/presidentbeef/brakeman
+    # todo: needs env
     -name: semgrep
       install: pip install semgrep #docker pull returntocorp/semgrep:latest
       update: pip install semgrep #docker pull returntocorp/semgrep:latest
@@ -234,5 +235,52 @@ tools_to_install:
         description: "Semgrep is a fast, open-source, static analysis tool for finding bugs and enforcing code standards at editor, commit, and CI time."
         category: "SAST"
         url: https://github.com/semgrep/semgrep
+    # todo: needs env
+    -name: libsast
+      install: pip install libsast
+      update: pip install libsast 
+      help: libsast --help
+      default: false
+      language:
+        - "JavaScript"
+        - "Node.js"
+        - "TypeScript"
+      devsecops:
+        name: libsast
+        description: "A CLI tool to scan your JavaScript libraries for known vulnerabilities."
+        category: "SAST"
+        url: https://github.com/ajinabraham/libsast
+    -name: eslint
+      install: npm init @eslint/config
+      update: npm init @eslint/config
+      help: eslint --help
+      default: false
+      language:
+        - "JavaScript"
+        - "Node.js"
+        - "TypeScript"
+      devsecops:
+        name: eslint
+        description: "ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs."
+        category: "SAST"
+        url: https://github.com/eslint/eslint
 
-    -name: 
+
+    -name: sonarqube
+      install: |
+       docker pull sonarqube@latest
+       sudo sysctl -w vm.max_map_count=524288
+       sudo sysctl -w fs.file-max=131072
+       sudo ulimit -n 131072
+       sudo ulimit -u 8192
+      update: docker pull sonarqube@latest
+      help: echo "Running in docker  not need help"
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: sonarqube
+        description: "SonarQube is an open-source platform for continuous inspection of code quality."
+        category: "SAST"
+        url: https://github.com/SonarSource/sonarqube
+
