@@ -149,3 +149,16 @@ tools_to_install:
         description: "Scanner detecting the use of JavaScript libraries with known vulnerabilities."
         category: "dependency-check"
         url: https://github.com/retirejs/retire.js/
+    -name: local-php-security-checker
+      install: go install github.com/fabpot/local-php-security-checker@latest
+      update: go install github.com/fabpot/local-php-security-checker@latest
+      help: local-php-security-checker --help
+      default: false
+      language:
+        - "PHP"
+      devsecops:
+        name: local-php-security-checker
+        description: "PHP security vulnerabilities checker."
+        category: "dependency-check"
+        url: https://github.com/fabpot/local-php-security-checker
+        
