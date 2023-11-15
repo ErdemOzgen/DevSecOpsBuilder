@@ -134,4 +134,18 @@ tools_to_install:
         description: "Dependency-Track is an intelligent Software Supply Chain Component Analysis platform that allows organizations to identify and reduce risk from the use of third-party and open source components."
         category: "dependency-check"
         url: https://github.com/DependencyTrack/dependency-track
-  
+    
+    - name: retire.js
+      install: sudo  npm install -g retire
+      update: sudo  npm update -g retire
+      help: retire --help
+      default: false
+      language:
+        - "JavaScript"
+        - "Node.js"
+        - "TypeScript"
+      devsecops:
+        name: retire.js
+        description: "Scanner detecting the use of JavaScript libraries with known vulnerabilities."
+        category: "dependency-check"
+        url: https://github.com/retirejs/retire.js/
