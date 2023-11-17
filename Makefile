@@ -14,7 +14,41 @@ PIP=pip3
 
 
 setup:
+	sudo apt-get install build-essential -y
 	$(PIP) install -r requirements.txt
+	sudo apt update -y
+	# Add Docker's official GPG key:
+	sudo apt-get update
+	sudo apt-get install ca-certificates curl gnupg
+	sudo install -m 0755 -d /etc/apt/keyrings
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+	sudo chmod a+r /etc/apt/keyrings/docker.gpg
+	# Add the repository to Apt sources:
+	echo \
+	  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+	  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+	  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	sudo apt-get update
+	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+	sudo systemctl start docker
+	sudo systemctl enable docker
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	cd /tmp
+	curl -O https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+	bash Anaconda3-2022.05-Linux-x86_64.sh
+	sudo apt update
+	wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
+	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
+	sudo apt update
+	sudo apt install openjdk-11-jdk openjdk-11-jre
+	curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+	sudo apt install -y nodejs
+	sudo apt-get install -y nodejs
+	sudo apt-get update -y
+	sudo apt-get install ruby-full rubygems -y
+
+
 
 up:				## Build and start all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
@@ -55,12 +89,31 @@ clean:
 	find . -type d -name '__pycache__' -delete
 
 lab:
-	echo "Clone Test Secret Scanner repo"
+	echo "Cloning Test Secret Scanner repo"
 	mkdir -p  lab && cd lab && git clone https://github.com/BonJarber/SecretsTest.git
+	echo "Cloning Test DVWA repo"
+	git clone https://github.com/digininja/DVWA.git
+	echo "Cloning Test lambhack repo"
+	git clone https://github.com/wickett/lambhack.git
+	echo "Cloning Test NodeGoat repo"
+	git clone https://github.com/OWASP/NodeGoat.git
+	echo "Cloning Test DVSA repo"
+	git clone https://github.com/OWASP/DVSA.git
+	echo "Cloning Test railsgoat repo"
+	git clone https://github.com/OWASP/railsgoat
+	echo "Cloning Test WebGoat repo"
+	git clone https://github.com/WebGoat/WebGoat
+	echo "Cloning Test WebGoat.NET repo"
+	git clone https://github.com/OWASP/WebGoat.NET.git
+	echo "Cloning Test WebGoat.PHP repo"
+	git clone https://github.com/OWASP/OWASPWebGoatPHP.git
+	echo "Cloning Test  JAVA vulnado repo"
+	git clone https://github.com/ScaleSec/vulnado.git
+
 
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
-	cd lab && rm -rf SecretsTest/
+	cd lab && rm -rf *
 cleanoutput:
 	echo "Cleaning Test Secret Scanner repo"
 	cd command_outputs && rm -rf *.txt
