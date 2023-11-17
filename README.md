@@ -2,6 +2,13 @@
 Automatic DevSecOps builder
 
 
+# TODO
+
+Add to end of project all systems has anaconda
+	cd /tmp
+	curl -O https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+	bash Anaconda3-2022.05-Linux-x86_64.sh
+
 # Requirements
 
 * Docker

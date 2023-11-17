@@ -34,13 +34,11 @@ setup:
 	sudo systemctl enable docker
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
-	cd /tmp
-	curl -O https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-	bash Anaconda3-2022.05-Linux-x86_64.sh
-	sudo apt update
+	export PATH := /usr/local/go/bin:$(HOME)/bin:$(HOME)/go/bin:$(PATH)
+	sudo apt update -y
 	wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
-	sudo apt update
+	sudo apt update -y
 	sudo apt install openjdk-11-jdk openjdk-11-jre
 	curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 	sudo apt install -y nodejs
