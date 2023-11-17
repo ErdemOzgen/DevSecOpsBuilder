@@ -19,17 +19,19 @@ setup:
 	sudo apt update -y
 	# Add Docker's official GPG key:
 	sudo apt-get update
-	export PATH := /usr/local/go/bin:$(HOME)/bin:$(HOME)/go/bin:$(PATH)
-	sudo apt update -y
-	wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
-	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
-	sudo apt update -y
-	sudo apt install openjdk-11-jdk openjdk-11-jre
-	curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-	sudo apt install -y nodejs
-	sudo apt-get install -y nodejs
-	sudo apt-get update -y
+	# Set PATH for the duration of this recipe
+	export PATH="/usr/local/go/bin:/home/erdem/bin:/home/erdem/go/bin:$$PATH"; \
+	curl -L https://go.dev/dl/go1.21.4.linux-amd64.tar.gz -o go1.21.4.linux-amd64.tar.gz; \
+	sudo rm -rf /usr/local/go; \
+	sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz; \
+	sudo apt update -y; \
+	sudo apt install openjdk-11-jdk openjdk-11-jre; \
+	curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -; \
+	sudo apt install -y nodejs; \
+	sudo apt-get install -y nodejs; \
+	sudo apt-get update -y; \
 	sudo apt-get install ruby-full rubygems -y
+
 
 
 
