@@ -74,26 +74,21 @@ clean:
 	find . -type d -name '__pycache__' -delete
 
 lab:
-	echo "Cloning Test Secret Scanner repo"
-	mkdir -p  lab && cd lab && git clone https://github.com/BonJarber/SecretsTest.git
-	echo "Cloning Test DVWA repo"
-	git clone https://github.com/digininja/DVWA.git
-	echo "Cloning Test lambhack repo"
-	git clone https://github.com/wickett/lambhack.git
-	echo "Cloning Test NodeGoat repo"
-	git clone https://github.com/OWASP/NodeGoat.git
-	echo "Cloning Test DVSA repo"
-	git clone https://github.com/OWASP/DVSA.git
-	echo "Cloning Test railsgoat repo"
-	git clone https://github.com/OWASP/railsgoat
-	echo "Cloning Test WebGoat repo"
-	git clone https://github.com/WebGoat/WebGoat
-	echo "Cloning Test WebGoat.NET repo"
-	git clone https://github.com/OWASP/WebGoat.NET.git
-	echo "Cloning Test WebGoat.PHP repo"
-	git clone https://github.com/OWASP/OWASPWebGoatPHP.git
-	echo "Cloning Test  JAVA vulnado repo"
-	git clone https://github.com/ScaleSec/vulnado.git
+	mkdir -p lab
+	cd lab && { \
+		echo "Cloning repositories..."; \
+		test -d SecretsTest || git clone https://github.com/BonJarber/SecretsTest.git; \
+		test -d DVWA || git clone https://github.com/digininja/DVWA.git; \
+		test -d lambhack || git clone https://github.com/wickett/lambhack.git; \
+		test -d NodeGoat || git clone https://github.com/OWASP/NodeGoat.git; \
+		test -d DVSA || git clone https://github.com/OWASP/DVSA.git; \
+		test -d railsgoat || git clone https://github.com/OWASP/railsgoat; \
+		test -d WebGoat || git clone https://github.com/WebGoat/WebGoat; \
+		test -d WebGoat.NET || git clone https://github.com/OWASP/WebGoat.NET.git; \
+		test -d OWASPWebGoatPHP || git clone https://github.com/OWASP/OWASPWebGoatPHP.git; \
+		test -d vulnado || git clone https://github.com/ScaleSec/vulnado.git; \
+	}
+
 
 
 cleanlab:
