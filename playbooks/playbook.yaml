@@ -41,9 +41,18 @@ commands_to_run:
         output_path: "./command_outputs/git-secrets/"
       post_command: "echo Scan Complete. Results stored in ${output_path}"
       stepno: 5
+    
+    # You need to run ggsheild auth login
+    #- name: "GGSHIELD-SCAN"
+    #  command: ggshield secret scan repo ${scan_directory} >> ${output_path}/ggshield-results.txt
+    #  parameters:
+    #    scan_directory: "./lab/SecretsTest/"
+    #    output_path: "./command_outputs/ggshield/"
+    #  post_command: "echo GGShield Scan Complete. Results stored in ${output_path}"
+    #  stepno: 6
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
         echo_text: "This is a test echo."
-      stepno: 5
+      stepno: 7
