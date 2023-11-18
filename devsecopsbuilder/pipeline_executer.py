@@ -36,6 +36,21 @@ def run_command(step, output_dir, **kwargs):
     output_file = get_output_file_path(output_dir, step_name)
     result = execute_command(templated_command)
     save_command_output(result, output_file, step_name, templated_command)
+    # Execute post_command if present
+    post_command_result = execute_post_command(step, **command_parameters)
+    if post_command_result and post_command_result.returncode != 0:
+        print(f"Error executing post command for '{step_name}': {post_command_result.stderr}")
+
+def execute_post_command(step, **kwargs):
+    post_command_template = Template(step.get('post_command', ''))
+    # Use combined dictionary of default and override parameters
+    command_parameters = {**kwargs, **step.get('parameters', {})}
+    templated_post_command = post_command_template.safe_substitute(command_parameters)
+    if templated_post_command:
+        print(f"Executing post command for {step.get('name')}...")
+        result = execute_command(templated_post_command)
+        return result
+    return None
 
 
 def get_output_file_path(output_dir, step_name):

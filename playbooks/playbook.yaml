@@ -13,14 +13,15 @@ commands_to_run:
       stepno: 2
 
     - name: "GITLEAK-JOB"
-      command: docker run -v ${path_to_host_folder_to_scan}:/path zricethezav/gitleaks:latest ${run_command_option} --source="/path" ${options}
+      command: docker run -v ${path_to_host_folder_to_scan}:/path zricethezav/gitleaks:latest ${run_command_option} --source="/path" --verbose --report-format=json --report-path=/path/gitleaks_report.json
       parameters:
         path_to_host_folder_to_scan: "./lab/SecretsTest/"
         run_command_option: detect
-        options: --verbose --report-format=json --report-path=${path_to_host_folder_to_scan}/gitleaks_report.json 
         output_path: "./outputs/git-secrets/"
-      post_command: mv ${path_to_host_folder_to_scan}/gitleaks_report.json ${output_path}
+      post_command: mv ./lab/SecretsTest/gitleaks_report.json ${output_path}
+      output_path: ".command_outputs/git-secrets/"
       stepno: 3
+
 
     - name: "TRUFFLEHOG-JOB"
       command: trufflehog git file://${git_repository_path} ${options}
@@ -28,7 +29,7 @@ commands_to_run:
         git_repository_path: "./lab/SecretsTest/"
         options: "--json >> ./lab/SecretsTest/trufflehog_result.json"
       post_command: mv ./lab/SecretsTest/trufflehog_report.json ${output_path}
-      output_path: "./outputs/git-secrets/"
+      output_path: ".command_outputs/git-secrets/"
       stepno: 4
 
 
