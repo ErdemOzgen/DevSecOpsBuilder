@@ -3,7 +3,7 @@ from devsecopsbuilder import pipeline_executer
 # Main code execution
 if __name__ == "__main__":
     config = pipeline_executer.load_configuration('./playbooks/playbook.yaml')
-    output_dir = 'command_outputs'
+    output_dir = 'command_outputs/outputs'
     pipeline_executer.create_output_directory(output_dir)
 
     # Define default paths and other variables as a dictionary
