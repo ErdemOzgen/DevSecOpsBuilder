@@ -23,7 +23,7 @@ commands_to_run:
       stepno: 3
 
     - name: "TRUFFLEHOG-JOB"
-      command: trufflehog git file://SecretsTest --json >> trufflehog_result.json
+      command: trufflehog git file://${git_repository_path} ${options}
       parameters:
         git_repository_path: "./lab/SecretsTest/"
         options: "--json >> ${git_repository_path}/trufflehog_result.json"
