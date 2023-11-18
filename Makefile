@@ -100,6 +100,13 @@ lab:
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
 	cd lab && rm -rf *
+
+outputs:
+	mkdir -p command_outputs
+	mkdir -p command_outputs/git-secrets
+	mkdir -p command_outputs/SBOM
+	mkdir -p command_outputs/outputs
+
 cleanoutput:
 	echo "Cleaning Outputs"
 	cd command_outputs && rm -rf */**.*
