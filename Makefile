@@ -10,7 +10,7 @@ PYTHON=python
 PIP=pip3
 # --------------------------
 
-.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput
+.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs
 
 
 setup:
