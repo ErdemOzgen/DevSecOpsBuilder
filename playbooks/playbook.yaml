@@ -33,7 +33,14 @@ commands_to_run:
       post_parameters:
         output_path: "./command_outputs/git-secrets/"
       stepno: 4
-
+    
+    - name: "DETECT-SECRETS-SCAN"
+      command: detect-secrets scan ${scan_directory} >> ${output_path}/detect-secrets-results.json
+      parameters:
+        scan_directory: "./lab/SecretsTest/"
+        output_path: "./command_outputs/git-secrets/"
+      post_command: "echo Scan Complete. Results stored in ${output_path}"
+      stepno: 5
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
