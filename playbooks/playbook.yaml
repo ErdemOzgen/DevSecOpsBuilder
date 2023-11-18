@@ -19,15 +19,15 @@ commands_to_run:
         run_command_option: detect
         options: --verbose --report-format=json --report-path=${path_to_host_folder_to_scan}/gitleaks_report.json 
         output_path: "./outputs/git-secrets/"
-      post_command: mv ${path_to_host_folder_to_scan}gitleaks_report.json ${output_path}
+      post_command: mv ${path_to_host_folder_to_scan}/gitleaks_report.json ${output_path}
       stepno: 3
 
     - name: "TRUFFLEHOG-JOB"
       command: trufflehog git file://${git_repository_path} ${options}
       parameters:
         git_repository_path: "./lab/SecretsTest/"
-        options: "--json >> ./lab/SecretsTest//trufflehog_result.json"
-      post_command: mv ./lab/SecretsTest//trufflehog_report.json ${output_path}
+        options: "--json >> ./lab/SecretsTest/trufflehog_result.json"
+      post_command: mv ./lab/SecretsTest/trufflehog_report.json ${output_path}
       output_path: "./outputs/git-secrets/"
       stepno: 4
 
