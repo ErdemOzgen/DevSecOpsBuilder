@@ -26,8 +26,9 @@ commands_to_run:
       command: trufflehog git file://${git_repository_path} ${options}
       parameters:
         git_repository_path: "./lab/SecretsTest/"
-        options: "--json >> ${git_repository_path}/trufflehog_result.json"
-      post_command: mv ${git_repository_path}/trufflehog_report.json ${output_path}
+        options: "--json >> ./lab/SecretsTest//trufflehog_result.json"
+      post_command: mv ./lab/SecretsTest//trufflehog_report.json ${output_path}
+      output_path: "./outputs/git-secrets/"
       stepno: 4
 
 
