@@ -70,6 +70,10 @@ commands_to_run:
       post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
       stepno: 6
 
+    - name: "Dependencytrack"
+      command: "cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d"
+      stepno: 7
+      post_command: "cd /tmp && docker-compose down"
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"

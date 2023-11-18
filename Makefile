@@ -36,7 +36,7 @@ setup:
 	mkdir -p command_outputs/git-secrets
 	mkdir -p command_outputs/SBOM
 	mkdir -p command_outputs/outputs
-
+	sudo apt  install docker-compose -y
 
 
 
