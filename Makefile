@@ -32,6 +32,10 @@ setup:
 	sudo apt-get update -y; \
 	sudo apt-get install ruby-full rubygems -y
 	docker pull erdemozgen/blackcart:latest
+	mkdir -p command_outputs
+	mkdir -p command_outputs/git-secrets
+	mkdir -p command_outputs/SBOM
+	
 
 
 

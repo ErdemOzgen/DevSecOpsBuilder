@@ -53,6 +53,24 @@ commands_to_run:
     #  post_command: "echo GGShield Scan Complete. Results stored in ${output_path}"
     #  stepno: 6
 
+    # Takes too long to run
+    #- name: "CDXGEN-GENERATE-SBOM"
+    #  command: cdxgen -o ${output_path}/bom.xml -d ${scan_directory}
+    #  parameters:
+    #    scan_directory: "./path/to/project/"
+    #    output_path: "./command_outputs/cdxgen/"
+    #  post_command: "echo CycloneDX SBOM generation complete. Results stored in ${output_path}"
+    #  stepno: 6
+    # syft . --output cyclonedx-json >> erdem.json
+    - name: "SYFT-SCAN"
+      command: syft ${scan_directory} --output cyclonedx-json >> ${output_path}/syft-results.json
+      parameters:
+        scan_directory: "./lab/WebGoat/"
+        output_path: "./command_outputs/SBOM/"
+      post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
+      stepno: 6
+
+
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
