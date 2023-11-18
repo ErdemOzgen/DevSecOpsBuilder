@@ -35,7 +35,8 @@ setup:
 	mkdir -p command_outputs
 	mkdir -p command_outputs/git-secrets
 	mkdir -p command_outputs/SBOM
-	
+	mkdir -p command_outputs/outputs
+
 
 
 
@@ -100,8 +101,9 @@ cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
 	cd lab && rm -rf *
 cleanoutput:
-	echo "Cleaning Test Secret Scanner repo"
-	cd command_outputs && rm -rf *.txt
+	echo "Cleaning Outputs"
+	cd command_outputs && rm -rf */**.*
+
 
 help:			## Show this help.
 	@echo "Make application docker images and manage containers using docker-compose files."
