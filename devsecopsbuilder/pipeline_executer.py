@@ -44,7 +44,7 @@ def run_command(step, output_dir, **kwargs):
 def execute_post_command(step, **kwargs):
     post_command_template = Template(step.get('post_command', ''))
     # Use combined dictionary of default and override parameters
-    command_parameters = {**kwargs, **step.get('parameters', {})}
+    command_parameters = {**kwargs, **step.get('post_parameters', {})}
     templated_post_command = post_command_template.safe_substitute(command_parameters)
     if templated_post_command:
         print(f"Executing post command for {step.get('name')}...")

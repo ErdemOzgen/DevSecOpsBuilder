@@ -19,7 +19,8 @@ commands_to_run:
         run_command_option: detect
         output_path: "./outputs/git-secrets/"
       post_command: mv ./lab/SecretsTest/gitleaks_report.json ${output_path}
-      output_path: ".command_outputs/git-secrets/"
+      post_parameters:
+        output_path: "./command_outputs/git-secrets/"
       stepno: 3
 
 
@@ -28,8 +29,9 @@ commands_to_run:
       parameters:
         git_repository_path: "./lab/SecretsTest/"
         options: "--json >> ./lab/SecretsTest/trufflehog_result.json"
-      post_command: mv ./lab/SecretsTest/trufflehog_report.json ${output_path}
-      output_path: ".command_outputs/git-secrets/"
+      post_command: mv ./lab/SecretsTest/trufflehog_result.json ${output_path}
+      post_parameters:
+        output_path: "./command_outputs/git-secrets/"
       stepno: 4
 
 
