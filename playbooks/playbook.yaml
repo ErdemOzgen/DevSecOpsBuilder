@@ -40,6 +40,8 @@ commands_to_run:
         scan_directory: "./lab/SecretsTest/"
         output_path: "./command_outputs/git-secrets/"
       post_command: "echo Scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/git-secrets/"
       stepno: 5
     
     # You need to run ggsheild auth login
