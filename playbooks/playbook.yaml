@@ -17,13 +17,22 @@ commands_to_run:
       parameters:
         path_to_host_folder_to_scan: "./lab/SecretsTest/"
         run_command_option: detect
-        options: --verbose --report-format=json --report-path=/path/gitleaks_report.json 
+        options: --verbose --report-format=json --report-path=${path_to_host_folder_to_scan}/gitleaks_report.json 
         output_path: "./outputs/git-secrets/"
       post_command: mv ${path_to_host_folder_to_scan}gitleaks_report.json ${output_path}
       stepno: 3
+
+    - name: "TRUFFLEHOG-JOB"
+      command: trufflehog git file://SecretsTest --json >> trufflehog_result.json
+      parameters:
+        git_repository_path: "./lab/SecretsTest/"
+        options: "--json >> ${git_repository_path}/trufflehog_result.json"
+      post_command: mv ${git_repository_path}/trufflehog_report.json ${output_path}
+      stepno: 4
+
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
         echo_text: "This is a test echo."
-      stepno: 4
+      stepno: 5

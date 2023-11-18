@@ -149,7 +149,7 @@ tools_to_install:
         description: "Scanner detecting the use of JavaScript libraries with known vulnerabilities."
         category: "dependency-check"
         url: https://github.com/retirejs/retire.js/
-    -name: local-php-security-checker
+    - name: local-php-security-checker
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
       help: local-php-security-checker --help
@@ -162,7 +162,7 @@ tools_to_install:
         category: "dependency-check"
         url: https://github.com/fabpot/local-php-security-checker
     
-    -name: npm-check
+    - name: npm-check
       install: sudo npm install -g npm-check
       update: sudo npm update -g npm-check
       help: npm-check --help
@@ -177,7 +177,7 @@ tools_to_install:
         category: "dependency-check"
         url: https://www.npmjs.com/package/npm-check
     
-    -name: brakeman
+    - name: brakeman
       install: sudo gem install brakeman
       update: sudo gem update brakeman
       help: brakeman --help
@@ -190,13 +190,13 @@ tools_to_install:
         category: "dependency-check"
         url: https://github.com/presidentbeef/brakeman
     # todo: needs env
-    -name: semgrep
+    - name: semgrep
       install: pip install semgrep #docker pull returntocorp/semgrep:latest
       update: pip install semgrep #docker pull returntocorp/semgrep:latest
       help: semgrep --help
       default: false
       language:
-        - "C#""
+        - "C#"
         - "Go"
         - "Java"
         - "JavaScript"
@@ -236,7 +236,7 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/semgrep/semgrep
     # todo: needs env
-    -name: libsast
+    - name: libsast
       install: pip install libsast
       update: pip install libsast 
       help: libsast --help
@@ -250,7 +250,7 @@ tools_to_install:
         description: "A CLI tool to scan your JavaScript libraries for known vulnerabilities."
         category: "SAST"
         url: https://github.com/ajinabraham/libsast
-    -name: eslint
+    - name: eslint
       install: npm init @eslint/config
       update: npm init @eslint/config
       help: eslint --help
@@ -266,7 +266,7 @@ tools_to_install:
         url: https://github.com/eslint/eslint
 
 
-    -name: sonarqube
+    - name: sonarqube
       install: |
        docker pull sonarqube@latest
        sudo sysctl -w vm.max_map_count=524288
@@ -284,7 +284,7 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/SonarSource/sonarqube
 
-    -name: gosec
+    - name: gosec
       install: go install github.com/securego/gosec/cmd/gosec@latest
       update: go install github.com/securego/gosec/cmd/gosec@latest
       help: gosec --help
@@ -297,7 +297,7 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/securego/gosec
 
-    -name: safety
+    - name: safety
       install: pip install safety
       update: pip install safety
       help: safety --help
@@ -310,7 +310,7 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/pyupio/safety
     
-    -name: zap-proxy
+    - name: zap-proxy
       install: sudo snap install zaproxy --classic
       update: sudo snap refresh zaproxy --classic
       help: zap-proxy --help
@@ -323,7 +323,7 @@ tools_to_install:
         category: "DAST"
         url: https://www.zaproxy.org/download/
 
-    -name: wapiti
+    - name: wapiti
       install: git clone https://github.com/wapiti-scanner/wapiti/tree/master && cd wapiti && make install
       update: git clone https://github.com/wapiti-scanner/wapiti/tree/master && cd wapiti && make install
       help: wapiti --help
@@ -336,7 +336,7 @@ tools_to_install:
         category: "DAST"
         url: https://github.com/wapiti-scanner/wapiti/tree/master
 
-    -name: nuclei
+    - name: nuclei
       install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
       update: nuclei -update
       help: nuclei --help
