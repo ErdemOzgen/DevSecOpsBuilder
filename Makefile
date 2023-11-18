@@ -31,6 +31,7 @@ setup:
 	sudo apt-get install -y nodejs; \
 	sudo apt-get update -y; \
 	sudo apt-get install ruby-full rubygems -y
+	docker pull erdemozgen/blackcart:latest
 
 
 
