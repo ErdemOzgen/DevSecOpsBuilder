@@ -81,7 +81,7 @@ def save_command_output(result, output_file, step_name, command):
 # python devsecopsbuilder/pipeline_executer.py 
 if __name__ == "__main__":
     config = load_configuration('./playbooks/playbook.yaml')
-    output_dir = 'command_outputs'
+    output_dir = 'command_outputs/outputs'
     create_output_directory(output_dir)
 
     # Define default paths and other variables as a dictionary
