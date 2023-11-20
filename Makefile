@@ -73,20 +73,19 @@ clean:
 	find . -type d -name '__pycache__' -delete
 
 lab:
-    mkdir -p lab
-    cd lab && { \
-        echo "Cloning repositories..."; \
-        test -d SecretsTest || { mkdir SecretsTest && cd SecretsTest && git clone https://github.com/BonJarber/SecretsTest.git; cd ..; }; \
-        test -d DVWA || { mkdir DVWA && cd DVWA && git clone https://github.com/digininja/DVWA.git; cd ..; }; \
-        test -d lambhack || { mkdir lambhack && cd lambhack && git clone https://github.com/wickett/lambhack.git; cd ..; }; \
-        test -d NodeGoat || { mkdir NodeGoat && cd NodeGoat && git clone https://github.com/OWASP/NodeGoat.git; cd ..; }; \
-        test -d DVSA || { mkdir DVSA && cd DVSA && git clone https://github.com/OWASP/DVSA.git; cd ..; }; \
-        test -d railsgoat || { mkdir railsgoat && cd railsgoat && git clone https://github.com/OWASP/railsgoat; cd ..; }; \
-        test -d WebGoat || { mkdir WebGoat && cd WebGoat && git clone https://github.com/WebGoat/WebGoat; cd ..; }; \
-        test -d WebGoat.NET || { mkdir WebGoat.NET && cd WebGoat.NET && git clone https://github.com/OWASP/WebGoat.NET.git; cd ..; }; \
-        test -d OWASPWebGoatPHP || { mkdir OWASPWebGoatPHP && cd OWASPWebGoatPHP && git clone https://github.com/OWASP/OWASPWebGoatPHP.git; cd ..; }; \
-        test -d vulnado || { mkdir vulnado && cd vulnado && git clone https://github.com/ScaleSec/vulnado.git; cd ..; }; \
-    }
+	@echo "Cloning repositories..."
+	@mkdir -p lab
+	@test -d lab/SecretsTest || git clone https://github.com/BonJarber/SecretsTest.git lab/SecretsTest
+	@test -d lab/DVWA || git clone https://github.com/digininja/DVWA.git lab/DVWA
+	@test -d lab/lambhack || git clone https://github.com/wickett/lambhack.git lab/lambhack
+	@test -d lab/NodeGoat || git clone https://github.com/OWASP/NodeGoat.git lab/NodeGoat
+	@test -d lab/DVSA || git clone https://github.com/OWASP/DVSA.git lab/DVSA
+	@test -d lab/railsgoat || git clone https://github.com/OWASP/railsgoat.git lab/railsgoat
+	@test -d lab/WebGoat || git clone https://github.com/WebGoat/WebGoat.git lab/WebGoat
+	@test -d lab/WebGoat.NET || git clone https://github.com/OWASP/WebGoat.NET.git lab/WebGoat.NET
+	@test -d lab/OWASPWebGoatPHP || git clone https://github.com/OWASP/OWASPWebGoatPHP.git lab/OWASPWebGoatPHP
+	@test -d lab/vulnado || git clone https://github.com/ScaleSec/vulnado.git lab/vulnado
+
 
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
