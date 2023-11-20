@@ -104,6 +104,7 @@ outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs/git-secrets
 	mkdir -p command_outputs/SBOM
 	mkdir -p command_outputs/outputs
+	mkdir -p command_outputs/jenkinsFiles/
 
 # Cleans up command outputs.
 cleanoutput: ## Cleans up command outputs.

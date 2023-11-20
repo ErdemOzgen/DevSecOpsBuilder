@@ -69,4 +69,4 @@ def write_step(jfile, step):
     jfile.write('            }\n')
 
 if __name__=="__main__":
-    generate_jenkinsfile('./playbooks/playbook.yaml', './outputs/jenkinsFileOutput/Jenkinsfile')
+    generate_jenkinsfile('./playbooks/playbook.yaml', './command_outputs/jenkinsFiles/Jenkinsfile')
