@@ -60,3 +60,4 @@ check_conda_installed
 
 # Create the Conda environment
 create_conda_env
+source ~/.bashrc
