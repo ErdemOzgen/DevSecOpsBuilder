@@ -76,6 +76,36 @@ def save_command_output(result, output_file, step_name, command):
     else:
         print(f"Error executing step '{step_name}': {result.stderr}")
 
+def get_repository_languages(repository_path):
+    """
+    Retrieves the languages used in a repository.
+
+    Args:
+        repository_path (str): The path to the repository.
+
+    Returns:
+        list: A list of language names used in the repository.
+
+    Raises:
+        subprocess.CalledProcessError: If an error occurs while running github-linguist.
+    """
+    try:
+        # Change to the repository directory and run github-linguist
+        result = subprocess.run(['github-linguist'], cwd=repository_path, check=True, stdout=subprocess.PIPE, text=True)
+        
+        # Parse the output
+        output = result.stdout.strip().split("\n")
+        languages = [line.split()[-1] for line in output]  # Extracting the language names
+        return languages
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
+        return None
+
+# Example usage
+#repository_path = './WebGoat.NET'  # Replace with the actual repository path
+#print(get_repository_languages(repository_path))
+#result = ['C#', 'ASP.NET', 'CSS', 'JavaScript']
+
 
 # Main execution
 # python devsecopsbuilder/pipeline_executer.py 
