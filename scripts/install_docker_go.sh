@@ -29,6 +29,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo apt install gcc -y && sudo apt install build-essential -y
+sudo apt  install docker-compose -y
 # URL of the Go binary
 GO_BINARY_URL="https://go.dev/dl/go1.21.4.linux-amd64.tar.gz"
 

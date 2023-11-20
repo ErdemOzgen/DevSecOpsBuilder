@@ -1,5 +1,7 @@
-.DEFAULT_GOAL:=help
+# This Makefile is used to build and manage containers using docker-compose files.
+# It provides various targets for different operations such as building services, starting services, pulling Docker images, stopping services, etc.
 
+.DEFAULT_GOAL:=help
 
 # This for future release of Compose that will use Docker Buildkit, which is much efficient.
 COMPOSE_PREFIX_CMD := COMPOSE_DOCKER_CLI_BUILD=1
@@ -10,68 +12,67 @@ PYTHON=python
 PIP=pip3
 # --------------------------
 
-.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs
-
-
+# Installs the necessary dependencies and tools.
 setup:
 	sudo apt-get install build-essential -y
 	$(PIP) install -r requirements.txt
 	sudo apt update -y
-	
-	sudo apt install openjdk-11-jdk openjdk-11-jre -y; \
-	curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -; \
-	sudo apt install -y nodejs; \
-	sudo apt-get install -y nodejs; \
-	sudo apt-get update -y; \
-	sudo apt-get install ruby-full rubygems -y
-	docker pull erdemozgen/blackcart:latest
-	mkdir -p command_outputs
-	mkdir -p command_outputs/git-secrets
-	mkdir -p command_outputs/SBOM
-	mkdir -p command_outputs/outputs
-	sudo apt  install docker-compose -y
+	@./scripts/install_docker_go.sh
+	@./scripts/install_anaconda.sh
+	@./scripts/install_java_ruby_nodejs.sh
+	@make outputs
 
-
-
-
+# Builds and starts all services.
 up:				## Build and start all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
 
+# Builds all services.
 build:			## Build all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} build ${SERVICES}
 
+# Pulls Docker images.
 pull:			## Pull Docker images.
 	docker login
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} pull
 
+# Stops all services.
 down:			## Down all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} down
 
+# Stops all services.
 stop:			## Stop all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} stop ${SERVICES}
 
+# Restarts all services.
 restart:		## Restart all services.
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} restart ${SERVICES}
 
+# Removes all services containers.
 rm:				## Remove all services containers.
 	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) rm -f ${SERVICES}
 
+# Runs unit tests.
 test:
 	$(PYTHON) -m unittest discover -s test/
 
+# Tails all logs with -n 1000.
 logs:			## Tail all logs with -n 1000.
 	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) logs --follow --tail=1000 ${SERVICES}
 
+# Shows all Docker images.
 images:			## Show all Docker images.
 	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) images ${SERVICES}
 
+# Removes containers and deletes volume data.
 prune:			## Remove containers and delete volume data.
 	@make stop && make rm && docker volume prune -f
 
+# Cleans up unnecessary files.
 clean:
 	find . -type f -name '*.pyc' -delete
 	find . -type d -name '__pycache__' -delete
 
+# Clones repositories for lab purposes.
 lab:
 	@echo "Cloning repositories..."
 	@mkdir -p lab
@@ -86,22 +87,24 @@ lab:
 	@test -d lab/OWASPWebGoatPHP || git clone https://github.com/OWASP/OWASPWebGoatPHP.git lab/OWASPWebGoatPHP
 	@test -d lab/vulnado || git clone https://github.com/ScaleSec/vulnado.git lab/vulnado
 
-
+# Cleans up lab repositories.
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
 	cd lab && rm -rf *
 
+# Creates necessary directories for command outputs.
 outputs:
 	mkdir -p command_outputs
 	mkdir -p command_outputs/git-secrets
 	mkdir -p command_outputs/SBOM
 	mkdir -p command_outputs/outputs
 
+# Cleans up command outputs.
 cleanoutput:
 	echo "Cleaning Outputs"
-	cd command_outputs && rm -rf */**.*
+	cd command_outputs && rm -rf */
 
-
+# Shows the help message.
 help:			## Show this help.
 	@echo "Make application docker images and manage containers using docker-compose files."
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m (default: help)\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
