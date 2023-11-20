@@ -1,5 +1,11 @@
 # This Makefile is used to build and manage containers using docker-compose files.
 # It provides various targets for different operations such as building services, starting services, pulling Docker images, stopping services, etc.
+#     ____            _____           ____             ____        _ __    __         
+#    / __ \___ _   __/ ___/___  _____/ __ \____  _____/ __ )__  __(_) /___/ /__  _____
+#   / / / / _ \ | / /\__ \/ _ \/ ___/ / / / __ \/ ___/ __  / / / / / / __  / _ \/ ___/
+#  / /_/ /  __/ |/ /___/ /  __/ /__/ /_/ / /_/ (__  ) /_/ / /_/ / / / /_/ /  __/ /    
+# /_____/\___/|___//____/\___/\___/\____/ .___/____/_____/\__,_/_/_/\__,_/\___/_/     
+#                                      /_/                                           
 
 .DEFAULT_GOAL:=help
 
@@ -13,7 +19,7 @@ PIP=pip3
 # --------------------------
 
 # Installs the necessary dependencies and tools.
-setup:
+setup: ## Installs the necessary dependencies and tools.
 	sudo apt-get install build-essential -y
 	$(PIP) install -r requirements.txt
 	sudo apt update -y
@@ -52,7 +58,7 @@ rm:				## Remove all services containers.
 	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) rm -f ${SERVICES}
 
 # Runs unit tests.
-test:
+test: ## Runs unit tests.
 	$(PYTHON) -m unittest discover -s test/
 
 # Tails all logs with -n 1000.
@@ -68,12 +74,12 @@ prune:			## Remove containers and delete volume data.
 	@make stop && make rm && docker volume prune -f
 
 # Cleans up unnecessary files.
-clean:
+clean: ## Cleans up unnecessary files.
 	find . -type f -name '*.pyc' -delete
 	find . -type d -name '__pycache__' -delete
 
 # Clones repositories for lab purposes.
-lab:
+lab: ## Clones repositories for lab purposes.
 	@echo "Cloning repositories..."
 	@mkdir -p lab
 	@test -d lab/SecretsTest || git clone https://github.com/BonJarber/SecretsTest.git lab/SecretsTest
@@ -93,18 +99,25 @@ cleanlab:
 	cd lab && rm -rf *
 
 # Creates necessary directories for command outputs.
-outputs:
+outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs
 	mkdir -p command_outputs/git-secrets
 	mkdir -p command_outputs/SBOM
 	mkdir -p command_outputs/outputs
 
 # Cleans up command outputs.
-cleanoutput:
+cleanoutput: ## Cleans up command outputs.
 	echo "Cleaning Outputs"
 	cd command_outputs && rm -rf */
 
 # Shows the help message.
 help:			## Show this help.
-	@echo "Make application docker images and manage containers using docker-compose files."
+	@echo "----------------------"
+	@echo "▐▓█▀▀▀▀▀▀▀▀▀█▓▌░▄▄▄▄▄░"
+	@echo "▐▓█░░▀░░▀▄░░█▓▌░█▄▄▄█░"
+	@echo "▐▓█░░▄░░▄▀░░█▓▌░█▄▄▄█░"
+	@echo "▐▓█▄▄▄▄▄▄▄▄▄█▓▌░█████░"
+	@echo "░░░░▄▄███▄▄░░░░░█████░"
+	@echo "----------------------"
+	@echo "DevSecOps Builder"
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m (default: help)\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
