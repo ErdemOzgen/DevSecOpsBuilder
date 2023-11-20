@@ -25,7 +25,7 @@ setup:
 	sudo rm -rf /usr/local/go; \
 	sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz; \
 	sudo apt update -y; \
-	sudo apt install openjdk-11-jdk openjdk-11-jre; \
+	sudo apt install openjdk-11-jdk openjdk-11-jre -y; \
 	curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -; \
 	sudo apt install -y nodejs; \
 	sudo apt-get install -y nodejs; \
