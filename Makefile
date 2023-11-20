@@ -17,14 +17,7 @@ setup:
 	sudo apt-get install build-essential -y
 	$(PIP) install -r requirements.txt
 	sudo apt update -y
-	# Add Docker's official GPG key:
-	sudo apt-get update
-	# Set PATH for the duration of this recipe
-	export PATH="/usr/local/go/bin:/home/erdem/bin:/home/erdem/go/bin:$$PATH"; \
-	curl -L https://go.dev/dl/go1.21.4.linux-amd64.tar.gz -o go1.21.4.linux-amd64.tar.gz; \
-	sudo rm -rf /usr/local/go; \
-	sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz; \
-	sudo apt update -y; \
+	
 	sudo apt install openjdk-11-jdk openjdk-11-jre -y; \
 	curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -; \
 	sudo apt install -y nodejs; \
@@ -80,22 +73,20 @@ clean:
 	find . -type d -name '__pycache__' -delete
 
 lab:
-	mkdir -p lab
-	cd lab && { \
-		echo "Cloning repositories..."; \
-		test -d SecretsTest || git clone https://github.com/BonJarber/SecretsTest.git; \
-		test -d DVWA || git clone https://github.com/digininja/DVWA.git; \
-		test -d lambhack || git clone https://github.com/wickett/lambhack.git; \
-		test -d NodeGoat || git clone https://github.com/OWASP/NodeGoat.git; \
-		test -d DVSA || git clone https://github.com/OWASP/DVSA.git; \
-		test -d railsgoat || git clone https://github.com/OWASP/railsgoat; \
-		test -d WebGoat || git clone https://github.com/WebGoat/WebGoat; \
-		test -d WebGoat.NET || git clone https://github.com/OWASP/WebGoat.NET.git; \
-		test -d OWASPWebGoatPHP || git clone https://github.com/OWASP/OWASPWebGoatPHP.git; \
-		test -d vulnado || git clone https://github.com/ScaleSec/vulnado.git; \
-	}
-
-
+    mkdir -p lab
+    cd lab && { \
+        echo "Cloning repositories..."; \
+        test -d SecretsTest || { mkdir SecretsTest && cd SecretsTest && git clone https://github.com/BonJarber/SecretsTest.git; cd ..; }; \
+        test -d DVWA || { mkdir DVWA && cd DVWA && git clone https://github.com/digininja/DVWA.git; cd ..; }; \
+        test -d lambhack || { mkdir lambhack && cd lambhack && git clone https://github.com/wickett/lambhack.git; cd ..; }; \
+        test -d NodeGoat || { mkdir NodeGoat && cd NodeGoat && git clone https://github.com/OWASP/NodeGoat.git; cd ..; }; \
+        test -d DVSA || { mkdir DVSA && cd DVSA && git clone https://github.com/OWASP/DVSA.git; cd ..; }; \
+        test -d railsgoat || { mkdir railsgoat && cd railsgoat && git clone https://github.com/OWASP/railsgoat; cd ..; }; \
+        test -d WebGoat || { mkdir WebGoat && cd WebGoat && git clone https://github.com/WebGoat/WebGoat; cd ..; }; \
+        test -d WebGoat.NET || { mkdir WebGoat.NET && cd WebGoat.NET && git clone https://github.com/OWASP/WebGoat.NET.git; cd ..; }; \
+        test -d OWASPWebGoatPHP || { mkdir OWASPWebGoatPHP && cd OWASPWebGoatPHP && git clone https://github.com/OWASP/OWASPWebGoatPHP.git; cd ..; }; \
+        test -d vulnado || { mkdir vulnado && cd vulnado && git clone https://github.com/ScaleSec/vulnado.git; cd ..; }; \
+    }
 
 cleanlab:
 	echo "Cleaning Test Secret Scanner repo"
