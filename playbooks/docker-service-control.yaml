@@ -1,21 +1,17 @@
 commands_to_run:
   steps:
-    - name: "PWD"
-      command: pwd
-      stepno: 1
-
     - name: "Dependencytrack Deploy"
       command: "bash ./docker/deploy_depency_track.sh"
       stepno: 2
       post_command: "echo Dependencytrack has been finished"
 
-    - name: "Dependencycheck Destroy"
-      command: "bash ./docker/destroy_depency_track.sh"
-      stepno: 3
-      post_command: "echo Dependencycheck has been finished"
+    #- name: "Dependencycheck Destroy"
+    #  command: "bash ./docker/destroy_depency_track.sh"
+    #  stepno: 3
+    #  post_command: "echo Dependencycheck has been finished"
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
-        echo_text: "This is a test echo."
-      stepno: 2
+        echo_text: "All Docker services deployed."
+      stepno: 3
