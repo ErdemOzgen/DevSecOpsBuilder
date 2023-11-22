@@ -1,0 +1,17 @@
+commands_to_run:
+  steps:
+    - name: "Starting SBOM generation"
+      command: echo "Started SBOM generation"
+      stepno: 1
+      
+    - name: "SYFT-SCAN"
+      command: syft ${scan_directory} --output cyclonedx-json >> ${output_path}/syft-results.json
+      parameters:
+        scan_directory: "./lab/WebGoat/"
+        output_path: "./command_outputs/SBOM/"
+      post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
+      stepno: 2
+
+    - name: "Finished SBOM generation"
+      command: echo "Finished SBOM generation"
+      stepno: 3
