@@ -8,7 +8,7 @@
 #                                      /_/                                           
 
 .DEFAULT_GOAL:=help
-
+.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs
 # This for future release of Compose that will use Docker Buildkit, which is much efficient.
 COMPOSE_PREFIX_CMD := COMPOSE_DOCKER_CLI_BUILD=1
 
@@ -105,6 +105,7 @@ outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs/SBOM
 	mkdir -p command_outputs/outputs
 	mkdir -p command_outputs/jenkinsFiles/
+	mkdir -p command_outputs/graphs/
 
 # Cleans up command outputs.
 cleanoutput: ## Cleans up command outputs.
