@@ -38,6 +38,14 @@ commands_to_run:
         output_type: "json"
         output_path: "command_outputs/scanner/grype-sbom-scan.json"
     
+    - name: "SEMGREP Deploy"
+      command: " cd ${lab_path} && semgrep ${semgrep_config}"
+      paremeters:
+        lab_path: "./lab/WebGoat/"
+        semgrep_config: "--config=p/r2c-ci --exclude=**/node_modules/** > >> ../../command_outputs/scanner/semgrep-log.txt"
+      stepno: 5
+      post_command: "echo semgrep has been finished"
+
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
