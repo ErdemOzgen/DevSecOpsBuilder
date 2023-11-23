@@ -149,6 +149,7 @@ tools_to_install:
         description: "Scanner detecting the use of JavaScript libraries with known vulnerabilities."
         category: "dependency-check"
         url: https://github.com/retirejs/retire.js/
+
     - name: local-php-security-checker
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
@@ -189,6 +190,7 @@ tools_to_install:
         description: "A static analysis security vulnerability scanner for Ruby on Rails applications."
         category: "dependency-check"
         url: https://github.com/presidentbeef/brakeman
+        
     # todo: needs env
     - name: semgrep
       install: pip install semgrep #docker pull returntocorp/semgrep:latest
@@ -250,6 +252,7 @@ tools_to_install:
         description: "A CLI tool to scan your JavaScript libraries for known vulnerabilities."
         category: "SAST"
         url: https://github.com/ajinabraham/libsast
+
     - name: eslint
       install: npm init @eslint/config
       update: npm init @eslint/config
@@ -350,4 +353,29 @@ tools_to_install:
         url: https://github.com/projectdiscovery/nuclei
     #TODO: add oss-fuzz
     #TODO: Kubernetes add from kubernetes cluster
+
+    - name: grype
+      install: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+      update: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+      help: grype --help
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: grype
+        description: "Grype is a vulnerability scanner for container images and filesystems."
+        category: "scanner"
+        url: 	https://github.com/anchore/grype
     
+    - name: syfte
+      install: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+      update: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+      help: syfte --help
+      default: false
+      language:
+        - "All"
+      devsecops:
+        name: syfte
+        description: "Syft is a CLI tool and library for generating a Software Bill of Materials (SBOM) from container images and filesystems."
+        category: "scanner"
+        url:

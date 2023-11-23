@@ -1,0 +1,34 @@
+commands_to_run:
+  steps:
+    - name: "PWD"
+      command: "echo DevSecOps Builder has been started ${echo_text}"
+      parameters:
+        echo_text: "Scanner YAML"
+      stepno: 1
+
+
+    - name: "Grype Scanner Git Repo"
+      command: "grype dir:./lab/NodeGoat/ -o json >> command_outputs/scanner/grype-repo-scan.json"
+      stepno: 2
+      
+
+    - name: "Dependencycheck Destroy"
+      command: "bash ./docker/destroy_depency_track.sh"
+      stepno: 3
+      
+
+    - name: "Grype Scanner Docker Container"
+      command: "grype zricethezav/gitleaks:latest -o json >> command_outputs/scanner/grype-gitleaks-docker-scan.json"
+      stepno: 4
+      
+
+    - name: "Grype Scanner SBOM Scan"
+      command: "syft lab/NodeGoat/ -o syft-json > vulnado-sbom.json >> command_outputs/scanner/syft-sbom.json"
+      stepno: 5
+      post_command: "grype sbom:command_outputs/scanner/syft-sbom.json -o json >> command_outputs/scanner/grype-sbom-scan.json"
+    
+    - name: "Finished"
+      command: "echo DevSecOps Builder has been finished ${echo_text}"
+      parameters:
+        echo_text: "Scanners has been finished."
+      stepno: 6
