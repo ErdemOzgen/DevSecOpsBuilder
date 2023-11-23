@@ -22,6 +22,7 @@ PIP=pip3
 setup: ## Installs the necessary dependencies and tools.
 	sudo apt-get install build-essential -y
 	sudo apt update -y
+	chmod +x ./scripts/*.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	$(PIP) install -r requirements.txt
