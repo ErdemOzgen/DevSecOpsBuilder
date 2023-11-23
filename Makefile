@@ -27,6 +27,10 @@ setup: ## Installs the necessary dependencies and tools.
 	$(PIP) install -r requirements.txt
 	@./scripts/install_java_ruby_nodejs.sh
 	@make outputs
+	mkdir -p ~/bin
+	cp -r ./docker ~/bin
+	chmod +x ~/bin/clear*
+	chmod +x ~/bin/*.sh
 
 # Builds and starts all services.
 up:				## Build and start all services.
