@@ -18,4 +18,4 @@ commands_to_run:
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
         echo_text: "This is a test echo."
-      stepno: 2
+      stepno: 4

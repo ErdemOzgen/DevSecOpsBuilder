@@ -2,16 +2,13 @@ commands_to_run:
   steps:
     - name: "Dependencytrack Deploy"
       command: "bash ./docker/deploy_depency_track.sh"
-      stepno: 2
-      post_command: "echo Dependencytrack has been finished"
+      stepno: 1
+      post_command: "echo Dependencytrack has been deployed"
 
-    #- name: "Dependencycheck Destroy"
-    #  command: "bash ./docker/destroy_depency_track.sh"
-    #  stepno: 3
-    #  post_command: "echo Dependencycheck has been finished"
+
 
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
         echo_text: "All Docker services deployed."
-      stepno: 3
+      stepno: 2
