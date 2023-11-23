@@ -24,6 +24,12 @@ commands_to_run:
     #    semgrep_config: "--config=p/r2c-ci --exclude=**/node_modules/** > >> ../../command_outputs/scanner/semgrep-log.txt"
     #  stepno: 2
     #  post_command: "echo semgrep has been finished"
+    
+    
+    # Nodejsscan runs on docker container. You need to run docker login before running this playbook and you need to upload file in zip
+    #- name: "NODEJSSCAN"
+    #  command: "bash ./docker/deploy_nodejsscan.sh"
+    #  stepno: 5
 
     - name: "Finished SAST scan"
       command: echo "Finished SAST scan"
