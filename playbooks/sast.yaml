@@ -1,0 +1,30 @@
+commands_to_run:
+  steps:
+    - name: "Starting SAST scan"
+      command: echo "Started SAST scan"
+      stepno: 1
+      
+    - name: "Bandit Scan"
+      command: bandit -r .${scan_directory} -f ${output_type} -o erdemPython.json
+      parameters:
+        scan_directory: "./lab/DVSA"
+        output_type: "json"
+        output_path: "./command_outputs/SAST/"
+      post_command: "echo Bandit Scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/SAST/"
+      stepno: 2
+    
+    
+    # Run **semgrep login** before running this playbook 
+    #- name: "SEMGREP Deploy"
+    #  command: "cd ${lab_path} && semgrep ${semgrep_config}"
+    #  paremeters:
+    #    lab_path: "./lab/WebGoat/"
+    #    semgrep_config: "--config=p/r2c-ci --exclude=**/node_modules/** > >> ../../command_outputs/scanner/semgrep-log.txt"
+    #  stepno: 2
+    #  post_command: "echo semgrep has been finished"
+
+    - name: "Finished SAST scan"
+      command: echo "Finished SAST scan"
+      stepno: 3

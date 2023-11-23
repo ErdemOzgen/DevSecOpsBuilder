@@ -52,7 +52,7 @@ tools_to_install:
     
     - name: ggshield
       install: pip install --user -U ggshield EXPORT PATH=$PATH:$HOME/.local/bin
-      update: pip install --user -U ggshield
+      update: pip install --upgrade --user -U ggshield
       help: EXPORT /home/${USER}/.local/bin && ggshield --help
       language: "All"
       default: false
@@ -240,7 +240,7 @@ tools_to_install:
     # todo: needs env
     - name: libsast
       install: pip install libsast
-      update: pip install libsast 
+      update: pip install --upgrade libsast 
       help: libsast --help
       default: false
       language:
@@ -302,7 +302,7 @@ tools_to_install:
 
     - name: safety
       install: pip install safety
-      update: pip install safety
+      update: pip install --upgrade safety
       help: safety --help
       default: false
       language:
@@ -378,4 +378,17 @@ tools_to_install:
         name: syfte
         description: "Syft is a CLI tool and library for generating a Software Bill of Materials (SBOM) from container images and filesystems."
         category: "scanner"
-        url:
+        url:https://github.com/anchore/syfte
+    
+    - name: bandit
+      install: pip install bandit
+      update: pip install update bandit
+      help: bandit --help
+      default: false
+      language:
+        - "Python"
+      devsecops:
+        name: bandit
+        description: "Bandit is a tool designed to find common security issues in Python code."
+        category: "SAST"
+        url: https://github.com/PyCQA/bandit

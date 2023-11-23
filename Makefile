@@ -107,6 +107,7 @@ outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs/jenkinsFiles/
 	mkdir -p command_outputs/graphs/
 	mkdir -p command_outputs/scanner/
+	mkdir -p command_outputs/SAST/
 
 # Cleans up command outputs.
 cleanoutput: ## Cleans up command outputs.
