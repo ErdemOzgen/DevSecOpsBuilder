@@ -194,7 +194,7 @@ tools_to_install:
     # todo: needs env
     - name: semgrep
       install: pip install semgrep #docker pull returntocorp/semgrep:latest
-      update: pip install semgrep #docker pull returntocorp/semgrep:latest
+      update: pip install --upgrade semgrep #docker pull returntocorp/semgrep:latest
       help: semgrep --help
       default: false
       language:
