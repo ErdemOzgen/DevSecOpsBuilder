@@ -53,3 +53,17 @@ echo 'export PATH=$PATH:/home/$USER/go/bin' >> ~/.bashrc
 source ~/.bashrc
 
 echo "Go installation and PATH update complete."
+
+# This script installs LAZYDOCKER by downloading the latest release from GitHub and extracting it to the appropriate location.
+# It uses the GitHub API to fetch the latest release version and then downloads the corresponding tar.gz file.
+# The tar.gz file is then extracted to a temporary directory, and the 'lazydocker' binary is moved to /usr/local/bin.
+# Finally, the temporary files are cleaned up.
+
+echo " Installing LAZYDOCKER"
+LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -Lo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/latest/download/lazydocker_${LAZYDOCKER_VERSION}_Linux_x86_64.tar.gz"
+mkdir lazydocker-temp
+tar xf lazydocker.tar.gz -C lazydocker-temp
+sudo mv lazydocker-temp/lazydocker /usr/local/bin
+rm -rf lazydocker.tar.gz lazydocker-temp
+echo "LAZYDOCKER Installed"

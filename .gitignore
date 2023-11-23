@@ -162,3 +162,7 @@ command_outputs/*
 outputs/*
 test/SecretsTest/*
 lab/*
+docker/sonarqube_conf/*
+docker/sonarqube_data/*
+docker/sonarqube_extensions/*
+docker/sonarqube_logs/*

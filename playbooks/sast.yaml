@@ -30,7 +30,10 @@ commands_to_run:
     #- name: "NODEJSSCAN"
     #  command: "bash ./docker/deploy_nodejsscan.sh"
     #  stepno: 5
-
+    - name: "Sonarqube Docker Deploy"
+      command: "bash ./docker/deploy_sonarqube.sh"
+      stepno: 3
+      post_command: "echo Sonarqube has been deployed"
     - name: "Finished SAST scan"
       command: echo "Finished SAST scan"
       stepno: 3
