@@ -8,27 +8,38 @@ commands_to_run:
 
 
     - name: "Grype Scanner Git Repo"
-      command: "grype dir:./lab/NodeGoat/ -o json >> command_outputs/scanner/grype-repo-scan.json"
+      command: "grype ${lab_path} -o ${output_type} >> ${output_path}"
+      parameters:
+        lab_path: "./lab/NodeGoat/"
+        output_type: "json"
+        output_path: "command_outputs/scanner/grype-repo-scan.json"
       stepno: 2
-      
+          
 
-    - name: "Dependencycheck Destroy"
-      command: "bash ./docker/destroy_depency_track.sh"
+    - name: "Grype Scanner Docker Container"
+      command: "grype ${docker_path} -o ${output_type} >> ${output_path}"
+      parameters:
+        docker_path: "zricethezav/gitleaks:latest"
+        output_type: "json"
+        output_path: "command_outputs/scanner/grype-gitleaks-docker-scan.json"
       stepno: 3
       
 
-    - name: "Grype Scanner Docker Container"
-      command: "grype zricethezav/gitleaks:latest -o json >> command_outputs/scanner/grype-gitleaks-docker-scan.json"
-      stepno: 4
-      
-
     - name: "Grype Scanner SBOM Scan"
-      command: "syft lab/NodeGoat/ -o syft-json > vulnado-sbom.json >> command_outputs/scanner/syft-sbom.json"
-      stepno: 5
-      post_command: "grype sbom:command_outputs/scanner/syft-sbom.json -o json >> command_outputs/scanner/grype-sbom-scan.json"
+      command: "syft ${repo_path} -o ${output_type} > vulnado-sbom.json >> ${sbom_path}"
+      parameters:
+        repo_path: "./lab/NodeGoat/"
+        output_type: "syft-json"
+        sbom_path: "command_outputs/scanner/syft-sbom.json"
+      stepno: 4
+      post_command: "grype ${sbom_path} -o ${output_type} >> ${output_path}"
+      post_parameters:
+        sbom_path: "command_outputs/scanner/syft-sbom.json"
+        output_type: "json"
+        output_path: "command_outputs/scanner/grype-sbom-scan.json"
     
     - name: "Finished"
       command: "echo DevSecOps Builder has been finished ${echo_text}"
       parameters:
         echo_text: "Scanners has been finished."
-      stepno: 6
+      stepno: 5
