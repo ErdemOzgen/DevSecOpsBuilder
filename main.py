@@ -4,6 +4,7 @@ from devsecopsbuilder import convert_graph
 from devsecopsbuilder import convert_pipeline
 import networkx as nx
 import matplotlib.pyplot as plt
+from devsecopsbuilder import asciiart
 def main():
     parser = argparse.ArgumentParser(description="Pipeline Execution Script")
     parser.add_argument('--install', action='store_true', help='Install tools')
@@ -20,8 +21,10 @@ def main():
     parser.add_argument('--pipeline_output_dir', default='command_outputs/jenkinsFiles/Jenkinsfile', help='Path to pipeline output directory')
     args = parser.parse_args()
 
-    # Check if no arguments were provided
-    if not any(vars(args).values()):
+    # Check if no actionable arguments were provided
+    actionable_args = [args.install, args.update, args.execute, args.generate_graph, args.convert_pipeline]
+    if not any(actionable_args):
+        asciiart.print_ascii_art()
         parser.print_help()
         return
 
