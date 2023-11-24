@@ -19,14 +19,18 @@ PIP=pip3
 # --------------------------
 
 # Installs the necessary dependencies and tools.
-setup: ## Installs the necessary dependencies and tools.
+setup: ## Installs the necessary dependencies and tools run as sudo.
 	sudo apt-get install build-essential -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
+
+
+aftersetup: ## Installs do not run as sudo.
 	@make outputs
+	$(PIP) install -r requirements.txt
 	mkdir -p ~/bin
 	cp -r ./docker ~/bin
 	chmod +x ~/bin/clear*
@@ -126,8 +130,8 @@ cleanoutput: ## Cleans up command outputs.
 	echo "Cleaning Outputs"
 	cd command_outputs && rm -rf */
 
-pip: ## Installs pip dependencies.
-	$(PIP) install -r requirements.txt
+
+	
 
 # Shows the help message.
 help:			## Show this help.
