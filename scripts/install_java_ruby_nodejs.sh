@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Ensure the script is run as root
-if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root" 1>&2
-   exit 1
-fi
 
 echo "Installing OpenJDK 11 JDK and JRE..."
 sudo apt install openjdk-11-jdk openjdk-11-jre -y

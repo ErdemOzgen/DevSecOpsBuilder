@@ -26,7 +26,13 @@ setup: ## Installs the necessary dependencies and tools run as sudo.
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
-
+	@make outputs
+	$(PIP) install -r requirements.txt
+	mkdir -p ~/bin
+	cp -r ./docker/* ~/bin/
+	chmod +x ~/bin/cleardocker*
+	chmod +x ~/bin/*.sh
+	echo 'export PATH="$${HOME}/bin:$$PATH"' >> ~/.bashrc
 
 aftersetup: ## Installs do not run as sudo.
 	@make outputs
