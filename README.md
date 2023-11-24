@@ -89,6 +89,24 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
         category: "SAST"
         url: https://github.com/SonarSource/sonarqube
 ```
+
+![install](./imgs/pipeline-install.png)
+
+Also you can use for update and execute commands with same way
+```
+ ~/Desktop/devsecops/DevSecOpsBuilder │ main !1  python devsecopsbuilder/pipeline_executer.py                                                        1 х │ base Py │ 14:18:24 
+usage: pipeline_executer.py [-h] [--install] [--update] [--execute]
+
+Tool Installation and Update Script
+
+options:
+  -h, --help  show this help message and exit
+  --install   Install tools
+  --update    Update tools
+  --execute   Run playbook.yaml
+
+```
+
 ### Usage
 
 1. Choose or create a playbook YAML file based on your testing requirements.
