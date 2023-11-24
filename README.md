@@ -36,6 +36,12 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 - Docker
 - Python 3.x
 - Access to a GitHub account (for cloning repositories)
+### Pre-Installation
+* For fresh ubuntu 22.04 you need to install git and make to setup devsecops builder.
+
+   ```bash
+   sudo apt install git -y && sudo apt install make -y
+   ```
 
 ### Installation
 
@@ -51,7 +57,7 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 
 3. Run the setup script:
    ```bash
-   make setup
+   sudo make setup
    ```
 
 ### Usage
