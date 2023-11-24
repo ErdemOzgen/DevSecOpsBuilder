@@ -8,7 +8,7 @@
 #                                      /_/                                           
 
 .DEFAULT_GOAL:=help
-.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs
+.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs pip
 # This for future release of Compose that will use Docker Buildkit, which is much efficient.
 COMPOSE_PREFIX_CMD := COMPOSE_DOCKER_CLI_BUILD=1
 
@@ -25,7 +25,6 @@ setup: ## Installs the necessary dependencies and tools.
 	chmod +x ./scripts/*.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
-	pip install -r ./requirements.txt
 	@./scripts/install_java_ruby_nodejs.sh
 	@make outputs
 	mkdir -p ~/bin
@@ -126,6 +125,9 @@ outputs: ## Creates necessary directories for command outputs.
 cleanoutput: ## Cleans up command outputs.
 	echo "Cleaning Outputs"
 	cd command_outputs && rm -rf */
+
+pip: ## Installs pip dependencies.
+	$(PIP) install -r requirements.txt
 
 # Shows the help message.
 help:			## Show this help.
