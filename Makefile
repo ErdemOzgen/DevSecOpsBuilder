@@ -32,8 +32,8 @@ aftersetup: ## Installs do not run as sudo.
 	@make outputs
 	$(PIP) install -r requirements.txt
 	mkdir -p ~/bin
-	cp -r ./docker ~/bin
-	chmod +x ~/bin/clear*
+	cp -r ./docker/* ~/bin/
+	chmod +x ~/bin/cleardocker*
 	chmod +x ~/bin/*.sh
 
 # Builds and starts all services.
