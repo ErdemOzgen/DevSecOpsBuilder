@@ -78,7 +78,7 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 		# If you want to update you can use 
 		python main.py --update
 	```
-7. Execute 
+
 ```yaml
     - name: sonarqube
       install: docker pull sonarqube:latest && sudo sysctl -w vm.max_map_count=524288 && sudo sysctl -w fs.file-max=131072 && ulimit -n 131072 && ulimit -u 8192
@@ -96,20 +96,48 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 
 ![install](./imgs/pipeline-install.png)
 
-Also you can use for update and execute commands with same way
+7. You can see all options with default **python main.py** call
 ```
- ~/Desktop/devsecops/DevSecOpsBuilder │ main !1  python devsecopsbuilder/pipeline_executer.py                                                        1 х │ base Py │ 14:18:24 
-usage: pipeline_executer.py [-h] [--install] [--update] [--execute]
 
-Tool Installation and Update Script
+
+╭━━━╮╱╱╱╱╱╭━━━╮╱╱╱╱╱╭━━━╮╱╱╱╱╱╭━━╮╱╱╱╱╭╮╱╱╭╮
+╰╮╭╮┃╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃╭╮┃╱╱╱╱┃┃╱╱┃┃
+╱┃┃┃┣━━┳╮╭┫╰━━┳━━┳━━┫┃╱┃┣━━┳━━┫╰╯╰┳╮╭┳┫┃╭━╯┣━━┳━╮
+╱┃┃┃┃┃━┫╰╯┣━━╮┃┃━┫╭━┫┃╱┃┃╭╮┃━━┫╭━╮┃┃┃┣┫┃┃╭╮┃┃━┫╭╯
+╭╯╰╯┃┃━╋╮╭┫╰━╯┃┃━┫╰━┫╰━╯┃╰╯┣━━┃╰━╯┃╰╯┃┃╰┫╰╯┃┃━┫┃
+╰━━━┻━━╯╰╯╰━━━┻━━┻━━┻━━━┫╭━┻━━┻━━━┻━━┻┻━┻━━┻━━┻╯
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃┃
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰╯                                         
+
+usage: main.py [-h] [--install] [--update] [--execute] [--config CONFIG] [--output_dir OUTPUT_DIR] [--tools_config TOOLS_CONFIG] [--generate_graph] [--graph_yaml GRAPH_YAML]
+               [--graph_output_dir GRAPH_OUTPUT_DIR] [--convert_pipeline] [--pipeline_yaml PIPELINE_YAML] [--pipeline_output_dir PIPELINE_OUTPUT_DIR]
+
+Pipeline Execution Script
 
 options:
-  -h, --help  show this help message and exit
-  --install   Install tools
-  --update    Update tools
-  --execute   Run playbook.yaml
+  -h, --help            show this help message and exit
+  --install             Install tools
+  --update              Update tools
+  --execute             Execute commands from playbook
+  --config CONFIG       Path to configuration file
+  --output_dir OUTPUT_DIR
+                        Path to output directory
+  --tools_config TOOLS_CONFIG
+                        Path to tools configuration file
+  --generate_graph      Generate graph of defined yaml workflow
+  --graph_yaml GRAPH_YAML
+                        Path to yaml file for generating graph
+  --graph_output_dir GRAPH_OUTPUT_DIR
+                        Path to graph output directory
+  --convert_pipeline    Convert yaml to pipeline
+  --pipeline_yaml PIPELINE_YAML
+                        Path to workflow yaml file to pipeline
+  --pipeline_output_dir PIPELINE_OUTPUT_DIR
+                        Path to pipeline output directory
 
 ```
+
+
 
 ### Usage
 
