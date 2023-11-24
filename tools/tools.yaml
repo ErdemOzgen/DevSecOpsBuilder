@@ -51,7 +51,7 @@ tools_to_install:
         url: https://github.com/Yelp/detect-secrets
     
     - name: ggshield
-      install: pip install --user -U ggshield EXPORT PATH=$PATH:$HOME/.local/bin
+      install: pip install --user -U ggshield && EXPORT PATH=$PATH:$HOME/.local/bin
       update: pip install --upgrade --user -U ggshield
       help: EXPORT /home/${USER}/.local/bin && ggshield --help
       language: "All"
