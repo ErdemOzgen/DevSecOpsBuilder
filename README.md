@@ -270,7 +270,7 @@ commands_to_run:
 To run the playbook, execute the `main.py` script in your DevSecOpsBuilder setup:
 
 ```bash
-python main.py
+python main.py --execute
 ```
 
 This will sequentially execute the steps defined in your `playbook.yaml`, automating your DevSecOps pipeline process.
@@ -283,7 +283,8 @@ Remember, you can always tailor the playbook to better fit your project's requir
 
 
 ```bash
-python devsecopsbuilder/convert_pipeline.py
+#python devsecopsbuilder/convert_pipeline.py
+python main.py --convert_pipeline
 ```
 
 This will convert existing yaml file to Jenkinsfile. 
@@ -291,7 +292,8 @@ This will convert existing yaml file to Jenkinsfile.
 ![jenkins](./imgs/pipeline2.png)
 
 ```bash
-python devsecopsbuilder/convert_graph.py 
+#python devsecopsbuilder/convert_graph.py 
+python main.py --generate_graph
 ```
 
 This will create graph representation of your pipeline.
