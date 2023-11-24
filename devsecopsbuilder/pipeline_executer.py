@@ -3,7 +3,7 @@ import subprocess
 import yaml
 import os
 from string import Template
-
+import argparse
 def load_configuration(filepath):
     with open(filepath, 'r') as yaml_file:
         return yaml.safe_load(yaml_file)
@@ -17,7 +17,7 @@ def install_tools(tools):
         install_command = tool_info.get('install')
         if tool_name and install_command:
             print("Runnning ==> ",install_command)  # Replace with subprocess.run(...) to execute
-            # subprocess.run(install_command, shell=True, check=True)
+            subprocess.run(install_command, shell=True, check=True)
 
 def update_tools(tools):
     for tool_info in tools:
@@ -25,7 +25,7 @@ def update_tools(tools):
         update_command = tool_info.get('update')
         if tool_name and update_command:
             print("Updating with ==>" ,update_command)  # Replace with subprocess.run(...) to execute
-            # subprocess.run(update_command, shell=True, check=True)
+            subprocess.run(update_command, shell=True, check=True)
 
 def run_command(step, output_dir, **kwargs):
     step_name = step.get('name', 'Unnamed step')
@@ -106,25 +106,82 @@ def get_repository_languages(repository_path):
 #print(get_repository_languages(repository_path))
 #result = ['C#', 'ASP.NET', 'CSS', 'JavaScript']
 
+def main():
+    parser = argparse.ArgumentParser(description="Tool Installation and Update Script")
+    parser.add_argument('--install', action='store_true', help='Install tools')
+    parser.add_argument('--update', action='store_true', help='Update tools')
+    parser.add_argument('--execute', action='store_true', help='Run playbook.yaml')
+    args = parser.parse_args()
 
+        # Check if no arguments were provided
+    if not (args.install or args.update or args.execute):
+        parser.print_help()
+        return
+    # Load tool configuration from the YAML file
+    tools_config = load_configuration("./tools/tools.yaml")
+    tools = tools_config["tools_to_install"]["tools"]
+
+    if args.install:
+        print("----------------------")
+        print("Running pipeline executer: Installing tools...")
+        print("----------------------")
+        install_tools(tools)
+        print("----------------------")
+        print("Tools installed")
+
+    if args.update:
+        print("----------------------")
+        print("Running pipeline executer: Updating tools...")
+        print("----------------------")
+        update_tools(tools)
+        print("----------------------")
+        print("Tools updated")
+    if args.execute:
+        print("----------------------")
+        print("Running pipeline executer: Executing playbook.yaml...")
+        print("----------------------")
+        config = load_configuration('./playbooks/playbook.yaml')
+        output_dir = 'command_outputs/outputs'
+        create_output_directory(output_dir)
+
+        # Define default paths and other variables as a dictionary
+        default_variables = {
+            # Default variable values go here
+        }
+
+        # Run configured commands
+        commands_to_run = config.get('commands_to_run', {}).get('steps', [])
+        for step in commands_to_run:
+            if isinstance(step, dict):
+                # Update default variables with step-specific ones if they exist
+                step_variables = {**default_variables, **step.get('parameters', {})}
+                run_command(step, output_dir, **step_variables)
+            else:
+                print(f"Invalid step format: {step}")
+        print("----------------------")
+        print("pipeline executer: playbook.yaml executed")
+
+if __name__ == "__main__":
+    main()
 # Main execution
 # python devsecopsbuilder/pipeline_executer.py 
-if __name__ == "__main__":
-    config = load_configuration('./playbooks/playbook.yaml')
-    output_dir = 'command_outputs/outputs'
-    create_output_directory(output_dir)
-
-    # Define default paths and other variables as a dictionary
-    default_variables = {
-        # Default variable values go here
-    }
-
-    # Run configured commands
-    commands_to_run = config.get('commands_to_run', {}).get('steps', [])
-    for step in commands_to_run:
-        if isinstance(step, dict):
-            # Update default variables with step-specific ones if they exist
-            step_variables = {**default_variables, **step.get('parameters', {})}
-            run_command(step, output_dir, **step_variables)
-        else:
-            print(f"Invalid step format: {step}")
+#if __name__ == "__main__":
+    # Test for main function default playbook runner
+    #config = load_configuration('./playbooks/playbook.yaml')
+    #output_dir = 'command_outputs/outputs'
+    #create_output_directory(output_dir)
+    #
+    ## Define default paths and other variables as a dictionary
+    #default_variables = {
+    #    # Default variable values go here
+    #}
+    #
+    ## Run configured commands
+    #commands_to_run = config.get('commands_to_run', {}).get('steps', [])
+    #for step in commands_to_run:
+    #    if isinstance(step, dict):
+    #        # Update default variables with step-specific ones if they exist
+    #        step_variables = {**default_variables, **step.get('parameters', {})}
+    #        run_command(step, output_dir, **step_variables)
+    #    else:
+    #        print(f"Invalid step format: {step}")

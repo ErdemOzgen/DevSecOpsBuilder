@@ -365,8 +365,7 @@ tools_to_install:
         name: grype
         description: "Grype is a vulnerability scanner for container images and filesystems."
         category: "scanner"
-        url: 	https://github.com/anchore/grype
-    
+        url: https://github.com/anchore/grype
     - name: syfte
       install: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       update: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
@@ -378,7 +377,7 @@ tools_to_install:
         name: syfte
         description: "Syft is a CLI tool and library for generating a Software Bill of Materials (SBOM) from container images and filesystems."
         category: "scanner"
-        url:https://github.com/anchore/syfte
+        url: https://github.com/anchore/syfte
     
     - name: bandit
       install: pip install bandit
