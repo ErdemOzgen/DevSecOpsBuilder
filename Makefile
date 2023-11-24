@@ -35,6 +35,8 @@ aftersetup: ## Installs do not run as sudo.
 	cp -r ./docker/* ~/bin/
 	chmod +x ~/bin/cleardocker*
 	chmod +x ~/bin/*.sh
+	echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+
 
 # Builds and starts all services.
 up:				## Build and start all services.
