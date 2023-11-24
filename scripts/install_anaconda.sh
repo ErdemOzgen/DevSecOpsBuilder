@@ -57,7 +57,7 @@ function create_conda_env {
 
 # Check if Conda is installed
 check_conda_installed
-
+source ~/.bashrc
 # Create the Conda environment
 create_conda_env
 source ~/.bashrc
