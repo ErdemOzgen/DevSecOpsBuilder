@@ -71,7 +71,24 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
    # You can close after all containers pulled
    make down
    ```
-
+6. Install tools/tools.yaml You can select with which tools you need to install just change **default** parameter.
+	```bash
+		python devsecopsbuilder/pipeline_executer.py --install 
+	```
+```yaml
+    - name: sonarqube
+      install: docker pull sonarqube:latest && sudo sysctl -w vm.max_map_count=524288 && sudo sysctl -w fs.file-max=131072 && ulimit -n 131072 && ulimit -u 8192
+      update: docker pull sonarqube:latest
+      help: echo "Running in docker  not need help"
+      default: false # This tool wont be install
+      language:
+        - "All"
+      devsecops:
+        name: sonarqube
+        description: "SonarQube is an open-source platform for continuous inspection of code quality."
+        category: "SAST"
+        url: https://github.com/SonarSource/sonarqube
+```
 ### Usage
 
 1. Choose or create a playbook YAML file based on your testing requirements.
