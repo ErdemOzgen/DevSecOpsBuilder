@@ -47,7 +47,7 @@ def parse_yaml_and_create_graph(file_path):
 if __name__ == '__main__':
     # Replace with the actual path to your YAML file
     file_path = './playbooks/playbook.yaml'
-    output_img_path = 'command_outputs/graphs/graph.png'
+    output_img_path = './command_outputs/graphs/graph.png'
     workflow_graph = parse_yaml_and_create_graph(file_path)
 
     # Draw the graph
