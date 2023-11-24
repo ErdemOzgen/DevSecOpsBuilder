@@ -65,7 +65,12 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
    make lab
    ```
 
-5. 
+5. Pull and run docker containers
+   ```bash
+   make up
+   # You can close after all containers pulled
+   make down
+   ```
 
 ### Usage
 
