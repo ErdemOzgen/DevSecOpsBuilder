@@ -6,6 +6,13 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 
 **Note**: DevSecOpsBuilder is intended for testing and development purposes and is not production-ready.
 
+## Tested on Ubuntu 22.04 LTS
+
+**CPU**: Intel i7-7820HQ
+**RAM**: 32GB
+**Disk**: 500 GB SSD
+
+
 ## Features
 
 1. **YAML-Based Pipeline Creation**: Users can utilize YAML files to construct their DevSecOps pipeline, tailoring it to their specific needs.
