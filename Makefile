@@ -25,7 +25,7 @@ setup: ## Installs the necessary dependencies and tools.
 	chmod +x ./scripts/*.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
-	$(PIP) install -r requirements.txt
+	pip install -r ./requirements.txt
 	@./scripts/install_java_ruby_nodejs.sh
 	@make outputs
 	mkdir -p ~/bin
