@@ -19,7 +19,7 @@ PIP=pip3
 # --------------------------
 
 # Installs the necessary dependencies and tools.
-setup: ## Installs the necessary dependencies and tools run as sudo.
+setup: ## Installs the necessary dependencies and tools run.
 	sudo apt-get install build-essential -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
