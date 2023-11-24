@@ -14,7 +14,7 @@ COMPOSE_PREFIX_CMD := COMPOSE_DOCKER_CLI_BUILD=1
 
 COMPOSE_ALL_FILES := -f docker-compose.yml
 SERVICES          := #db web proxy redis celery celery-beat
-PYTHON=python
+PYTHON=python #Uses python3 using anaconda therefore default python is python3
 PIP=pip3
 # --------------------------
 
@@ -35,7 +35,8 @@ setup: ## Installs the necessary dependencies and tools.
 
 # Builds and starts all services.
 up:				## Build and start all services.
-	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
+	bash ./docker/deploy_*.sh
+#${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
 
 # Builds all services.
 build:			## Build all services.
@@ -48,27 +49,34 @@ pull:			## Pull Docker images.
 
 # Stops all services.
 down:			## Down all services.
-	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} down
+	bash ./docker/destroy_*.sh
+#${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} down
 
 # Stops all services.
 stop:			## Stop all services.
-	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} stop ${SERVICES}
+	docker stop $(docker ps -q)
+	
+#${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} stop ${SERVICES}
 
 # Restarts all services.
 restart:		## Restart all services.
-	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} restart ${SERVICES}
+	docker restart $(docker ps -q)
+
+#${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} restart ${SERVICES}
 
 # Removes all services containers.
 rm:				## Remove all services containers.
-	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) rm -f ${SERVICES}
+	docker rm -f $$(docker ps -a -q)
+#${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) rm -f ${SERVICES}
 
 # Runs unit tests.
 test: ## Runs unit tests.
 	$(PYTHON) -m unittest discover -s test/
 
 # Tails all logs with -n 1000.
-logs:			## Tail all logs with -n 1000.
-	${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) logs --follow --tail=1000 ${SERVICES}
+logs:			## Opens lazydocker for logs.
+	lazydocker
+#${COMPOSE_PREFIX_CMD} docker-compose $(COMPOSE_ALL_FILES) logs --follow --tail=1000 ${SERVICES}
 
 # Shows all Docker images.
 images:			## Show all Docker images.
