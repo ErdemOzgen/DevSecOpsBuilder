@@ -60,6 +60,13 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
    make setup
    ```
 
+4. Run the lab script: (This will download test repos)
+   ```bash
+   make lab
+   ```
+
+5. 
+
 ### Usage
 
 1. Choose or create a playbook YAML file based on your testing requirements.

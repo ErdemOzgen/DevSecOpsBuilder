@@ -47,7 +47,9 @@ aftersetup: ## Installs do not run as sudo.
 
 # Builds and starts all services.
 up:				## Build and start all services.
-	bash ./docker/deploy_*.sh
+	bash ./docker/docker/deploy_depency_track.sh
+	bash ./docker/docker/deploy_nodejsscan.sh
+	bash ./docker/docker/deploy_sonarqube.sh
 #${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
 
 # Builds all services.
@@ -61,7 +63,9 @@ pull:			## Pull Docker images.
 
 # Stops all services.
 down:			## Down all services.
-	bash ./docker/destroy_*.sh
+	bash ./docker/docker/destroy_depency_track.sh
+	bash ./docker/docker/destroy_nodejsscan.sh
+	bash ./docker/docker/destroy_sonarqube.sh
 #${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} down
 
 # Stops all services.
