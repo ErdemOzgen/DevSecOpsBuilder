@@ -268,17 +268,12 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/eslint/eslint
 
-
+    # todo: it fails needs to be fixed but
     - name: sonarqube
-      install: |
-       docker pull sonarqube@latest
-       sudo sysctl -w vm.max_map_count=524288
-       sudo sysctl -w fs.file-max=131072
-       ulimit -n 131072
-       ulimit -u 8192
+      install: docker pull sonarqube@latest && sudo sysctl -w vm.max_map_count=524288 && sudo sysctl -w fs.file-max=131072 && ulimit -n 131072 && ulimit -u 8192
       update: docker pull sonarqube@latest
       help: echo "Running in docker  not need help"
-      default: true
+      default: false
       language:
         - "All"
       devsecops:
