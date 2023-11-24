@@ -131,11 +131,14 @@ The playbook is composed of a series of steps, each representing a command to be
 
 ```yaml
 - name: "Name of the Step"
-  command: "command to execute"
+  command: "command to execute values: ${param1} ${param2}"
   parameters:
     param1: "value1"
     param2: "value2"
-  post_command: "command to execute after the main command"
+  post_command: "command to execute after the main command ${post_param1} ${post_param2}"
+  post_parameters:
+	post_param1: "value1"
+	post_param2: "value2"
   stepno: Step Number
 ```
 
@@ -143,7 +146,11 @@ The playbook is composed of a series of steps, each representing a command to be
 - `command`: The main command to be executed.
 - `parameters`: Key-value pairs that provide additional parameters to the command.
 - `post_command`: An optional command to be executed after the main command.
+- `post_parameters`: Key-value pairs that provide additional parameters to the post command.
 - `stepno`: The step number, for ordering and reference.
+
+** You dont need to use always **parameters** and **post_parameters** but if you do you can use as baseplate for all devsecops process.
+
 
 ### Customizing playbook.yaml
 
