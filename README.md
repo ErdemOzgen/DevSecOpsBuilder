@@ -145,7 +145,7 @@ options:
 
 2. Run the main script to start the pipeline:
    ```bash
-   python main.py
+   python main.py --execute
    ```
 
 3. Follow the on-screen instructions to view outputs and logs.
