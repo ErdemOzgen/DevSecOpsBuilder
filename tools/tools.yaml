@@ -91,7 +91,7 @@ tools_to_install:
       install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
       update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
       help: syft -h
-      default: false
+      default: true
       language:
         - "C"
         - "C++"
@@ -154,7 +154,7 @@ tools_to_install:
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
       help: local-php-security-checker --help
-      default: false
+      default: true
       language:
         - "PHP"
       devsecops:
@@ -343,7 +343,7 @@ tools_to_install:
       install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
       update: nuclei -update
       help: nuclei --help
-      default: false
+      default: true
       language:
         - "All"
       devsecops:

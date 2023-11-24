@@ -119,13 +119,15 @@ def main():
         return
     # Load tool configuration from the YAML file
     tools_config = load_configuration("./tools/tools.yaml")
-    tools = tools_config["tools_to_install"]["tools"]
+    all_tools = tools_config["tools_to_install"]["tools"]
+    default_tools = [tool for tool in all_tools if tool.get('default', False)]
 
     if args.install:
         print("----------------------")
         print("Running pipeline executer: Installing tools...")
         print("----------------------")
-        install_tools(tools)
+        #print(default_tools)
+        install_tools(default_tools)
         print("----------------------")
         print("Tools installed")
 
