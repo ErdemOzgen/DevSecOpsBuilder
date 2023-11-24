@@ -203,7 +203,7 @@ This will create graph representation of your pipeline.
 
 ## Contributing
 
-Contributions to DevSecOpsBuilder are welcome! Please read our [contributing guidelines](./CONTRIBUTING) for more information on how to get involved.
+Contributions to DevSecOpsBuilder are welcome! Please read our [contributing guidelines](./CONTRIBUTING.md) for more information on how to get involved.
 
 ## License
 
