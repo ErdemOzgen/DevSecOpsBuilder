@@ -47,7 +47,7 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 
 1. Clone the DevSecOpsBuilder repository:
    ```bash
-   git clone [repository URL]
+   git clone https://github.com/ErdemOzgen/DevSecOpsBuilder.git
    ```
 
 2. Navigate to the repository directory:
@@ -57,7 +57,7 @@ DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and te
 
 3. Run the setup script:
    ```bash
-   sudo make setup
+   make setup
    ```
 
 ### Usage
