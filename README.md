@@ -68,10 +68,10 @@ sudo apt install git -y && sudo apt install make -y
    ```
 6. Install tools/tools.yaml You can select with which tools you need to install just change **default** parameter.
 	```bash
-		#python devsecopsbuilder/pipeline_executer.py --install #old way
-		python main.py --install
-		# If you want to update you can use 
-		python main.py --update
+	#python devsecopsbuilder/pipeline_executer.py --install #old way
+	python main.py --install
+	# If you want to update you can use 
+	python main.py --update
 	```
 
 ```yaml
