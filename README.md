@@ -287,6 +287,83 @@ This will convert existing yaml file to Jenkinsfile.
 
 ![jenkins](./imgs/pipeline2.png)
 
+* Generated Jenkinsfile
+```Jenkinsfile
+pipeline {
+    agent any
+
+    stages {
+            stage('Start') {
+                steps {
+                    sh 'echo "Welcome to DevSecOpsBuilder"'
+                }
+            }
+        stage('Step_2') {
+            parallel {
+            stage('List_files') {
+                steps {
+                    sh 'ls -l'
+                }
+            }
+            stage('Get_current_directory') {
+                steps {
+                    sh 'pwd'
+                }
+            }
+            }
+        }
+            stage('GITLEAK-JOB') {
+                steps {
+                    sh 'docker run -v ./lab/SecretsTest/:/path zricethezav/gitleaks:latest detect --source="/path" --verbose --report-format=json --report-path=/path/gitleaks_report.json'
+                    sh 'mv ./lab/SecretsTest/gitleaks_report.json ./outputs/git-secrets/'
+                }
+            }
+            stage('TRUFFLEHOG-JOB') {
+                steps {
+                    sh 'trufflehog git file://./lab/SecretsTest/ --json >> ./lab/SecretsTest/trufflehog_result.json'
+                    sh 'mv ./lab/SecretsTest/trufflehog_result.json ${output_path}'
+                }
+            }
+            stage('DETECT-SECRETS-SCAN') {
+                steps {
+                    sh 'detect-secrets scan ./lab/SecretsTest/ >> ./command_outputs/git-secrets//detect-secrets-results.json'
+                    sh 'echo Scan Complete. Results stored in ./command_outputs/git-secrets/'
+                }
+            }
+            stage('SYFT-SCAN') {
+                steps {
+                    sh 'syft ./lab/WebGoat/ --output cyclonedx-json >> ./command_outputs/SBOM//syft-results.json'
+                    sh 'echo Syft Scan Complete. Results stored in ./command_outputs/SBOM/'
+                }
+            }
+        stage('Step_7') {
+            parallel {
+            stage('Dependencytrack') {
+                steps {
+                    sh 'cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d'
+                    sh 'cd /tmp && docker-compose down'
+                }
+            }
+            stage('Finished') {
+                steps {
+                    sh 'echo DevSecOps Builder has been finished This is a test echo.'
+                }
+            }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Success!'
+        }
+        failure {
+            echo 'Failure!'
+        }
+    }
+}
+
+```
+
 ```bash
 #python devsecopsbuilder/convert_graph.py 
 python main.py --generate_graph
