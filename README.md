@@ -2,45 +2,40 @@
 
 ## Overview
 
-DevSecOpsBuilder is a comprehensive tool designed to facilitate the setup and testing of DevSecOps environments. It is equipped with Makefile, Dockerfile, and Python scripts to automatically install necessary software and libraries, creating an effective testbed for DevSecOps practices. This solution streamlines the process of setting up a DevSecOps pipeline, making it easier for users to implement and test various security practices in their development workflows.
+DevSecOpsBuilder is a comprehensive toolset designed for setting up and testing DevSecOps environments. It automates the installation of essential software and libraries using Makefile, Dockerfile, and Python scripts, thus creating a robust testbed for DevSecOps practices. This solution simplifies the process of establishing a DevSecOps pipeline, facilitating the integration and testing of various security practices within development workflows.
 
-**Note**: DevSecOpsBuilder is intended for testing and development purposes and is not production-ready.
+**Note**: DevSecOpsBuilder is intended for testing and development purposes only and is not recommended for production use.
 
-## Tested on Ubuntu 22.04 LTS
+## System Requirements
 
-**CPU**: Intel i7-7820HQ
-**RAM**: 32GB
-**Disk**: 500 GB SSD
-
+Tested on Ubuntu 22.04 LTS:
+- **CPU**: Intel i7-7820HQ
+- **RAM**: 32GB
+- **Disk**: 500 GB SSD
 
 ## Features
 
-1. **YAML-Based Pipeline Creation**: Users can utilize YAML files to construct their DevSecOps pipeline, tailoring it to their specific needs.
-
-2. **Predefined YAML Templates**: The repository includes a range of predefined YAML templates for specific tasks such as SAST, DAST, SCA, and secret scanning, allowing for quick setup and deployment.
-
-3. **Execution and Logging**: By running `python main.py`, users can execute their chosen or custom playbook.yaml and view the outputs and logs generated during the process.
-
-4. **Jenkinsfile Generation**: DevSecOpsBuilder can automatically generate Jenkinsfiles from the provided YAML configurations, integrating seamlessly with Jenkins CI/CD pipelines.
-
-5. **Visualization Tools**: The tool generates graphical representations of the YAML and Jenkinsfile, providing a visual overview of the pipeline's structure and flow.
-
-6. **Docker Container Deployment**: It supports the deployment of Docker containers for key DevSecOps tools like SonarQube, Dependency Track, NodeJsScan, enhancing the security testing capabilities.
-
-7. **GitHub Integration**: DevSecOpsBuilder can clone test repositories from GitHub, making it a versatile tool for testing existing tools and pipelines in a controlled environment.
+1. **YAML-Based Pipeline Creation**: Easy construction of DevSecOps pipelines using YAML files.
+2. **Predefined YAML Templates**: Includes templates for SAST, DAST, SCA, and secret scanning.
+3. **Execution and Logging**: Execute custom or predefined `playbook.yaml` and view logs using `python main.py`.
+4. **Jenkinsfile Generation**: Automates Jenkinsfile creation from YAML configurations.
+5. **Visualization Tools**: Generates graphical views of YAML and Jenkinsfile for easy understanding.
+6. **Docker Container Deployment**: Supports Docker deployment for key DevSecOps tools.
+7. **GitHub Integration**: Facilitates cloning from GitHub for testing in a controlled environment.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Docker
-- Python 3.x
-- Access to a GitHub account (for cloning repositories)
-### Pre-Installation
-* For fresh ubuntu 22.04 you need to install git and make to setup devsecops builder.
+- make
+- git
 
-   ```bash
-   sudo apt install git -y && sudo apt install make -y
+### Pre-Installation
+
+For Ubuntu 22.04 setup:
+
+```bash
+sudo apt install git -y && sudo apt install make -y
    ```
 
 ### Installation
@@ -162,16 +157,17 @@ The `playbook.yaml` file is a crucial part of the DevSecOpsBuilder, defining the
 The playbook is composed of a series of steps, each representing a command to be executed. Here's an example of what a typical step looks like:
 
 ```yaml
-- name: "Name of the Step"
-  command: "command to execute values: ${param1} ${param2}"
+- name: "Step Name"
+  command: "executable command"
   parameters:
     param1: "value1"
     param2: "value2"
-  post_command: "command to execute after the main command ${post_param1} ${post_param2}"
+  post_command: "command after the main command"
   post_parameters:
-	post_param1: "value1"
-	post_param2: "value2"
+    post_param1: "value1"
+    post_param2: "value2"
   stepno: Step Number
+
 ```
 
 - `name`: A descriptive name for the step.
