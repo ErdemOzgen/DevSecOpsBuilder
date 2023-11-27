@@ -60,19 +60,19 @@ sudo apt install git -y && sudo apt install make -y
    make lab
    ```
 
-4. Run pip install and update .bashrc
+5. Run pip install and update .bashrc
    ```bash
    source ~/.bashrc
    pip install -r requirements.txt
    reboot
    ```
-5. Pull and run docker containers
+6. Pull and run docker containers
    ```bash
    make up
    # You can close after all containers pulled
    make down
    ```
-6. Install tools/tools.yaml You can select with which tools you need to install just change **default** parameter.
+7. Install tools/tools.yaml You can select with which tools you need to install just change **default** parameter.
 	```bash
 	#python devsecopsbuilder/pipeline_executer.py --install #old way
 	python main.py --install
@@ -97,7 +97,8 @@ sudo apt install git -y && sudo apt install make -y
 
 ![install](./imgs/pipeline-install.png)
 
-7. You can see all options with default **python main.py** call
+8. You can see all options with default **python main.py** call
+
 ```
 
 
@@ -178,12 +179,12 @@ The playbook is composed of a series of steps, each representing a command to be
 
 - `name`: A descriptive name for the step.
 - `command`: The main command to be executed.
-- `parameters`: Key-value pairs that provide additional parameters to the command.
-- `post_command`: An optional command to be executed after the main command.
-- `post_parameters`: Key-value pairs that provide additional parameters to the post command.
+- `parameters`: Key-value pairs that provide additional parameters to the command. (Optinal)
+- `post_command`: An optional command to be executed after the main command.(Optinal)
+- `post_parameters`: Key-value pairs that provide additional parameters to the post command.(Optinal)
 - `stepno`: The step number, for ordering and reference.
 
-** You dont need to use always **parameters** and **post_parameters** but if you do you can use as baseplate for all devsecops process.
+** **You dont need to use always **parameters** and **post_parameters** but if you do you can use as baseplate for all devsecops process.**
 
 
 ### Customizing playbook.yaml
@@ -294,7 +295,7 @@ This will convert existing yaml file to Jenkinsfile.
 ![jenkins](./imgs/pipeline2.png)
 
 * Generated Jenkinsfile
-```Jenkinsfile
+```groovy
 pipeline {
     agent any
 
