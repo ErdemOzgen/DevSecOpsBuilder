@@ -18,7 +18,24 @@ def install_tools(tools):
         if tool_name and install_command:
             print("Runnning ==> ",install_command)  # Replace with subprocess.run(...) to execute
             subprocess.run(install_command, shell=True, check=True)
+def install_tools(tools):
+    for tool_info in tools:
+        tool_name = tool_info.get('name')
+        install_command = tool_info.get('install')
+        help_command = tool_info.get('help')  # Command to display help, used to check if installed
 
+        if tool_name and install_command and help_command:
+            try:
+                # Check if the tool is already installed by running its help command
+                subprocess.run(help_command, shell=True, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print(f"{tool_name} is already installed.")
+            except subprocess.CalledProcessError:
+                # Tool is not installed, proceed with installation
+                print(f"Installing {tool_name}...")
+                subprocess.run(install_command, shell=True, check=True)
+        else:
+            print(f"Missing information for {tool_name}")
+            
 def update_tools(tools):
     for tool_info in tools:
         tool_name = tool_info.get('name')
