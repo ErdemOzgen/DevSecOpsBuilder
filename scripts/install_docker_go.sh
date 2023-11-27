@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 # Check if Docker is installed
 if ! command -v docker &> /dev/null
 then
@@ -79,3 +79,4 @@ then
 else
     echo "LAZYDOCKER is already installed."
 fi
+source ~/.bashrc

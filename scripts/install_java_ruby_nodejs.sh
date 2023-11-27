@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 # Check if OpenJDK 11 JDK and JRE are installed
 if ! java -version 2>&1 | grep -q "openjdk 11"
 then
@@ -33,3 +33,4 @@ else
 fi
 
 echo "Setup completed successfully."
+source ~/.bashrc

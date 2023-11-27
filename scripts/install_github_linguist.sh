@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 # Check if Ruby is installed
 if ! command -v ruby &> /dev/null
 then
@@ -30,3 +30,4 @@ then
 else
     echo "github-linguist is already installed."
 fi
+source ~/.bashrc
