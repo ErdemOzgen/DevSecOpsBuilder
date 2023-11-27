@@ -28,7 +28,6 @@ setup: ## Installs the necessary dependencies and tools run.
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
 	@make outputs
-	$(PIP) install -r requirements.txt
 	mkdir -p ~/bin
 	cp -r ./docker/* ~/bin/
 	chmod +x ~/bin/cleardocker*

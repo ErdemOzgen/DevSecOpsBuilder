@@ -59,3 +59,4 @@ source ~/.bashrc
 create_conda_env
 # Activate the environment
 source ~/.bashrc
+pip install -r requirements.txt
