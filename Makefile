@@ -20,6 +20,8 @@ PIP=pip3
 
 # Installs the necessary dependencies and tools.
 setup: ## Installs the necessary dependencies and tools run.
+	@echo "Installing dependencies..."
+	source ~/.bashrc
 	sudo apt-get install build-essential -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
@@ -27,29 +29,24 @@ setup: ## Installs the necessary dependencies and tools run.
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
 	@make outputs
+	source ~/.bashrc
 	$(PIP) install -r requirements.txt
 	mkdir -p ~/bin
 	cp -r ./docker/* ~/bin/
 	chmod +x ~/bin/cleardocker*
 	chmod +x ~/bin/*.sh
-	echo 'export PATH="$${HOME}/bin:$$PATH"' >> ~/.bashrc
-
-aftersetup: ## Installs do not run as sudo.
-	@make outputs
-	$(PIP) install -r requirements.txt
-	mkdir -p ~/bin
-	cp -r ./docker/* ~/bin/
-	chmod +x ~/bin/cleardocker*
-	chmod +x ~/bin/*.sh
-	echo 'export PATH="$${HOME}/bin:$$PATH"' >> ~/.bashrc
+	@echo 'export PATH="$${HOME}/bin:$$PATH"' >> ~/.bashrc
+	@echo 'SETUP has been completed. Please restart your terminal and run "make help" to see the available commands.'
 
 
 
 # Builds and starts all services.
 up:				## Build and start all services.
-	bash ./docker/docker/deploy_depency_track.sh
-	bash ./docker/docker/deploy_nodejsscan.sh
-	bash ./docker/docker/deploy_sonarqube.sh
+	@echo "Starting all services... If it needs, *sudo* you need to reboot your machine"
+	bash ./docker/deploy_depency_track.sh
+	bash ./docker/deploy_nodejsscan.sh
+	bash ./docker/deploy_sonarqube.sh
+	@echo "All containers are up and running. You can see with => docker ps -a"
 #${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} up -d --build ${SERVICES}
 
 # Builds all services.
@@ -63,9 +60,9 @@ pull:			## Pull Docker images.
 
 # Stops all services.
 down:			## Down all services.
-	bash ./docker/docker/destroy_depency_track.sh
-	bash ./docker/docker/destroy_nodejsscan.sh
-	bash ./docker/docker/destroy_sonarqube.sh
+	bash ./docker/destroy_depency_track.sh
+	bash ./docker/destroy_nodejsscan.sh
+	bash ./docker/destroy_sonarqube.sh
 #${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} down
 
 # Stops all services.

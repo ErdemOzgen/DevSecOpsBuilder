@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Deploying NodeJsScan"
-docker rm -f opensecurity/nodejsscan:latest
+docker rm -f nodejsscan
 echo "NodeJsScan destroyed"
 
 

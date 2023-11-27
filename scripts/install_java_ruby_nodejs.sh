@@ -6,7 +6,7 @@ sudo apt install openjdk-11-jdk openjdk-11-jre -y
 
 echo "Setting up Node.js..."
 curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -
-sudo apt install -y nodejs
+sudo apt install -y nodejs npm
 
 echo "Updating package lists..."
 sudo apt-get update -y
