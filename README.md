@@ -60,6 +60,12 @@ sudo apt install git -y && sudo apt install make -y
    make lab
    ```
 
+4. Run pip install and update .bashrc
+   ```bash
+   source ~/.bashrc
+   pip install -r requirements.txt
+   reboot
+   ```
 5. Pull and run docker containers
    ```bash
    make up
