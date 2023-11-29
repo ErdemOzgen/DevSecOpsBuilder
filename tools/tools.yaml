@@ -88,8 +88,8 @@ tools_to_install:
         url: https://github.com/CycloneDX/cdxgen
 
     - name: syft
-      install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
-      update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+      update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       help: syft -h
       default: true
       language:
@@ -361,18 +361,7 @@ tools_to_install:
         description: "Grype is a vulnerability scanner for container images and filesystems."
         category: "scanner"
         url: https://github.com/anchore/grype
-    - name: syfte
-      install: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
-      update: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
-      help: syfte --help
-      default: false
-      language:
-        - "All"
-      devsecops:
-        name: syfte
-        description: "Syft is a CLI tool and library for generating a Software Bill of Materials (SBOM) from container images and filesystems."
-        category: "scanner"
-        url: https://github.com/anchore/syfte
+    
     
     - name: bandit
       install: pip install bandit
