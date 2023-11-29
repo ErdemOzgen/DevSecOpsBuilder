@@ -311,7 +311,7 @@ tools_to_install:
     - name: zap-proxy
       install: sudo snap install zaproxy --classic
       update: sudo snap refresh zaproxy --classic
-      help: zap-proxy --help
+      help: zaproxy -h
       default: false
       language:
         - "All"
