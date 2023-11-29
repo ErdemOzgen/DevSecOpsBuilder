@@ -14,8 +14,11 @@ if ! command -v node > /dev/null 2>&1
 then
     echo "Setting up Node.js..."
     # Replace '20' with the version number you wish to install, e.g., '14' for Node.js 14
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt install -y nodejs
+    #curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
+    chmod 500 nsolid_setup_deb.sh
+    sudo ./nsolid_setup_deb.sh 20
+    sudo apt install -y npm
 else
     echo "Node.js is already installed."
 fi
