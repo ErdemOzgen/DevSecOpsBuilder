@@ -18,7 +18,8 @@ then
     curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
     chmod 500 nsolid_setup_deb.sh
     sudo ./nsolid_setup_deb.sh 20
-    sudo apt install -y npm
+    source ~/.bashrc
+    sudo apt install -y nodejs npm
 else
     echo "Node.js is already installed."
 fi
