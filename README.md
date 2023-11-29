@@ -1,5 +1,9 @@
 # DevSecOpsBuilder
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ErdemOzgen/DevSecOpsBuilder/main/imgs/DevSecOpsBuilder.png" alt="DevSecOps Concept">
+</p>
+
 ## Overview
 
 DevSecOpsBuilder is a comprehensive toolset designed for setting up and testing DevSecOps environments. It automates the installation of essential software and libraries using Makefile, Dockerfile, and Python scripts, thus creating a robust testbed for DevSecOps practices. This solution simplifies the process of establishing a DevSecOps pipeline, facilitating the integration and testing of various security practices within development workflows.
