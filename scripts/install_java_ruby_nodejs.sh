@@ -13,8 +13,8 @@ fi
 if ! command -v node &> /dev/null
 then
     echo "Setting up Node.js..."
-    # Replace 'X' with the version number you wish to install, e.g., '14' for Node.js 14
-    curl -fsSL https://deb.nodesource.com/setup_X | sudo -E bash -
+    # Replace '20' with the version number you wish to install, e.g., '14' for Node.js 14
+    curl -fsSL https://deb.nodesource.com/setup_20 | sudo -E bash -
     sudo apt install -y nodejs npm
 else
     echo "Node.js is already installed."
