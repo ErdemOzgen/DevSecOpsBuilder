@@ -5,7 +5,7 @@ tools_to_install:
       update: docker pull zricethezav/gitleaks:latest
       help: docker run --rm zricethezav/gitleaks --help
       language: "All"
-      default: false
+      default: true
       devsecops:
         name: gitleaks
         description: "Gitleaks is a SAST tool for detecting hardcoded secrets like passwords, api keys, and tokens in git repos."
@@ -43,7 +43,7 @@ tools_to_install:
       update: pip install --upgrade detect-secrets
       help: detect-secrets --help
       language: "All"
-      default: false
+      default: true
       devsecops:
         name: detect-secrets
         description: "An enterprise friendly way of detecting and preventing secrets in code."
@@ -66,7 +66,7 @@ tools_to_install:
       install: sudo npm install -g @cyclonedx/cdxgen
       update: sudo npm update -g @cyclonedx/cdxgen
       help: cdxgen -h
-      default: false
+      default: true
       language:
         - "C++"
         - "Node.js"
@@ -91,7 +91,7 @@ tools_to_install:
       install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       help: syft -h
-      default: false
+      default: true
       language:
         - "C"
         - "C++"
@@ -154,7 +154,7 @@ tools_to_install:
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
       help: local-php-security-checker --help
-      default: false
+      default: true
       language:
         - "PHP"
       devsecops:
@@ -318,13 +318,13 @@ tools_to_install:
         name: wapiti
         description: "Wapiti allows you to audit the security of your web applications."
         category: "DAST"
-        url: https://github.com/wapiti-scanner/wapiti/tree/master
+        url: https://github.com/wapiti-scanner/wapiti.git 
 
     - name: nuclei
       install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
       update: nuclei -update
       help: nuclei --help
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
