@@ -253,20 +253,6 @@ tools_to_install:
         category: "SAST"
         url: https://github.com/ajinabraham/libsast
 
-    - name: eslint
-      install: npm init @eslint/config
-      update: npm init @eslint/config
-      help: eslint --help
-      default: false
-      language:
-        - "JavaScript"
-        - "Node.js"
-        - "TypeScript"
-      devsecops:
-        name: eslint
-        description: "ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs."
-        category: "SAST"
-        url: https://github.com/eslint/eslint
 
     
     - name: sonarqube
