@@ -66,7 +66,7 @@ tools_to_install:
       install: sudo npm install -g @cyclonedx/cdxgen
       update: sudo npm update -g @cyclonedx/cdxgen
       help: cdxgen -h
-      default: false
+      default: true
       language:
         - "C++"
         - "Node.js"
@@ -308,17 +308,17 @@ tools_to_install:
         url: https://www.zaproxy.org/download/
 
     - name: wapiti
-      install: git clone https://github.com/wapiti-scanner/wapiti/tree/master && cd wapiti && make install
-      update: git clone https://github.com/wapiti-scanner/wapiti/tree/master && cd wapiti && make install
+      install: git clone https://github.com/wapiti-scanner/wapiti.git && cd wapiti && make install
+      update: git clone https://github.com/wapiti-scanner/wapiti.git && cd wapiti && make install
       help: wapiti --help
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
         name: wapiti
         description: "Wapiti allows you to audit the security of your web applications."
         category: "DAST"
-        url: https://github.com/wapiti-scanner/wapiti/tree/master
+        url: https://github.com/wapiti-scanner/wapiti.git 
 
     - name: nuclei
       install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
