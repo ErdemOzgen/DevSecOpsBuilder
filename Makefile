@@ -22,6 +22,7 @@ PIP=pip3
 setup: ## Installs the necessary dependencies and tools run.
 	@echo "Installing dependencies..."
 	sudo apt-get install build-essential -y
+	sudo apt install net-tools -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
 	@./scripts/install_docker_go.sh
