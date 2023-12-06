@@ -132,11 +132,13 @@ outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs/graphs/
 	mkdir -p command_outputs/scanner/
 	mkdir -p command_outputs/SAST/
+	mkdir -p command_outputs/python-scan
 
 # Cleans up command outputs.
 cleanoutput: ## Cleans up command outputs.
 	echo "Cleaning Outputs"
 	cd command_outputs && rm -rf */
+	@make outputs
 
 
 	
