@@ -23,7 +23,7 @@ commands_to_run:
       post_command: "echo Bandit Scan Complete. Results stored in ${output_path}"
       post_parameters:
         output_path: "./command_outputs/python-scan/"
-      stepno: 4
+      stepno: 3
 
     - name: "Vulnerability Scan with Grype"
       command: "grype dir:${scan_directory} -o json --file ${output_path}"
