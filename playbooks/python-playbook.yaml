@@ -3,16 +3,36 @@ commands_to_run:
     - name: "Starting scan for Python"
       command: echo "Starting scan with Python tools"
       stepno: 1
+
+    - name: "Code obfuscation with PyArmor"
+      command: "pyarmor gen ${file_path} --output ${output_path}"
+      parameters:
+        file_path: "./lab/DVSA"
+        output_path: "./lab/DVSA-obfuscated"
+      post_command: "echo PyArmor Python script obfuscation completed. You can find the obfuscated code in ${output_path}"
+      post_parameters:
+        output_path: "lab/DVSA-obfuscated/DVSA"
+      stepno: 2
       
     - name: "Secret Scan with Detect Secrets"
       command: "detect-secrets -C ${scan_directory} scan > ${output_file}"
       parameters:
-        scan_directory: "/lab/DVSA"
+        scan_directory: "./lab/DVSA"
         output_file: "./command_outputs/python-scan/secrets.json"
       post_command: "echo Detect Secrets complete. Results stored in ${output_file}"
       post_parameters:
         output_file: "./command_outputs/python-scan/secrets.json"
-      stepno: 2
+      stepno: 3
+
+    - name: "Secret Scan with Detect Secrets (obfuscated)"
+      command: "detect-secrets -C ${scan_directory} scan > ${output_file}"
+      parameters:
+        scan_directory: "./lab/DVSA-obfuscated/DVSA"
+        output_file: "./command_outputs/python-scan/secrets_obf.json"
+      post_command: "echo Detect Secrets complete. Results stored in ${output_file}"
+      post_parameters:
+        output_file: "./command_outputs/python-scan/secrets_obf.json"
+      stepno: 3
 
     - name: "Bandit Scan"
       command: "bandit -r ${scan_directory} -f ${output_type} -o ${output_path}/bandit_result.json"
@@ -25,6 +45,17 @@ commands_to_run:
         output_path: "./command_outputs/python-scan/"
       stepno: 3
 
+    - name: "Bandit Scan (obfuscated)"
+      command: "bandit -r ${scan_directory} -f ${output_type} -o ${output_path}/bandit_result_obf.json"
+      parameters:
+        scan_directory: "./lab/DVSA-obfuscated/DVSA"
+        output_type: "json"
+        output_path: "./command_outputs/python-scan"
+      post_command: "echo Bandit Scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/python-scan/"
+      stepno: 4
+
     - name: "Vulnerability Scan with Grype"
       command: "grype dir:${scan_directory} -o json --file ${output_path}"
       parameters:
@@ -34,7 +65,19 @@ commands_to_run:
       post_command: "echo Grype scan Complete. Results stored in ${output_path}"
       post_parameters:
         output_path: "./command_outputs/python-scan/"
-      stepno: 4
+      stepno: 5
+    
+    - name: "Vulnerability Scan with Grype (obfuscated)"
+      command: "grype dir:${scan_directory} -o json --file ${output_path}"
+      parameters:
+        scan_directory: "./lab/DVSA-obfuscated/DVSA"
+        output_type: "json"
+        output_path: "./command_outputs/python-scan/grype_obf.json"
+      post_command: "echo Grype scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/python-scan/"
+      stepno: 5
+
 
     - name: "Dependency Scan with Safety"
       command: "safety check --save-json ${output_path}"
@@ -43,7 +86,9 @@ commands_to_run:
       post_command: "echo Safety dependency scan Complete. Results stored in ${output_path}"
       post_parameters:
         output_path: "./command_outputs/python-scan/"
-      stepno: 5
+      stepno: 6
+
+    
 
     
 

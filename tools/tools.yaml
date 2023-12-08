@@ -361,3 +361,16 @@ tools_to_install:
         description: "Bandit is a tool designed to find common security issues in Python code."
         category: "SAST"
         url: https://github.com/PyCQA/bandit
+
+    - name: pyarmor
+      install: pip install pyarmor
+      update: pip install --upgrade pyarmor
+      help: pyarmor --help
+      default: true
+      language:
+        - "Python"
+      devsecops:
+        name: pyarmor
+        description: "Pyarmor is a command-line tool designed for obfuscating Python scripts, binding obfuscated scripts to specific machines, and setting expiration dates for obfuscated scripts."
+        category: "Obfuscation"
+        url: https://github.com/dashingsoft/pyarmor
