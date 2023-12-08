@@ -88,6 +88,21 @@ commands_to_run:
         output_path: "./command_outputs/python-scan/"
       stepno: 6
 
+    # This step requires a configured instance of SonarQube with a desired project.
+    # After tho configuration on SonarQube, you must add the required parameters below to perform your scan.
+    # This step and its commands are specified for Python projects.
+    #- name: "SAST Scan with SonarQube"
+    #  command: >
+    #    docker run
+    #    --rm
+    #    --network=host
+    #    -e SONAR_HOST_URL="<Enter the URL of SonarQube instance here. Usually, it is http://localhost:9000>"
+    #    -e SONAR_SCANNER_OPTS="-Dsonar.projectKey= <Enter your project key here>"
+    #    -e SONAR_TOKEN="<Enter your generated token here>"
+    #    -v "<Enter the whole path of your project to be scanned here>:/usr/src"
+    #    sonarsource/sonar-scanner-cli
+    #  stepno: 7
+
     
 
     

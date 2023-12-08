@@ -54,6 +54,7 @@ build:			## Build all services.
 pull:			## Pull Docker images.
 	docker login
 	${COMPOSE_PREFIX_CMD} docker-compose ${COMPOSE_ALL_FILES} pull
+	docker pull sonarsource/sonar-scanner-cli
 
 # Stops all services.
 down:			## Down all services.
