@@ -9,7 +9,7 @@ commands_to_run:
       parameters:
         file_path: "./lab/DVSA"
         output_path: "./lab/DVSA-obfuscated"
-      post_command: "echo PyArmor Python script obfuscation completed. You can find the obfuscated code in ${}"
+      post_command: "echo PyArmor Python script obfuscation completed. You can find the obfuscated code in ${output_path}"
       post_parameters:
         output_path: "lab/DVSA-obfuscated/DVSA"
       stepno: 2
