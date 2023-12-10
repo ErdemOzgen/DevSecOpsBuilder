@@ -16,7 +16,7 @@ commands_to_run:
       command: nuclei -t ${template} -u ${target_address} -o ${output_file}
       parameters:
         target_address: https://example.com
-        template: example/template #use "nuclei -tl" command for templates 
+        template: example/template #use "nuclei -tl" command to see the templates
         output_file: "./command_outputs/DAST/NucleiReport.txt" #create file before run the process
       post_command: "echo Nuclei Scan Completed"
       stepno: 2
