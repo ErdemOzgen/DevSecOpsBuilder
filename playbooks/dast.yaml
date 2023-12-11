@@ -16,7 +16,7 @@ commands_to_run:
       command: nuclei -t ${template} -u ${target_address} -o ${output_file}
       parameters:
         target_address: http://scanme.nmap.org/
-        template: http/exposures/files/db-xml-file.yaml  #use "nuclei -tl" command to see the templates
+        template: http/exposures/files/db-xml-file.yaml  #use "nuclei -tl" command to see the templates #Optinal you can remove it
         output_file: "./command_outputs/DAST/NucleiReport.txt" #create file before run the process
       post_command: "echo Nuclei Scan Completed"
       stepno: 2
@@ -25,6 +25,6 @@ commands_to_run:
       command: zaproxy -quickurl ${target_address} -quickout ${output_file} -cmd 
       parameters:
         target_address: "http://scanme.nmap.org/"
-        output_file: "~/DevSecOpsBuilder/command_outputs/DAST/ZapProxyOutput.html" 
+        output_file: "~/DevSecOpsBuilder/command_outputs/DAST/ZapProxyOutput.html" # Change this path
       post_command: "echo Zaproxy Scan Completed" 
       stepno: 2

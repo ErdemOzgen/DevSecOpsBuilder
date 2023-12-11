@@ -126,14 +126,15 @@ cleanlab:
 # Creates necessary directories for command outputs.
 outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs
-	mkdir -p command_outputs/git-secrets
-	mkdir -p command_outputs/SBOM
+	mkdir -p command_outputs/git-secrets/
+	mkdir -p command_outputs/SBOM?
 	mkdir -p command_outputs/outputs
 	mkdir -p command_outputs/jenkinsFiles/
 	mkdir -p command_outputs/graphs/
 	mkdir -p command_outputs/scanner/
 	mkdir -p command_outputs/SAST/
-	mkdir -p command_outputs/python-scan
+	mkdir -p command_outputs/python-scan/
+	mkdir -p command_outputs/DAST/
 
 # Cleans up command outputs.
 cleanoutput: ## Cleans up command outputs.
