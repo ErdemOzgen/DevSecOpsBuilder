@@ -1,0 +1,30 @@
+commands_to_run:
+  steps:
+    - name: "Starting DAST scan"
+      command: echo "Started DAST scan"
+      stepno: 1
+
+    - name: "Wapiti Scan"
+      command: wapiti -u ${target_address} -o ${output_path}
+      parameters:
+        target_address: "http://scanme.nmap.org/"
+        output_path: "./command_outputs/DAST/WapitiReports"
+      post_command: "echo Wapiti Scan Completed"
+      stepno: 2
+
+    - name: "Nuclei Scan"
+      command: nuclei -t ${template} -u ${target_address} -o ${output_file}
+      parameters:
+        target_address: http://scanme.nmap.org/
+        template: http/exposures/files/db-xml-file.yaml  #use "nuclei -tl" command to see the templates
+        output_file: "./command_outputs/DAST/NucleiReport.txt" #create file before run the process
+      post_command: "echo Nuclei Scan Completed"
+      stepno: 2
+
+    - name: "Zaproxy Scan" 
+      command: zaproxy -quickurl ${target_address} -quickout ${output_file} -cmd 
+      parameters:
+        target_address: "http://scanme.nmap.org/"
+        output_file: "~/DevSecOpsBuilder/command_outputs/DAST/ZapProxyOutput.html" 
+      post_command: "echo Zaproxy Scan Completed" 
+      stepno: 2
