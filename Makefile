@@ -25,6 +25,12 @@ setup: ## Installs the necessary dependencies and tools run.
 	sudo apt install net-tools -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
+	sudo add-apt-repository ppa:ethereum/ethereum
+	sudo apt-get update
+	sudo apt-get install solc
+	pip install solc-select
+	solc-select install latest
+	solc-select use 0.8.23
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
@@ -117,6 +123,7 @@ lab: ## Clones repositories for lab purposes.
 	@test -d lab/WebGoat.NET || git clone https://github.com/OWASP/WebGoat.NET.git lab/WebGoat.NET
 	@test -d lab/OWASPWebGoatPHP || git clone https://github.com/OWASP/OWASPWebGoatPHP.git lab/OWASPWebGoatPHP
 	@test -d lab/vulnado || git clone https://github.com/ScaleSec/vulnado.git lab/vulnado
+	@test -d lab/not-so-smart-contracts || git clone https://github.com/crytic/not-so-smart-contracts.git lab/not-so-smart-contracts 
 
 # Cleans up lab repositories.
 cleanlab:
@@ -133,6 +140,7 @@ outputs: ## Creates necessary directories for command outputs.
 	mkdir -p command_outputs/graphs/
 	mkdir -p command_outputs/scanner/
 	mkdir -p command_outputs/SAST/
+	mkdir -p command_outputs/SAST/solidity-scans
 	mkdir -p command_outputs/python-scan/
 	mkdir -p command_outputs/DAST/
 

@@ -374,3 +374,29 @@ tools_to_install:
         description: "Pyarmor is a command-line tool designed for obfuscating Python scripts, binding obfuscated scripts to specific machines, and setting expiration dates for obfuscated scripts."
         category: "Obfuscation"
         url: https://github.com/dashingsoft/pyarmor
+    
+    - name: mythril
+      install: pip install mythril
+      update: pip install --upgrade mythril
+      help: myth -h
+      default: false
+      language:
+        - "Solidity"
+      devsecops:
+        name: mythril
+        description: "Mythril is a security analysis tool for EVM bytecode. It detects security vulnerabilities in smart contracts built for Ethereum, Hedera, Quorum, Vechain, Roostock, Tron and other EVM-compatible blockchains. "
+        category: "SAST"
+        url: https://github.com/ConsenSys/mythril
+
+    - name: slither-analyzer
+      install: pip install slither-analyzer
+      update: pip install --upgrade slither-analyzer
+      help: slither --help
+      default: false
+      language:
+        - "Solidity"
+      devsecops:
+        name: slither
+        description: "Slither is a Solidity & Vyper static analysis framework written in Python3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. "
+        category: "SAST"
+        url: https://github.com/ConsenSys/mythril
