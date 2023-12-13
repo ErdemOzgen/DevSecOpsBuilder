@@ -5,7 +5,7 @@ tools_to_install:
       update: docker pull zricethezav/gitleaks:latest
       help: docker run --rm zricethezav/gitleaks --help
       language: "All"
-      default: true
+      default: false
       devsecops:
         name: gitleaks
         description: "Gitleaks is a SAST tool for detecting hardcoded secrets like passwords, api keys, and tokens in git repos."
@@ -43,7 +43,7 @@ tools_to_install:
       update: pip install --upgrade detect-secrets
       help: detect-secrets --help
       language: "All"
-      default: true
+      default: false
       devsecops:
         name: detect-secrets
         description: "An enterprise friendly way of detecting and preventing secrets in code."
@@ -66,7 +66,7 @@ tools_to_install:
       install: sudo npm install -g @cyclonedx/cdxgen
       update: sudo npm update -g @cyclonedx/cdxgen
       help: cdxgen -h
-      default: true
+      default: false
       language:
         - "C++"
         - "Node.js"
@@ -91,7 +91,7 @@ tools_to_install:
       install: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
       help: syft -h
-      default: true
+      default: false
       language:
         - "C"
         - "C++"
@@ -154,7 +154,7 @@ tools_to_install:
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
       help: local-php-security-checker --help
-      default: true
+      default: false
       language:
         - "PHP"
       devsecops:
@@ -311,7 +311,7 @@ tools_to_install:
       install: git clone https://github.com/wapiti-scanner/wapiti.git && cd wapiti && make install
       update: git clone https://github.com/wapiti-scanner/wapiti.git && cd wapiti && make install
       help: wapiti --help
-      default: true
+      default: false
       language:
         - "All"
       devsecops:
@@ -324,7 +324,7 @@ tools_to_install:
       install: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
       update: nuclei -update
       help: nuclei --help
-      default: true
+      default: false
       language:
         - "All"
       devsecops:
@@ -366,7 +366,7 @@ tools_to_install:
       install: pip install pyarmor
       update: pip install --upgrade pyarmor
       help: pyarmor --help
-      default: true
+      default: false
       language:
         - "Python"
       devsecops:
@@ -374,3 +374,29 @@ tools_to_install:
         description: "Pyarmor is a command-line tool designed for obfuscating Python scripts, binding obfuscated scripts to specific machines, and setting expiration dates for obfuscated scripts."
         category: "Obfuscation"
         url: https://github.com/dashingsoft/pyarmor
+    
+    - name: mythril
+      install: pip install mythril
+      update: pip install --upgrade mythril
+      help: myth -h
+      default: true
+      language:
+        - "Solidity"
+      devsecops:
+        name: mythril
+        description: "Mythril is a security analysis tool for EVM bytecode. It detects security vulnerabilities in smart contracts built for Ethereum, Hedera, Quorum, Vechain, Roostock, Tron and other EVM-compatible blockchains. "
+        category: "SAST"
+        url: https://github.com/ConsenSys/mythril
+
+    - name: slither-analyzer
+      install: pip install slither-analyzer
+      update: pip install --upgrade slither-analyzer
+      help: slither --help
+      default: true
+      language:
+        - "Solidity"
+      devsecops:
+        name: slither
+        description: "Slither is a Solidity & Vyper static analysis framework written in Python3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. "
+        category: "SAST"
+        url: https://github.com/ConsenSys/mythril

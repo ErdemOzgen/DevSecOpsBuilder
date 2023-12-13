@@ -1,0 +1,28 @@
+commands_to_run:
+  steps:
+    - name: "Solidity Scan with Mythril"
+      command: myth analyze ${file_path} > ${output_path}
+      parameters:
+        file_path: "./lab/not-so-smart-contracts/reentrancy/Reentrancy.sol"
+        output_path: "./command_outputs/SAST/solidity-scans/mythril-scan.txt"
+      post_command: "echo Mythril Solidity Smart Contract scan completed. You can find the result in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/SAST/solidity-scans/"
+      stepno: 1
+
+    - name: "Solidity Scan with Slither"
+      command: slither ${file_path}  --solc-solcs-select ${solc_version} --json ${output_path}
+      parameters:
+        file_path: "./lab/not-so-smart-contracts/reentrancy/Reentrancy.sol"
+        # Solc version is crucial for this step. This version must be able to scan your .sol file or project.
+        # Also, you have to install the required version of solc to use it with Slither.
+        # You can easily install it with solc-select that is automatically installed with DevSecOps builder.
+        # Simple, use command: solc-select install DESIRED_VERSION
+        solc_version: "0.4.15"
+        output_path: "./command_outputs/SAST/solidity-scans/slither-scan.json"
+      post_command: "echo Slither Solidity Smart Contract scan completed. You can find the result in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/SAST/solidity-scans/"
+      stepno: 2
+
+
