@@ -2,6 +2,7 @@ import argparse
 from devsecopsbuilder import pipeline_executer
 from devsecopsbuilder import convert_graph
 from devsecopsbuilder import convert_pipeline
+from devsecopsbuilder import generate_report
 import networkx as nx
 import matplotlib.pyplot as plt
 from devsecopsbuilder import asciiart
@@ -13,6 +14,7 @@ def main():
     parser.add_argument('--config', default='./playbooks/playbook.yaml', help='Path to configuration file (optional)')
     parser.add_argument('--output_dir', default='command_outputs/outputs', help='Path to output directory (optional)')
     parser.add_argument('--tools_config', default='./tools/tools.yaml', help='Path to tools configuration file (optional)')
+    parser.add_argument('--report', action='store_true', help='Generates a report of the results of playbooks')
     parser.add_argument('--generate_graph', action='store_true', help='Generate graph of defined yaml workflow')
     parser.add_argument('--graph_yaml', default='./playbooks/playbook.yaml', help='Path to yaml file for generating graph (optional)')
     parser.add_argument('--graph_output_dir', default='command_outputs/graphs/graph.png', help='Path to graph output directory (optional)')
@@ -22,7 +24,7 @@ def main():
     args = parser.parse_args()
 
     # Check if no actionable arguments were provided
-    actionable_args = [args.install, args.update, args.execute, args.generate_graph, args.convert_pipeline]
+    actionable_args = [args.install, args.update, args.execute, args.report, args.generate_graph, args.convert_pipeline]
     if not any(actionable_args):
         asciiart.print_ascii_art()
         parser.print_help()
