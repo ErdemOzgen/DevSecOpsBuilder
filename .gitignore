@@ -169,3 +169,5 @@ docker/sonarqube_logs/*
 dependency-check/*
 dependency-check*
 output.pdf
+git-hound/*
+wapiti/*
