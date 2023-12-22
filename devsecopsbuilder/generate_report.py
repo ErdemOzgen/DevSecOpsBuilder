@@ -1,4 +1,5 @@
 import json
+import os
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import (
@@ -10,23 +11,38 @@ from reportlab.platypus import (
 
 
 styles = getSampleStyleSheet()
+# Define the base directory and scan type
+base_dir = "command_outputs"
+scan_type = "python-scan"
+# File names
+bandit_file = "bandit_result.json"
+grype_file = "grype.json"
+safety_file = "dependency_scan.json"
+secret_file = "secrets.json"
+sbom_file = "sbom.json"
 
 
-def bandit_results():
+def get_file_path(base_dir, scan_type, file_name):
     """
-    Reads data from a JSON file containing the results of a Bandit scan and generates a list of comp. for PDF report with the scan results.  # noqa: E501
+    Constructs a file path for a given scan type and file name.
+
+    Args:
+        base_dir (str): The base directory where the scan results are stored.
+        scan_type (str): The type of scan (e.g., 'python-scan').
+        file_name (str): The name of the file (e.g., 'bandit_result.json').
 
     Returns:
-        list: A list of paragraphs containing the Bandit scan results, formatted as HTML, ready to be added to a PDF report.  # noqa: E501
+        str: The full file path.
     """
+    return os.path.join(base_dir, scan_type, file_name)
 
+
+def bandit_results(bandit_file_path):
     story = []
-    with open("command_outputs/python-scan/bandit_result.json", "r") as file:
+    with open(bandit_file_path, "r") as file:
         bandit_data = json.load(file)
 
-    bandit_heading = Paragraph(
-        "<b>Bandit Scan Results</b>", styles["Heading1"]
-    )  # noqa: E501
+    bandit_heading = Paragraph("<b>Bandit Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(bandit_heading)
 
     for result in bandit_data["results"]:
@@ -51,13 +67,13 @@ def bandit_results():
     return story
 
 
-def grype_results():
+def grype_results(grype_file_path):
     story = []
+    with open(grype_file_path, "r") as file:
+        grype_data = json.load(file)
+
     grype_heading = Paragraph("<b>Grype Scan Results</b>", styles["Heading1"])
     story.append(grype_heading)
-
-    with open("command_outputs/python-scan/grype.json", "r") as file:
-        grype_data = json.load(file)
 
     for match in grype_data["matches"]:
         vulnerability = match["vulnerability"]
@@ -96,32 +112,24 @@ def grype_results():
     return story
 
 
-def safety_results():
+def safety_results(safety_file_path):
     story = []
-    safety_heading = Paragraph(
-        "<b>Safety Dependency Scan Results</b>", styles["Heading1"]
-    )
+    safety_heading = Paragraph("<b>Safety Dependency Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(safety_heading)
-    with open("command_outputs/python-scan/dependency_scan.json", "r") as file:
+
+    with open(safety_file_path, "r") as file:
         safety_data = json.load(file)
 
     pkgs = []
 
-    for package_name, package_info in safety_data.get(
-        "scanned_packages", {}
-    ).items():  # noqa: E501
+    for package_name, package_info in safety_data.get("scanned_packages", {}).items():  # noqa: E501
         pkgs.append(f"{package_name} {package_info.get('version')}")
 
-    pkgs = ", ".join(pkgs)
-    pkgs = Paragraph(
-        f"<b>Scanned Packages: </b>{pkgs}<br/><br/>", styles["Normal"]
-    )  # noqa: E501
-    story.append(pkgs)
+    pkgs_str = ", ".join(pkgs)
+    pkgs_paragraph = Paragraph(f"<b>Scanned Packages: </b>{pkgs_str}<br/><br/>", styles["Normal"])  # noqa: E501
+    story.append(pkgs_paragraph)
 
-    vuln_list = Paragraph(
-        "<b>Vulnerabilities Found in Packages: </b><br/><br/>",
-        styles["Normal"],  # noqa: E501
-    )
+    vuln_list = Paragraph("<b>Vulnerabilities Found in Packages: </b><br/><br/>", styles["Normal"])  # noqa: E501
     story.append(vuln_list)
 
     for vuln in safety_data.get("vulnerabilities", []):
@@ -148,17 +156,15 @@ def safety_results():
     return story
 
 
-def secret_results():
+def secret_results(secret_file_path):
     story = []
-    secret_heading = Paragraph(
-        "<b>Detect Secrets Scan Results</b>", styles["Heading1"]
-    )  # noqa: E501
+    secret_heading = Paragraph("<b>Detect Secrets Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(secret_heading)
-    with open("command_outputs/python-scan/secrets.json", "r") as file:
+
+    with open(secret_file_path, "r") as file:
         secret_data = json.load(file)
 
     for _, results_list in secret_data["results"].items():
-
         for result in results_list:
             result_type = result.get("type")
             filename = result.get("filename")
@@ -172,26 +178,25 @@ def secret_results():
                 f"<b>Hashed Secret:</b> {hashed_secret}<br/><br/>"
             )
 
-            story.append(
-                KeepTogether([Paragraph(paragraph, styles["Normal"])])
-            )  # noqa: E501
+            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))
     story.append(PageBreak())
 
     return story
 
 
-def sbom_results():
+def sbom_results(sbom_file_path):
     story = []
     sbom_heading = Paragraph("<b>SBOM with Syft</b>", styles["Heading1"])
     story.append(sbom_heading)
-    with open("command_outputs/python-scan/sbom.json", "r") as file:
+
+    with open(sbom_file_path, "r") as file:
         sbom_data = json.load(file)
 
     for component in sbom_data["components"]:
         component_name = component["name"]
         component_type = component["type"]
         component_version = component["version"]
-        component_cpe = component["cpe"]
+        component_cpe = component.get("cpe", "N/A")  # Added a default value for CPE since it is not always present in the SBOM.   # noqa: E501
 
         paragraph = (
             f"<b>Type:</b> {component_type}<br/>"
@@ -205,27 +210,24 @@ def sbom_results():
     return story
 
 
-def generate_pdf(output_filename):
-    # Load your JSON data from the file
-
+def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path, sbom_file_path=None): # noqa: E501
     doc = SimpleDocTemplate(output_filename, pagesize=letter)
     story = []
 
-    story += bandit_results()
-    story += grype_results()
-    story += safety_results()
-    story += secret_results()
-    # SBOM results can be enormous. Therefore, this segment is commented but
-    # you can simply uncomment and use it.
-    # story += sbom_results()
+    story += bandit_results(bandit_file_path)
+    story += grype_results(grype_file_path)
+    story += safety_results(safety_file_path)
+    story += secret_results(secret_file_path)
+    
+    # SBOM results can be enormous. Therefore, this segment is optional.
+    if sbom_file_path:
+        story += sbom_results(sbom_file_path)
 
     doc.build(story)
 
 
-# Set the output filename
 output_filename = "output.pdf"
 
 # Generate the PDF
-generate_pdf(output_filename)
-
+generate_pdf(output_filename, bandit_file, grype_file, safety_file, secret_file)  # noqa: E501
 print("Report generated.")
