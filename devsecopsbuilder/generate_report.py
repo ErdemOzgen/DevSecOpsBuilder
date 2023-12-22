@@ -96,7 +96,6 @@ def grype_results(grype_file_path):
         related_vulns = match["relatedVulnerabilities"]
         related_vulns_id = []
         if related_vulns:
-            print(story)
             for i in related_vulns:
                 related_vulns_id.append(i["id"])
         else:
@@ -241,6 +240,5 @@ def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file
 
 
 generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
-
 
 print("Report generated.")
