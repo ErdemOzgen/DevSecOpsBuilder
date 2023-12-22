@@ -96,7 +96,6 @@ def grype_results(grype_file_path):
         related_vulns = match["relatedVulnerabilities"]
         related_vulns_id = []
         if related_vulns:
-            print(story)
             for i in related_vulns:
                 related_vulns_id.append(i["id"])
         else:
