@@ -14,10 +14,12 @@ styles = getSampleStyleSheet()
 
 def bandit_results():
     """
-    Input: None
-    Output: List
-    Output Definition: Bandit result in a list for pdf generation
+    Reads data from a JSON file containing the results of a Bandit scan and generates a list of comp. for PDF report with the scan results.  # noqa: E501
+
+    Returns:
+        list: A list of paragraphs containing the Bandit scan results, formatted as HTML, ready to be added to a PDF report.  # noqa: E501
     """
+
     story = []
     with open("command_outputs/python-scan/bandit_result.json", "r") as file:
         bandit_data = json.load(file)

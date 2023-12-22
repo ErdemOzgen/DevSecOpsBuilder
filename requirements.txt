@@ -1,4 +1,4 @@
 pyYAML==6.0.1
 networkx==3.2.1
 matplotlib==3.8.2
-reportlab
+reportlab==4.0.8
