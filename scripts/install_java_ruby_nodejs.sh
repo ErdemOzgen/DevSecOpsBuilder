@@ -5,6 +5,7 @@ if ! java -version 2>&1 | grep -q "openjdk 11"
 then
     echo "Installing OpenJDK 11 JDK and JRE..."
     sudo apt install openjdk-11-jdk openjdk-11-jre -y
+    sudo apt install maven -y
 else
     echo "OpenJDK 11 JDK and JRE are already installed."
 fi

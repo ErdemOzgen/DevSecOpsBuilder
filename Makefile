@@ -25,12 +25,7 @@ setup: ## Installs the necessary dependencies and tools run.
 	sudo apt install net-tools -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
-	sudo add-apt-repository ppa:ethereum/ethereum
-	sudo apt-get update
-	sudo apt-get install solc
-	pip install solc-select
-	solc-select install latest
-	solc-select use 0.8.23
+	@./scripts/install_smart_contracts.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
