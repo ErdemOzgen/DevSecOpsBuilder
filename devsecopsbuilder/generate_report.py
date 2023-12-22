@@ -178,7 +178,7 @@ def secret_results(secret_file_path):
                 f"<b>Hashed Secret:</b> {hashed_secret}<br/><br/>"
             )
 
-            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))
+            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
     story.append(PageBreak())
 
     return story
@@ -210,7 +210,7 @@ def sbom_results(sbom_file_path):
     return story
 
 
-def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path, sbom_file_path=None): # noqa: E501
+def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path, sbom_file_path=None):  # noqa: E501
     doc = SimpleDocTemplate(output_filename, pagesize=letter)
     story = []
 
