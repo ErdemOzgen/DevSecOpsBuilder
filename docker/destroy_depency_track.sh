@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Deploying Dependency Track"
+echo "Destroying Dependency Track"
 docker-compose -f ./docker/docker-compose-depency-track.yml down
 echo "Dependency Track destroyed"
 

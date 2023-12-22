@@ -166,3 +166,6 @@ docker/sonarqube_conf/*
 docker/sonarqube_data/*
 docker/sonarqube_extensions/*
 docker/sonarqube_logs/*
+dependency-check/*
+dependency-check*
+output.pdf

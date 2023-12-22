@@ -97,8 +97,11 @@ commands_to_run:
       stepno: 7
 
     # This step requires a configured instance of SonarQube with a desired project.
+    # You can simply run "make up" to run the required Docker containers.
     # After the configuration on SonarQube, you must add the required parameters below to perform your scan.
+    # Also, you must use a SonarScanner CLI instance. Command below will run the container image of the instance.
     # This step and its commands are specified for Python projects.
+    # You can see the scan results on SonarQube UI.
     #- name: "SAST Scan with SonarQube"
     #  command: >
     #    docker run

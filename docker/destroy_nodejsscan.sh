@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Deploying NodeJsScan"
+echo "Destroying NodeJsScan"
 docker rm -f nodejsscan
 echo "NodeJsScan destroyed"
 
