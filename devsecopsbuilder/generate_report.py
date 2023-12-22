@@ -66,7 +66,8 @@ def grype_results():
         urls = vulnerability["urls"]
         related_vulns = match["relatedVulnerabilities"]
         related_vulns_id = []
-        if related_vulns:print(story)
+        if related_vulns:
+            print(story)
             for i in related_vulns:
                 related_vulns_id.append(i["id"])
         else:
