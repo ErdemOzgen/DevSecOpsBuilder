@@ -242,5 +242,4 @@ def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file
 
 generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
 
-
 print("Report generated.")
