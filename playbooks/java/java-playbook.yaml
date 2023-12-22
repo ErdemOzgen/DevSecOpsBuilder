@@ -1,0 +1,66 @@
+commands_to_run:
+  steps:
+    - name: "Starting scan for Java project"
+      command: echo "Starting scan for Java Project"
+      stepno: 1
+      
+    - name: "Secret Scan with Detect Secrets"
+      command: "detect-secrets -C ${scan_directory} scan > ${output_file}"
+      parameters:
+        scan_directory: "./lab/vulnado"
+        output_file: "./command_outputs/java-scan/secrets.json"
+      post_command: "echo Detect Secrets complete. Results stored in ${output_file}"
+      post_parameters:
+        output_file: "./command_outputs/java-scan/secrets.json"
+      stepno: 2
+
+    - name: "Vulnerability Scan with Grype"
+      command: "grype dir:${scan_directory} -o json --file ${output_path}"
+      parameters:
+        scan_directory: "./lab/vulnado"
+        output_type: "json"
+        output_path: "./command_outputs/java-scan/grype.json"
+      post_command: "echo Grype scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/java-scan/"
+      stepno: 3
+
+    - name: "Dependency Scan with OWASP Dependency Check"
+      command: "dependency-check/bin/dependency-check.sh --scan \"${scan_directory}\" --out ${output_path}"
+      parameters:
+        scan_directory: "./lab/vulnado"
+        output_path: "./command_outputs/java-scan"
+      post_command: "echo OWASP Dependency Check Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "./command_outputs/java-scan"
+      stepno: 4
+
+    - name: "SBOM Generation With Syft"
+      command: syft ${scan_directory} --output cyclonedx-json >> ${output_path}/sbom.json
+      parameters:
+        scan_directory: "./lab/vulnado"
+        output_path: "./command_outputs/java-scan"
+      post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
+      stepno: 5
+
+    # This step requires a configured instance of SonarQube with a desired project.
+    # You can simply run "make up" to run the required Docker containers.
+    # After the configuration on SonarQube, you must add the required parameters below to perform your scan.
+    # This step and its commands are specified for Java projects.
+    # You can see the scan results on SonarQube UI.
+    - name: "SAST Scan with SonarQube"
+      command: >
+        cd ${scan_directory} &&
+        mvn clean verify sonar:sonar
+        -Dsonar.projectKey=test2
+        -Dsonar.projectName='test2'
+        -Dsonar.host.url=http://localhost:9000
+        -Dsonar.token=sqp_ae949b1addec7ffc8081b65ec9021192d667ff91
+      parameters:
+        scan_directory: "lab/vulnado"
+      stepno: 6
+
+    
+
+    
+

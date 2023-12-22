@@ -293,6 +293,21 @@ tools_to_install:
         description: "Safety checks your installed dependencies for known security vulnerabilities."
         category: "SAST"
         url: https://github.com/pyupio/safety
+
+    - name: dependency-check
+      install: > 
+        wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.0.7/dependency-check-9.0.7-release.zip &&
+        unzip dependency-check-9.0.7-release.zip
+      update: wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.0.7/dependency-check-9.0.7-release.zip
+      help: dependency-check/bin/dependency-check.sh --help
+      default: true
+      language:
+        - "All"
+      devsecops:
+        name: dependency-check
+        description: "OWASP dependency-check-cli is an command line tool that uses dependency-check-core to detect publicly disclosed vulnerabilities associated with the scanned project dependencies."
+        category: "dependency-check"
+        url: https://github.com/jeremylong/DependencyCheck
     
     - name: zap-proxy
       install: sudo snap install zaproxy --classic

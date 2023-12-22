@@ -82,15 +82,26 @@ commands_to_run:
     - name: "Dependency Scan with Safety"
       command: "safety check --save-json ${output_path}"
       parameters:
-        output_path: "./command_outputs/python-scan/"
+        output_path: "./command_outputs/python-scan/dependency_scan.json"
       post_command: "echo Safety dependency scan Complete. Results stored in ${output_path}"
       post_parameters:
-        output_path: "./command_outputs/python-scan/"
+        output_path: "./command_outputs/python-scan/dependency_scan.json"
       stepno: 6
 
+    - name: "SBOM Generation With Syft"
+      command: syft ${scan_directory} --output cyclonedx-json >> ${output_path}/sbom.json
+      parameters:
+        scan_directory: "./lab/DVSA"
+        output_path: "./command_outputs/python-scan/"
+      post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
+      stepno: 7
+
     # This step requires a configured instance of SonarQube with a desired project.
-    # After tho configuration on SonarQube, you must add the required parameters below to perform your scan.
+    # You can simply run "make up" to run the required Docker containers.
+    # After the configuration on SonarQube, you must add the required parameters below to perform your scan.
+    # Also, you must use a SonarScanner CLI instance. Command below will run the container image of the instance.
     # This step and its commands are specified for Python projects.
+    # You can see the scan results on SonarQube UI.
     #- name: "SAST Scan with SonarQube"
     #  command: >
     #    docker run
@@ -101,7 +112,7 @@ commands_to_run:
     #    -e SONAR_TOKEN="<Enter your generated token here>"
     #    -v "<Enter the whole path of your project to be scanned here>:/usr/src"
     #    sonarsource/sonar-scanner-cli
-    #  stepno: 7
+    #  stepno: 8
 
     
 
