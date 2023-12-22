@@ -11,26 +11,6 @@ from reportlab.platypus import (
 
 
 styles = getSampleStyleSheet()
-# Define the base directory and scan type
-base_dir = "command_outputs"
-scan_type = "python-scan"
-
-# File names
-bandit_file = "bandit_result.json"
-grype_file = "grype.json"
-safety_file = "dependency_scan.json"
-secret_file = "secrets.json"
-sbom_file = "sbom.json"
-
-# Output filename
-output_filename = "output.pdf"
-
-# Construct file paths using base directory, scan type, and file names
-bandit_file_path = os.path.join(base_dir, scan_type, bandit_file)
-grype_file_path = os.path.join(base_dir, scan_type, grype_file)
-safety_file_path = os.path.join(base_dir, scan_type, safety_file)
-secret_file_path = os.path.join(base_dir, scan_type, secret_file)
-sbom_file_path = os.path.join(base_dir, scan_type, sbom_file)  # Optional
 
 
 def get_file_path(base_dir, scan_type, file_name):
@@ -235,10 +215,29 @@ def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file
 
     doc.build(story)
 
-# Generate the PDF
-# Generate the PDF
 
+if __name__ == "__main__":
+    # Define the base directory and scan type
+    base_dir = "command_outputs"
+    scan_type = "python-scan"
 
-generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+    # File names
+    bandit_file = "bandit_result.json"
+    grype_file = "grype.json"
+    safety_file = "dependency_scan.json"
+    secret_file = "secrets.json"
+    sbom_file = "sbom.json"
 
-print("Report generated.")
+    # Output filename
+    output_filename = "output.pdf"
+
+    # Construct file paths using base directory, scan type, and file names
+    bandit_file_path = os.path.join(base_dir, scan_type, bandit_file)
+    grype_file_path = os.path.join(base_dir, scan_type, grype_file)
+    safety_file_path = os.path.join(base_dir, scan_type, safety_file)
+    secret_file_path = os.path.join(base_dir, scan_type, secret_file)
+    sbom_file_path = os.path.join(base_dir, scan_type, sbom_file)  # Optional
+
+    generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+
+    print("Report generated.")
