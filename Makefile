@@ -21,6 +21,7 @@ PIP=pip3
 # Installs the necessary dependencies and tools.
 setup: ## Installs the necessary dependencies and tools run.
 	@echo "Installing dependencies..."
+	sudo apt update -y && sudo apt upgrade -y
 	sudo apt-get install build-essential -y
 	sudo apt install net-tools -y
 	sudo apt update -y

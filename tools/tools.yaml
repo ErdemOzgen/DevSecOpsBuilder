@@ -237,7 +237,7 @@ tools_to_install:
         description: "Semgrep is a fast, open-source, static analysis tool for finding bugs and enforcing code standards at editor, commit, and CI time."
         category: "SAST"
         url: https://github.com/semgrep/semgrep
-    # todo: needs env
+
     - name: libsast
       install: pip install libsast
       update: pip install --upgrade libsast 
@@ -254,9 +254,8 @@ tools_to_install:
         url: https://github.com/ajinabraham/libsast
 
 
-    
     - name: sonarqube
-      install: docker pull sonarqube:latest && sudo sysctl -w vm.max_map_count=524288 && sudo sysctl -w fs.file-max=131072 && ulimit -n 131072 && ulimit -u 8192
+      install: docker pull sonarqube:latest 
       update: docker pull sonarqube:latest
       help: echo "Running in docker  not need help"
       default: false
