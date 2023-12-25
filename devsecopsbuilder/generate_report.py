@@ -1,5 +1,6 @@
 import json
 import os
+import glob
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import (
@@ -8,7 +9,6 @@ from reportlab.platypus import (
     KeepTogether,
     PageBreak,
 )  # noqa: E501
-
 
 styles = getSampleStyleSheet()
 
@@ -216,28 +216,68 @@ def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file
     doc.build(story)
 
 
-if __name__ == "__main__":
-    # Define the base directory and scan type
-    base_dir = "command_outputs"
-    scan_type = "python-scan"
+def find_file_by_keyword(base_dir, scan_type, keyword):
+    """
+    Searches for the most recently modified file in the specified directory 
+    that contains the given keyword. Returns the path of that file.
+    """
+    pattern = os.path.join(base_dir, scan_type, f"*{keyword}*")
+    files = glob.glob(pattern)
+    if not files:
+        return None
+    # Sort files by modification time and return the most recent
+    return max(files, key=os.path.getmtime)
 
-    # File names
-    bandit_file = "bandit_result.json"
-    grype_file = "grype.json"
-    safety_file = "dependency_scan.json"
-    secret_file = "secrets.json"
-    sbom_file = "sbom.json"
+
+def find_and_generate_report(base_dir, scan_type, output_filename):
+    # Find files based on keywords
+    bandit_file_path = find_file_by_keyword(base_dir, scan_type, "bandit")
+    grype_file_path = find_file_by_keyword(base_dir, scan_type, "grype")
+    safety_file_path = find_file_by_keyword(base_dir, scan_type, "dependency_scan")  # noqa: E501
+    secret_file_path = find_file_by_keyword(base_dir, scan_type, "secrets")
+    # sbom_file_path = find_file_by_keyword(base_dir, scan_type, "sbom")  # Optional  # noqa: E501
+
+    # Call the function to generate the PDF (assuming it accepts None for missing files) # noqa: E501
+    generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+
+    print("Report generated.")
+
+
+if __name__ == "__main__":
+    # Define the base directory
+    base_dir = "command_outputs"
+
+    # Define the scan type (can be changed for different projects)
+    scan_type = "python-scan"
 
     # Output filename
     output_filename = "output.pdf"
 
-    # Construct file paths using base directory, scan type, and file names
-    bandit_file_path = os.path.join(base_dir, scan_type, bandit_file)
-    grype_file_path = os.path.join(base_dir, scan_type, grype_file)
-    safety_file_path = os.path.join(base_dir, scan_type, safety_file)
-    secret_file_path = os.path.join(base_dir, scan_type, secret_file)
-    sbom_file_path = os.path.join(base_dir, scan_type, sbom_file)  # Optional
+    # Call the function to find files and generate the report
+    find_and_generate_report(base_dir, scan_type, output_filename)
 
-    generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+# if __name__ == "__main__":
+#     # Define the base directory and scan type
+#     base_dir = "command_outputs"
+#     scan_type = "python-scan"
 
-    print("Report generated.")
+#     # File names
+#     bandit_file = "bandit_result.json"
+#     grype_file = "grype.json"
+#     safety_file = "dependency_scan.json"
+#     secret_file = "secrets.json"
+#     sbom_file = "sbom.json"
+
+#     # Output filename
+#     output_filename = "output.pdf"
+
+#     # Construct file paths using base directory, scan type, and file names
+#     bandit_file_path = os.path.join(base_dir, scan_type, bandit_file)
+#     grype_file_path = os.path.join(base_dir, scan_type, grype_file)
+#     safety_file_path = os.path.join(base_dir, scan_type, safety_file)
+#     secret_file_path = os.path.join(base_dir, scan_type, secret_file)
+#     sbom_file_path = os.path.join(base_dir, scan_type, sbom_file)  # Optional
+
+#     generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+
+#     print("Report generated.")
