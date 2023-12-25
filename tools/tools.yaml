@@ -393,7 +393,7 @@ tools_to_install:
       install: pip install mythril
       update: pip install --upgrade mythril
       help: myth -h
-      default: true
+      default: false
       language:
         - "Solidity"
       devsecops:
@@ -406,7 +406,7 @@ tools_to_install:
       install: pip install slither-analyzer
       update: pip install --upgrade slither-analyzer
       help: slither --help
-      default: true
+      default: false
       language:
         - "Solidity"
       devsecops:

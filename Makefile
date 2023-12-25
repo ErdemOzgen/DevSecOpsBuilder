@@ -8,7 +8,7 @@
 #                                      /_/                                           
 
 .DEFAULT_GOAL:=help
-.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs pip
+.PHONY: up build username pull down stop restart rm logs test clean lab cleanlab cleanoutput outputs pip contracts setup-smart-contracts
 # This for future release of Compose that will use Docker Buildkit, which is much efficient.
 COMPOSE_PREFIX_CMD := COMPOSE_DOCKER_CLI_BUILD=1
 
@@ -26,7 +26,6 @@ setup: ## Installs the necessary dependencies and tools run.
 	sudo apt install net-tools -y
 	sudo apt update -y
 	chmod +x ./scripts/*.sh
-	@./scripts/install_smart_contracts.sh
 	@./scripts/install_docker_go.sh
 	@./scripts/install_anaconda.sh
 	@./scripts/install_java_ruby_nodejs.sh
@@ -38,7 +37,11 @@ setup: ## Installs the necessary dependencies and tools run.
 	@echo 'export PATH="$${HOME}/bin:$$PATH"' >> ~/.bashrc
 	@echo 'SETUP has been completed. Please restart your terminal and run "make help" to see the available commands.'
 
-
+# Installs the necessary dependencies and tools for smart contracts.
+setup-smart-contracts: ## Installs the necessary dependencies and tools for smart contracts run.
+	@echo "Installing dependencies..."
+	sudo apt update -y && sudo apt upgrade -y
+	@./scripts/install_smart_contracts.sh
 
 # Builds and starts all services.
 up:				## Build and start all services.
