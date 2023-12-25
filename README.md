@@ -57,6 +57,8 @@ sudo apt install git -y && sudo apt install make -y
 3. Run the setup script:
    ```bash
    make setup
+   # For smart contract auditing
+   # make setup-smart-contracts
    ```
 
 4. Run the lab script: (This will download test repos)
@@ -80,6 +82,8 @@ sudo apt install git -y && sudo apt install make -y
 	```bash
 	#python devsecopsbuilder/pipeline_executer.py --install #old way
 	python main.py --install
+  # For smart contract auditing
+  # Enable default:true for smart contract tools
 	# If you want to update you can use 
 	python main.py --update
 	```
