@@ -28,198 +28,144 @@ def get_file_path(base_dir, scan_type, file_name):
     return os.path.join(base_dir, scan_type, file_name)
 
 
-def bandit_results(bandit_file_path):
+def process_json_data(file_path, heading_title, item_processor, data_tag, addHeader=True, giveInfo=True):  # noqa: E501
     story = []
-    bandit_heading = Paragraph("<b>Bandit Scan Results</b>", styles["Heading1"])  # noqa: E501
-    story.append(bandit_heading)
-    if bandit_file_path is None:
-        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
-        story.append(no_result)
-        story.append(PageBreak())
+    if addHeader:
+        heading = Paragraph(f"<b>{heading_title}</b>", styles["Heading1"])
+        story.append(heading)
+    if file_path is None:
+        if giveInfo:
+            no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
+            story.append(no_result)
+            story.append(PageBreak())
         return story
-    with open(bandit_file_path, "r") as file:
-        bandit_data = json.load(file)
+    
+    with open(file_path, "r") as file:
+        data = json.load(file)
 
-    for result in bandit_data["results"]:
-        code_snippet = result["code"]
-        filename = result["filename"]
-        line_number = result["line_number"]
-        issue_severity = result["issue_severity"]
-        issue_text = result["issue_text"]
-        code_snippet = code_snippet.replace("\n", "<br/>")
-        # Create a paragraph
-        paragraph = (
-            f"<b>File:</b> {filename}, <b>Line:</b> {line_number}<br/>"
-            f"<b>Severity:</b> {issue_severity}<br/>"
-            f"<b>Issue:</b> {issue_text}<br/>"
-            f"<b>Code Snippet:</b> <code>{code_snippet}</code><br/><br/>"
-        )
+    if heading_title == "Detect Secrets Scan Results":
+        story += item_processor(data)
+        return story
+    
+    if heading_title == "Safety Extra Info":
+        story.append(item_processor(data))
+        return story
+        
+    results = data.get(data_tag, [])
 
-        # Add the paragraph to the story
-        story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))
-    story.append(PageBreak())
+    if isinstance(results, list):
+        # If results is a list, process each item
+        for item in results:
+            paragraph = item_processor(item)
+            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
+    elif isinstance(results, dict):
+        # If results is a dictionary, process its values
+        for item in results.values():
+            paragraph = item_processor(item)
+            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
 
     return story
+
+
+def bandit_item_processor(item):
+    code_snippet = item["code"].replace("\n", "<br/>")
+    return (
+        f"<b>File:</b> {item['filename']}, <b>Line:</b> {item['line_number']}<br/>"  # noqa: E501
+        f"<b>Severity:</b> {item['issue_severity']}<br/>"
+        f"<b>Issue:</b> {item['issue_text']}<br/>"
+        f"<b>Code Snippet:</b> <code>{code_snippet}</code><br/><br/>"
+    )
+
+
+def grype_item_processor(item):
+    vulnerability = item["vulnerability"]
+    fix_versions = vulnerability["fix"]["versions"]
+    related_vulns = item["relatedVulnerabilities"]
+    related_vulns_id = [vuln["id"] for vuln in related_vulns] if related_vulns else ["No related vulnerabilities found."]   # noqa: E501
+    related_vulns_id_str = ", ".join(related_vulns_id)
+
+    return (
+        f"<b>Vulnerability ID:</b> {vulnerability['id']}<br/>"
+        f"<b>Severity:</b> {vulnerability['severity']}<br/>"
+        f"<b>Description:</b> {vulnerability['description']}<br/>"
+        f"<b>Fix Versions:</b> {', '.join(fix_versions)}<br/>"
+        f"<b>URLs:</b> {', '.join(vulnerability['urls'])}<br/>"
+        f"<b>Related Vulnerability ID:</b> {related_vulns_id_str}<br/><br/>"
+    )
+
+
+def safety_item_processor(item):
+    paragraph = (
+        f"<b>Package Name:</b> {item.get('package_name')}<br/>"
+        f"<b>Vulnerability ID:</b> {item.get('vulnerability_id')}<br/>"
+        f"<b>CVE:</b> <code>{item.get('CVE')}</code><br/>"
+        f"<b>Analyzed Version:</b> {item.get('analyzed_version')}<br/>"
+        f"<b>Advisory:</b> <code>{item.get('advisory')}</code><br/>"
+        f"<b>More info:</b> <code>{item.get('more_info_url')}</code><br/><br/>"
+    )
+    return paragraph
+
+
+def secret_item_processor(result):
+    return (
+        f"<b>Secret Type:</b> {result.get('type')}<br/>"
+        f"<b>File Path:</b> {result.get('filename')}<br/>"
+        f"<b>Line:</b> {result.get('line_number')}<br/>"
+        f"<b>Hashed Secret:</b> {result.get('hashed_secret')}<br/><br/>"
+    )
+
+
+def sbom_item_processor(component):
+    return (
+        f"<b>Type:</b> {component['type']}<br/>"
+        f"<b>Name:</b> {component['name']}<br/>"
+        f"<b>Version:</b> <code>{component['version']}</code><br/>"
+        f"<b>CPE:</b> {component.get('cpe', 'N/A')}<br/><br/>"
+    )
+
+
+def bandit_results(bandit_file_path):
+    return process_json_data(bandit_file_path, "Bandit Scan Results", bandit_item_processor, "results")  # noqa: E501
 
 
 def grype_results(grype_file_path):
-    story = []
-    grype_heading = Paragraph("<b>Grype Scan Results</b>", styles["Heading1"])
-    story.append(grype_heading)
+    return process_json_data(grype_file_path, "Grype Scan Results", grype_item_processor, "matches")  # noqa: E501
 
-    if grype_file_path is None:
-        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
-        story.append(no_result)
-        story.append(PageBreak())
-        return story
+
+def safety_info(safety_file_path):
+    def safety_scanned_packages(item):
+        pkgs = []
+
+        for package_name, package_info in item.get("scanned_packages", {}).items():  # noqa: E501
+            pkgs.append(f"{package_name} {package_info.get('version')}")
+
+        pkgs_str = ", ".join(pkgs)
+        pkgs_paragraph = Paragraph(f"<b>Scanned Packages: </b>{pkgs_str}<br/><br/>", styles["Normal"])  # noqa: E501
+        return pkgs_paragraph
     
-    with open(grype_file_path, "r") as file:
-        grype_data = json.load(file)
-
-    for match in grype_data["matches"]:
-        vulnerability = match["vulnerability"]
-        vulnerability_id = vulnerability["id"]
-        severity = vulnerability["severity"]
-        description = vulnerability["description"]
-        fix_versions = vulnerability["fix"]["versions"]
-        urls = vulnerability["urls"]
-        related_vulns = match["relatedVulnerabilities"]
-        related_vulns_id = []
-        if related_vulns:
-            for i in related_vulns:
-                related_vulns_id.append(i["id"])
-        else:
-            related_vulns_id.append(
-                "No related vulnerabilities have been found."
-            )  # noqa: E501
-
-        related_vulns_id = ", ".join(related_vulns_id)
-
-        # Create a paragraph with vulnerability information
-        paragraph = (
-            f"<b>Vulnerability ID:</b> {vulnerability_id}<br/>"
-            f"<b>Severity:</b> {severity}<br/>"
-            f"<b>Description:</b> {description}<br/>"
-            f"<b>Fix Versions:</b> {', '.join(fix_versions)}<br/>"
-            f"<b>URLs:</b> {', '.join(urls)}<br/>"
-            f"<b>Related Vulnerability ID:</b> {related_vulns_id}<br/><br/>"
-        )
-
-        # Add the paragraph to the story with KeepTogether
-        story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))
-    story.append(PageBreak())
-
-    return story
+    return process_json_data(safety_file_path, "Safety Extra Info", safety_scanned_packages, "vulnerabilities", False, False)  # noqa: E501
 
 
 def safety_results(safety_file_path):
-    story = []
-    safety_heading = Paragraph("<b>Safety Dependency Scan Results</b>", styles["Heading1"])  # noqa: E501
-    story.append(safety_heading)
-
-    if safety_file_path is None:
-        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
-        story.append(no_result)
-        story.append(PageBreak())
-        return story
-    
-    with open(safety_file_path, "r") as file:
-        safety_data = json.load(file)
-
-    pkgs = []
-
-    for package_name, package_info in safety_data.get("scanned_packages", {}).items():  # noqa: E501
-        pkgs.append(f"{package_name} {package_info.get('version')}")
-
-    pkgs_str = ", ".join(pkgs)
-    pkgs_paragraph = Paragraph(f"<b>Scanned Packages: </b>{pkgs_str}<br/><br/>", styles["Normal"])  # noqa: E501
-    story.append(pkgs_paragraph)
-
-    vuln_list = Paragraph("<b>Vulnerabilities Found in Packages: </b><br/><br/>", styles["Normal"])  # noqa: E501
-    story.append(vuln_list)
-
-    for vuln in safety_data.get("vulnerabilities", []):
-        if vuln:
-            pkg_name = vuln.get("package_name")
-            vuln_id = vuln.get("vulnerability_id")
-            cve = vuln.get("CVE")
-            analyzed_version = vuln.get("analyzed_version")
-            advisory = vuln.get("advisory")
-            more_info = vuln.get("more_info_url")
-
-            paragraph = (
-                f"<b>Package Name:</b> {pkg_name}<br/>"
-                f"<b>Vulnerability ID:</b> {vuln_id}<br/>"
-                f"<b>CVE:</b> <code>{cve}</code><br/>"
-                f"<b>Analyzed Version:</b> {analyzed_version}<br/>"
-                f"<b>Advisory:</b> <code>{advisory}</code><br/>"
-                f"<b>More info:</b> <code>{more_info}</code><br/><br/>"
-            )
-
-            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
-    story.append(PageBreak())
-
-    return story
+    return process_json_data(safety_file_path, "Safety Dependency Scan Results", safety_item_processor, "vulnerabilities")   # noqa: E501
 
 
 def secret_results(secret_file_path):
-    story = []
-    secret_heading = Paragraph("<b>Detect Secrets Scan Results</b>", styles["Heading1"])  # noqa: E501
-    story.append(secret_heading)
-
-    if secret_file_path is None:
-        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
-        story.append(no_result)
+    def process_secrets(item):
+        story = []
+        for _, results_list in item["results"].items():
+            for result in results_list:
+                paragraph = secret_item_processor(result)
+                story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
         story.append(PageBreak())
+
         return story
-    
-    with open(secret_file_path, "r") as file:
-        secret_data = json.load(file)
 
-    for _, results_list in secret_data["results"].items():
-        for result in results_list:
-            result_type = result.get("type")
-            filename = result.get("filename")
-            line_number = result.get("line_number")
-            hashed_secret = result.get("hashed_secret")
-
-            paragraph = (
-                f"<b>Secret Type:</b> {result_type}<br/>"
-                f"<b>File Path:</b> {filename}<br/>"
-                f"<b>Line:</b> {line_number}<br/>"
-                f"<b>Hashed Secret:</b> {hashed_secret}<br/><br/>"
-            )
-
-            story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))  # noqa: E501
-    story.append(PageBreak())
-
-    return story
+    return process_json_data(secret_file_path, "Detect Secrets Scan Results", process_secrets, "results")  # noqa: E501
 
 
 def sbom_results(sbom_file_path):
-    story = []
-    sbom_heading = Paragraph("<b>SBOM with Syft</b>", styles["Heading1"])
-    story.append(sbom_heading)
-
-    with open(sbom_file_path, "r") as file:
-        sbom_data = json.load(file)
-
-    for component in sbom_data["components"]:
-        component_name = component["name"]
-        component_type = component["type"]
-        component_version = component["version"]
-        component_cpe = component.get("cpe", "N/A")  # Added a default value for CPE since it is not always present in the SBOM.   # noqa: E501
-
-        paragraph = (
-            f"<b>Type:</b> {component_type}<br/>"
-            f"<b>Name:</b> {component_name}<br/>"
-            f"<b>Version:</b> <code>{component_version}</code><br/>"
-            f"<b>CPE:</b> {component_cpe}<br/><br/>"
-        )
-        story.append(KeepTogether([Paragraph(paragraph, styles["Normal"])]))
-    story.append(PageBreak())
-
-    return story
+    return process_json_data(sbom_file_path, "SBOM with Syft", sbom_item_processor, "components")  # noqa: E501
 
 
 def generate_pdf(output_filename, **scan_files):  # noqa: E501
@@ -229,6 +175,7 @@ def generate_pdf(output_filename, **scan_files):  # noqa: E501
     story += bandit_results(scan_files["bandit_file_path"])
     story += grype_results(scan_files["grype_file_path"])
     story += safety_results(scan_files["safety_file_path"])
+    story += safety_info(scan_files["safety_file_path"])
     story += secret_results(scan_files["secret_file_path"])
     
     # SBOM results can be enormous. Therefore, this segment is optional.
