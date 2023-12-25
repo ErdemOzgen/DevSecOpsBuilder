@@ -30,11 +30,15 @@ def get_file_path(base_dir, scan_type, file_name):
 
 def bandit_results(bandit_file_path):
     story = []
-    with open(bandit_file_path, "r") as file:
-        bandit_data = json.load(file)
-
     bandit_heading = Paragraph("<b>Bandit Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(bandit_heading)
+    if bandit_file_path is None:
+        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
+        story.append(no_result)
+        story.append(PageBreak())
+        return story
+    with open(bandit_file_path, "r") as file:
+        bandit_data = json.load(file)
 
     for result in bandit_data["results"]:
         code_snippet = result["code"]
@@ -60,11 +64,17 @@ def bandit_results(bandit_file_path):
 
 def grype_results(grype_file_path):
     story = []
-    with open(grype_file_path, "r") as file:
-        grype_data = json.load(file)
-
     grype_heading = Paragraph("<b>Grype Scan Results</b>", styles["Heading1"])
     story.append(grype_heading)
+
+    if grype_file_path is None:
+        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
+        story.append(no_result)
+        story.append(PageBreak())
+        return story
+    
+    with open(grype_file_path, "r") as file:
+        grype_data = json.load(file)
 
     for match in grype_data["matches"]:
         vulnerability = match["vulnerability"]
@@ -107,6 +117,12 @@ def safety_results(safety_file_path):
     safety_heading = Paragraph("<b>Safety Dependency Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(safety_heading)
 
+    if safety_file_path is None:
+        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
+        story.append(no_result)
+        story.append(PageBreak())
+        return story
+    
     with open(safety_file_path, "r") as file:
         safety_data = json.load(file)
 
@@ -151,6 +167,12 @@ def secret_results(secret_file_path):
     secret_heading = Paragraph("<b>Detect Secrets Scan Results</b>", styles["Heading1"])  # noqa: E501
     story.append(secret_heading)
 
+    if secret_file_path is None:
+        no_result = Paragraph("There is no result under this scan.", styles["Normal"])  # noqa: E501
+        story.append(no_result)
+        story.append(PageBreak())
+        return story
+    
     with open(secret_file_path, "r") as file:
         secret_data = json.load(file)
 
@@ -200,18 +222,18 @@ def sbom_results(sbom_file_path):
     return story
 
 
-def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path, sbom_file_path=None):  # noqa: E501
+def generate_pdf(output_filename, **scan_files):  # noqa: E501
     doc = SimpleDocTemplate(output_filename, pagesize=letter)
     story = []
 
-    story += bandit_results(bandit_file_path)
-    story += grype_results(grype_file_path)
-    story += safety_results(safety_file_path)
-    story += secret_results(secret_file_path)
+    story += bandit_results(scan_files["bandit_file_path"])
+    story += grype_results(scan_files["grype_file_path"])
+    story += safety_results(scan_files["safety_file_path"])
+    story += secret_results(scan_files["secret_file_path"])
     
     # SBOM results can be enormous. Therefore, this segment is optional.
-    if sbom_file_path:
-        story += sbom_results(sbom_file_path)
+    if "sbom_file_path" in scan_files:
+        story += sbom_results(scan_files["sbom_file_path"])
 
     doc.build(story)
 
@@ -219,27 +241,37 @@ def generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file
 def find_file_by_keyword(base_dir, scan_type, keyword):
     """
     Searches for the most recently modified file in the specified directory 
-    that contains the given keyword. Returns the path of that file.
+    that contains the given keyword. Excludes specific keywords from the search.  # noqa: E501
+    Returns the path of that file.
     """
+    excluded_keywords = ['armor', 'obf', 'obfuscated', 'pyarmor', 'hidden']
+    
+    # If the keyword is in the list of excluded keywords, return None
+    if any(excluded_keyword in keyword.lower() for excluded_keyword in excluded_keywords):  # noqa: E501
+        return None
+    
     pattern = os.path.join(base_dir, scan_type, f"*{keyword}*")
     files = glob.glob(pattern)
+    
+    # Exclude files with specific keywords
+    files = [file for file in files if not any(excluded_keyword in file.lower() for excluded_keyword in excluded_keywords)]   # noqa: E501
+    
     if not files:
         return None
+    
     # Sort files by modification time and return the most recent
     return max(files, key=os.path.getmtime)
 
 
 def find_and_generate_report(base_dir, scan_type, output_filename):
-    # Find files based on keywords
-    bandit_file_path = find_file_by_keyword(base_dir, scan_type, "bandit")
-    grype_file_path = find_file_by_keyword(base_dir, scan_type, "grype")
-    safety_file_path = find_file_by_keyword(base_dir, scan_type, "dependency_scan")  # noqa: E501
-    secret_file_path = find_file_by_keyword(base_dir, scan_type, "secrets")
-    # sbom_file_path = find_file_by_keyword(base_dir, scan_type, "sbom")  # Optional  # noqa: E501
+    scan_files = {}
 
-    # Call the function to generate the PDF (assuming it accepts None for missing files) # noqa: E501
-    generate_pdf(output_filename, bandit_file_path, grype_file_path, safety_file_path, secret_file_path)  # noqa: E501
+    scan_files["bandit_file_path"] = find_file_by_keyword(base_dir, scan_type, "bandit")  # noqa: E501
+    scan_files["grype_file_path"] = find_file_by_keyword(base_dir, scan_type, "grype")  # noqa: E501
+    scan_files["safety_file_path"] = find_file_by_keyword(base_dir, scan_type, "dependency_scan")  # noqa: E501
+    scan_files["secret_file_path"] = find_file_by_keyword(base_dir, scan_type, "secrets")   # noqa: E501
 
+    generate_pdf(output_filename, **scan_files)  # noqa: E501
     print("Report generated.")
 
 
