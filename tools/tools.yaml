@@ -17,7 +17,7 @@ tools_to_install:
       update: git clone https://github.com/tillson/git-hound.git && cd git-hound && mv config.example.yml config.yaml && go install .
       help: ./git-hound -h
       language: "All"
-      default: false
+      default: true
       devsecops:
         name: git-hound
         description: "Git Hound makes it easy to find exposed API keys on GitHub using pattern matching, targetted querying, and a scoring system."
@@ -31,7 +31,7 @@ tools_to_install:
       update: cd /tmp && curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
       help: trufflehog --help
       language: "All"
-      default: false
+      default: true
       devsecops:
         name: truffleHog
         description: "Searches through git repositories for secrets, digging deep into commit history and branches. This is effective at finding secrets accidentally committed."
@@ -55,7 +55,7 @@ tools_to_install:
       update: pip install --upgrade --user -U ggshield
       help: export /home/${USER}/.local/bin && ggshield --help
       language: "All"
-      default: false
+      default: true
       devsecops:
         name: ggshield
         description: "ggshield is a secrets scanner for commits, branches, pull requests and more. It runs locally and integrates with GitHub, GitLab and BitBucket."
@@ -126,7 +126,7 @@ tools_to_install:
       install: cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d
       update: cd /tmp && curl -LO https://dependencytrack.org/docker-compose.yml && docker-compose up -d
       help: echo "Running in docker compose not need help"
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
@@ -139,7 +139,7 @@ tools_to_install:
       install: sudo  npm install -g retire
       update: sudo  npm update -g retire
       help: retire --help
-      default: false
+      default: true
       language:
         - "JavaScript"
         - "Node.js"
@@ -167,7 +167,7 @@ tools_to_install:
       install: sudo npm install -g npm-check
       update: sudo npm update -g npm-check
       help: npm-check --help
-      default: false
+      default: true
       language:
         - "JavaScript"
         - "Node.js"
@@ -182,7 +182,7 @@ tools_to_install:
       install: sudo gem install brakeman
       update: sudo gem update brakeman
       help: brakeman --help
-      default: false
+      default: true
       language:
         - "Ruby on Rails"
       devsecops:
@@ -196,7 +196,7 @@ tools_to_install:
       install: pip install semgrep #docker pull returntocorp/semgrep:latest
       update: pip install --upgrade semgrep #docker pull returntocorp/semgrep:latest
       help: semgrep --help
-      default: false
+      default: true
       language:
         - "C#"
         - "Go"
@@ -242,7 +242,7 @@ tools_to_install:
       install: pip install libsast
       update: pip install --upgrade libsast 
       help: libsast --help
-      default: false
+      default: true
       language:
         - "JavaScript"
         - "Node.js"
@@ -258,7 +258,7 @@ tools_to_install:
       install: docker pull sonarqube:latest 
       update: docker pull sonarqube:latest
       help: echo "Running in docker  not need help"
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
@@ -271,7 +271,7 @@ tools_to_install:
       install: go install github.com/securego/gosec/cmd/gosec@latest
       update: go install github.com/securego/gosec/cmd/gosec@latest
       help: gosec --help
-      default: false
+      default: true
       language:
         - "Go"
       devsecops:
@@ -284,7 +284,7 @@ tools_to_install:
       install: pip install safety
       update: pip install --upgrade safety
       help: safety --help
-      default: false
+      default: true
       language:
         - "Python"
       devsecops:
@@ -312,7 +312,7 @@ tools_to_install:
       install: sudo snap install zaproxy --classic
       update: sudo snap refresh zaproxy --classic
       help: zaproxy -h
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
@@ -353,7 +353,7 @@ tools_to_install:
       install: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
       update: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
       help: grype --help
-      default: false
+      default: true
       language:
         - "All"
       devsecops:
@@ -367,7 +367,7 @@ tools_to_install:
       install: pip install bandit
       update: pip install update bandit
       help: bandit --help
-      default: false
+      default: true
       language:
         - "Python"
       devsecops:
@@ -393,7 +393,7 @@ tools_to_install:
       install: pip install mythril
       update: pip install --upgrade mythril
       help: myth -h
-      default: false
+      default: true
       language:
         - "Solidity"
       devsecops:
@@ -406,7 +406,7 @@ tools_to_install:
       install: pip install slither-analyzer
       update: pip install --upgrade slither-analyzer
       help: slither --help
-      default: false
+      default: true
       language:
         - "Solidity"
       devsecops:
