@@ -268,8 +268,8 @@ tools_to_install:
         url: https://github.com/SonarSource/sonarqube
 
     - name: gosec
-      install: go install github.com/securego/gosec/cmd/gosec@latest
-      update: go install github.com/securego/gosec/cmd/gosec@latest
+      install: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.18.2
+      update: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.18.2
       help: gosec --help
       default: true
       language:
