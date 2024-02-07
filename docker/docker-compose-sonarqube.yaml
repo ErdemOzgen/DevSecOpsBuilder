@@ -5,6 +5,7 @@ services:
     image: sonarqube:latest
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+      - SONAR_JAVA_OPTS=-Xmx8g -Xms8g
     ports:
       - "9000:9000"
     volumes:

@@ -1,11 +1,12 @@
+# PYTHON_ARGCOMPLETE_OK
 import argparse
 from devsecopsbuilder import pipeline_executer
 from devsecopsbuilder import convert_graph
 from devsecopsbuilder import convert_pipeline
-from devsecopsbuilder import generate_report    # noqa: F401
 import networkx as nx
 import matplotlib.pyplot as plt
 from devsecopsbuilder import asciiart
+import argcomplete
 
 
 def main():
@@ -63,6 +64,9 @@ def main():
         default="command_outputs/jenkinsFiles/Jenkinsfile",
         help="Path to pipeline output directory (optional)",
     )
+    
+    argcomplete.autocomplete(parser)
+    
     args = parser.parse_args()
 
     # Check if no actionable arguments were provided
@@ -144,7 +148,7 @@ def main():
             print("Pipeline converted successfully.")
         except Exception as e:
             print(f"Error converting pipeline: {e}")
-
+            
 
 if __name__ == "__main__":
     main()

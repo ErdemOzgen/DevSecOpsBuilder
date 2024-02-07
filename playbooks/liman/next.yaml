@@ -1,0 +1,97 @@
+commands_to_run:
+  steps:
+    - name: "Starting scan for Liman MYS-next (with TS)"
+      command: echo "Starting scan for Liman MYS/next (with TS)"
+      stepno: 1
+      
+    - name: "Secret Scan with Detect Secrets"
+      command: "detect-secrets -C ${scan_directory} scan > ${output_file}"
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_file: "../Desktop/Liman_MYS/results_next/secrets.json"
+      post_command: "echo Detect Secrets complete. Results stored in ${output_directory}"
+      post_parameters:
+        output_directory: "../Desktop/Liman_MYS/results_next"
+      stepno: 2
+
+    - name: "Secret Scan with GitLeaks"
+      command: docker run -v ${path_to_host_folder_to_scan}:/path -v ${output_path}:/output_path zricethezav/gitleaks:latest ${run_command_option} --source="/path" --report-format=json --report-path=/output_path/gitleaks_report.json
+      parameters:
+        path_to_host_folder_to_scan: "/home/aseren/Desktop/Liman_MYS/next"
+        run_command_option: detect
+        output_path: "/home/aseren/Desktop/Liman_MYS/results_next"
+      post_command: echo GitLeaks complete. Results stored in ${output_path}"
+      stepno: 3
+    
+    - name: "Vulnerability Scan with Grype"
+      command: "grype dir:${scan_directory} -o json --file ${output_path}"
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_type: "json"
+        output_path: "../Desktop/Liman_MYS/results_next/grype.json"
+      post_command: "echo Grype scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "../Desktop/Liman_MYS/results_next/"
+      stepno: 4
+
+    - name: "Vulnerability Scan with Retire.js"
+      command: "retire --path ${scan_directory} --outputformat ${output_type} --outputpath ${output_path}"
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_type: "json"
+        output_path: "../Desktop/Liman_MYS/results_next/retire.json"
+      post_command: "echo Grype scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "../Desktop/Liman_MYS/results_next/"
+      stepno: 5
+
+    - name: "Dependency Check with npm-check"
+      command: "npm-check ${scan_directory} > ${output_path} --no-emoji --no-color"
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_path: "../Desktop/Liman_MYS/results_next/npm-check.txt"
+      post_command: "echo npm-check scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "../Desktop/Liman_MYS/results_next/"
+      stepno: 6
+    
+    - name: "Dependency Scan with OWASP Dependency Check"
+      command: "dependency-check/bin/dependency-check.sh --scan \"${scan_directory}\" --out ${output_path}"
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_path: "../Desktop/Liman_MYS/results_next"
+      post_command: "echo OWASP Dependency Check Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "../Desktop/Liman_MYS/results_next"
+      stepno: 7
+
+    - name: "SBOM Generation With Syft"
+      command: syft ${scan_directory} --output cyclonedx-json >> ${output_path}/sbom.json
+      parameters:
+        scan_directory: "../Desktop/Liman_MYS/next"
+        output_path: "../Desktop/Liman_MYS/results_next"
+      post_command: "echo Syft Scan Complete. Results stored in ${output_path}"
+      stepno: 8
+
+    - name: "SBOM Scan with Grype"
+      command: "grype sbom:${scan_path} -o json --file ${output_path}"
+      parameters:
+        scan_path: "../Desktop/Liman_MYS/results_next/sbom.json"
+        output_type: "json"
+        output_path: "../Desktop/Liman_MYS/results_next/grype_sbom_scan.json"
+      post_command: "echo Grype scan Complete. Results stored in ${output_path}"
+      post_parameters:
+        output_path: "../Desktop/Liman_MYS/results_next/grype_sbom_scan.json"
+      stepno: 9
+
+    - name: "SAST Scan with SonarQube"
+      command: >
+        docker run
+        --rm
+        --network=host
+        -e SONAR_HOST_URL="http://localhost:9000"
+        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=next"
+        -e SONAR_TOKEN="sqp_addfeb07d854e50677f5068b20bfb4576c8bfd64"
+        -v "/home/aseren/Desktop/Liman_MYS/next:/usr/src"
+        sonarsource/sonar-scanner-cli
+      stepno: 10
