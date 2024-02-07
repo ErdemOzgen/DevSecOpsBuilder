@@ -414,3 +414,23 @@ tools_to_install:
         description: "Slither is a Solidity & Vyper static analysis framework written in Python3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. "
         category: "SAST"
         url: https://github.com/ConsenSys/mythril
+    
+    # Requires Terraform to run correctly according to the docs
+    - name: checkov
+      install: pip3 install checkov
+      update: pip3 install -U checkov
+      help: checkov --help
+      default: false
+      language:
+        - "Terraform"
+        - "CloudFormation"
+        - "Azure Resource Manager"
+        - "Serverless framework"
+        - "Helm charts"
+        - "Kubernetes"
+        - "Docker"
+      devsecops:
+        name: checkov
+        description: "Checkov is a static code analysis tool for scanning infrastructure as code (IaC) files for misconfigurations that may lead to security or compliance problems."
+        category: "infrastructure-as-code"
+        url: https://github.com/bridgecrewio/checkov
