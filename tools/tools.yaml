@@ -136,8 +136,8 @@ tools_to_install:
         url: https://github.com/DependencyTrack/dependency-track
     
     - name: retire.js
-      install: sudo  npm install -g retire
-      update: sudo  npm update -g retire
+      install: sudo npm install -g retire
+      update: sudo npm update -g retire
       help: retire --help
       default: true
       language:
@@ -150,6 +150,19 @@ tools_to_install:
         category: "dependency-check"
         url: https://github.com/retirejs/retire.js/
 
+    - name: jshint
+      install: sudo npm install -g jshint
+      update: sudo npm update -g jshint
+      help: jshint --help
+      default: true
+      language:
+        - "JavaScript"
+      devsecops:
+        name: jshint
+        description: "JSHint is a community-driven tool that detects errors and potential problems in JavaScript code."
+        category: "SAST"
+        url: https://github.com/jshint/jshint
+
     - name: local-php-security-checker
       install: go install github.com/fabpot/local-php-security-checker@latest
       update: go install github.com/fabpot/local-php-security-checker@latest
@@ -160,7 +173,7 @@ tools_to_install:
       devsecops:
         name: local-php-security-checker
         description: "PHP security vulnerabilities checker."
-        category: "dependency-check"
+        category: "SAST"
         url: https://github.com/fabpot/local-php-security-checker
     
     - name: npm-check
