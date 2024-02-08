@@ -414,3 +414,42 @@ tools_to_install:
         description: "Slither is a Solidity & Vyper static analysis framework written in Python3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. "
         category: "SAST"
         url: https://github.com/ConsenSys/mythril
+    
+    # Requires Terraform to run correctly according to the docs
+    - name: checkov
+      install: pip3 install checkov
+      update: pip3 install -U checkov
+      help: checkov --help
+      default: false
+      language:
+        - "Terraform"
+        - "CloudFormation"
+        - "Azure Resource Manager"
+        - "Serverless framework"
+        - "Helm charts"
+        - "Kubernetes"
+        - "Docker"
+      devsecops:
+        name: checkov
+        description: "Checkov is a static code analysis tool for scanning infrastructure as code (IaC) files for misconfigurations that may lead to security or compliance problems."
+        category: "infrastructure-as-code"
+        url: https://github.com/bridgecrewio/checkov
+
+    - name: terraform
+      install: |
+        sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+        wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo apt update
+        sudo apt-get install terraform
+      update: sudo apt-get upgrade terraform
+      help: terraform -help
+      default: false
+      language:
+        - "Terraform"
+      devsecops:
+        name: terraform
+        description: "Terraform is an infrastructure as code tool that lets you build, change, and version infrastructure safely and efficiently."
+        category: "infrastructure-as-code"
+        url: https://www.terraform.io/
+      
