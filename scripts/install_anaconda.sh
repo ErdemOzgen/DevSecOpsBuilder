@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Anaconda installer download link
-ANACONDA_URL="https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh"
+ANACONDA_URL="https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh"
 
 # Function to check if Conda is installed
 function is_conda_installed {
